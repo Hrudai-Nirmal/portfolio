@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hrudai Nirmal — Portfolio
+
+A modern, scroll-interactive personal portfolio website built with **Next.js**, **TypeScript**, and **Tailwind CSS**.
+
+## Features
+
+- 🎨 **Light & dark theme** with custom color palettes and smooth toggle transitions
+- 📱 **Fully responsive** — optimized for mobile, tablet, and desktop
+- ⚡ **Full-page scroll snap** — each section takes up the full viewport
+- 🧩 **Modular sections** — Home (quote), About Me, My Work, Why Work With Me, Contact
+- 🍔 **Smart navigation** — full header at top, collapses to dropdown button on scroll & mobile
+- 🌐 **Contact icons** — LinkedIn, GitHub, Instagram, CV download, Email, Phone
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ and npm
+
+### Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Customization
 
-To learn more about Next.js, take a look at the following resources:
+- **About text**: Edit `src/components/About.tsx` to update your bio.
+- **Profile photo**: Replace the placeholder in `src/components/About.tsx` with your image.
+- **Projects**: Update the `projects` array in `src/components/Projects.tsx`.
+- **Why Work With Me**: Edit `src/components/WhyWorkWithMe.tsx` to adjust bullet points.
+- **Contact links**: Update URLs in `src/components/Contact.tsx`.
+- **CV download**: Upload your CV to `/public/` and update the href in `Contact.tsx`.
+- **Quote**: Change the hero quote in `src/components/Hero.tsx`.
+- **Colors**: Modify the palette in `src/app/globals.css` (`:root`, `.light`, `.dark`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js](https://nextjs.org/) — React framework with App Router
+- [TypeScript](https://www.typescriptlang.org/) — Type safety
+- [Tailwind CSS](https://tailwindcss.com/) — Utility-first styling
