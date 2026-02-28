@@ -59,43 +59,93 @@ export default function Navbar() {
     return () => document.removeEventListener("click", handleClick);
   }, [dropdownOpen]);
 
+  // Stagger delays: name slides last (longest travel), links slide right with increasing delay
+  // This creates the effect of elements "funneling" into the dropdown button on the right
+  const nameTransition = scrolled
+    ? "translate-x-[calc(100vw)] opacity-0"
+    : "translate-x-0 opacity-100";
+
+  const linkTransition = (index: number) => {
+    // Each link gets a shorter travel distance (they're already closer to the right)
+    // and a staggered delay so they cascade
+    const delay = index * 60; // ms stagger
+    return {
+      className: `transition-all ease-in-out ${
+        scrolled
+          ? "translate-x-24 opacity-0 scale-90"
+          : "translate-x-0 opacity-100 scale-100"
+      }`,
+      style: {
+        transitionDuration: "500ms",
+        transitionDelay: scrolled ? `${delay}ms` : `${(navLinks.length - index) * 60}ms`,
+      },
+    };
+  };
+
+  const themeToggleTransition = {
+    className: `transition-all ease-in-out ${
+      scrolled
+        ? "translate-x-16 opacity-0 scale-90"
+        : "translate-x-0 opacity-100 scale-100"
+    }`,
+    style: {
+      transitionDuration: "500ms",
+      transitionDelay: scrolled ? `${navLinks.length * 60}ms` : "0ms",
+    },
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      {/* ===== Full Header (visible at top, desktop only) ===== */}
+      {/* ===== Full Header (desktop) — elements slide right on scroll ===== */}
       <div
-        className={`transition-all duration-500 ease-in-out ${
-          scrolled
-            ? "opacity-0 -translate-y-full pointer-events-none"
-            : "opacity-100 translate-y-0"
-        } hidden md:block`}
+        className={`hidden md:block transition-all duration-700 ease-in-out ${
+          scrolled ? "pointer-events-none" : ""
+        }`}
       >
         <div className="max-w-6xl mx-auto px-8 py-5 flex items-center justify-between">
+          {/* Name slides right */}
           <a
             href="#home"
-            className="text-xl font-bold tracking-tight text-accent"
+            className={`text-xl font-bold tracking-tight text-accent transition-all duration-700 ease-in-out ${nameTransition}`}
           >
             Hrudai Nirmal
           </a>
+
+          {/* Nav links slide right with stagger */}
           <div className="flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-200"
-              >
-                {link.label}
-              </a>
-            ))}
-            <ThemeToggle />
+            {navLinks.map((link, index) => {
+              const t = linkTransition(index);
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm text-text-secondary hover:text-text-primary ${t.className}`}
+                  style={t.style}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+            <div
+              className={themeToggleTransition.className}
+              style={themeToggleTransition.style}
+            >
+              <ThemeToggle />
+            </div>
           </div>
         </div>
-      </div>      {/* ===== Dropdown Button (always on mobile, on scroll for desktop) ===== */}
+      </div>
+
+      {/* ===== Dropdown Button (always on mobile, appears on scroll for desktop) ===== */}
       <div
         className={`fixed top-4 right-4 md:top-6 md:right-8 z-50 transition-all duration-500 ease-in-out ${
           scrolled
-            ? "opacity-100 translate-y-0"
-            : "md:opacity-0 md:-translate-y-4 md:pointer-events-none"
+            ? "opacity-100 scale-100"
+            : "md:opacity-0 md:scale-75 md:pointer-events-none"
         }`}
+        style={{
+          transitionDelay: scrolled ? `${(navLinks.length + 1) * 60}ms` : "0ms",
+        }}
       >
         <div className="relative">
           <button
