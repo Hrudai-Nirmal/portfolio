@@ -2,18 +2,18 @@
 
 /* ===== Color Palettes ===== */
 /* Light: #FAF7F0 #D8D2C2 #B17457 #4A4947 */
-/* Dark:  #181C14 #3C3D37 #697565 #ECDFCC */
+/* Dark:  #222831 #31363F #76ABAE #EEEEEE */
 
 :root {
   /* Default to dark */
-  --bg-primary: #181C14;
-  --bg-secondary: #3C3D37;
-  --accent: #697565;
-  --text-primary: #ECDFCC;
-  --text-secondary: #b0a992;
-  --border-color: #3C3D37;
-  --surface: #1f2219;
-  --surface-hover: #2a2d24;
+  --bg-primary: #222831;
+  --bg-secondary: #31363F;
+  --accent: #76ABAE;
+  --text-primary: #EEEEEE;
+  --text-secondary: #a8a8a8;
+  --border-color: #31363F;
+  --surface: #2b3040;
+  --surface-hover: #353b4a;
 }
 
 .light {
@@ -28,14 +28,14 @@
 }
 
 .dark {
-  --bg-primary: #181C14;
-  --bg-secondary: #3C3D37;
-  --accent: #697565;
-  --text-primary: #ECDFCC;
-  --text-secondary: #b0a992;
-  --border-color: #3C3D37;
-  --surface: #1f2219;
-  --surface-hover: #2a2d24;
+  --bg-primary: #222831;
+  --bg-secondary: #31363F;
+  --accent: #76ABAE;
+  --text-primary: #EEEEEE;
+  --text-secondary: #a8a8a8;
+  --border-color: #31363F;
+  --surface: #2b3040;
+  --surface-hover: #353b4a;
 }
 
 @theme inline {
