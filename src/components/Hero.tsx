@@ -12,17 +12,16 @@ export default function Hero() {
           Hrudai Nirmal
         </p>
         <blockquote className="text-3xl md:text-5xl lg:text-6xl font-light leading-tight tracking-tight mb-8 animate-fade-in-up animation-delay-200">
-          &ldquo;The only way to do great work is to love what you do.&rdquo;
+          The only way to do great work is to love what you do.
         </blockquote>
         <p className="text-text-secondary text-lg md:text-xl animate-fade-in-up animation-delay-400">
-          — Steve Jobs
         </p>
         <div className="mt-16 animate-fade-in-up animation-delay-600">
           <a
             href="#about"
             className="inline-flex items-center gap-2 text-sm text-accent hover:text-text-primary transition-colors duration-300"
           >
-            Scroll to explore
+            See what I love doing
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

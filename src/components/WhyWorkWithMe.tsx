@@ -2,56 +2,23 @@ const reasons = [
   {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
       </svg>
     ),
-    title: "Fast & Efficient Delivery",
+    title: "Endlessly Curious",
     description:
-      "I respect deadlines and deliver quality work on time, every time. No unnecessary delays.",
+      "I approach every challenge with genuine curiosity — always asking why, digging deeper, and seeking out better solutions rather than settling for the obvious.",
   },
   {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
     ),
-    title: "Clean, Maintainable Code",
+    title: "Driven by Originality",
     description:
-      "I write code that is readable, well-structured, and easy for teams to maintain and scale.",
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      </svg>
-    ),
-    title: "Clear Communication",
-    description:
-      "I keep you in the loop at every step — transparent updates, no surprises.",
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <line x1="12" y1="8" x2="12" y2="12" />
-        <line x1="12" y1="16" x2="12.01" y2="16" />
-      </svg>
-    ),
-    title: "Attention to Detail",
-    description:
-      "Pixel-perfect implementation with a focus on accessibility and user experience.",
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-      </svg>
-    ),
-    title: "Always Learning",
-    description:
-      "I stay up to date with the latest technologies and best practices to deliver modern solutions.",
+      "I thrive on building things that stand out. I enjoy pushing creative boundaries and crafting unique experiences that go beyond the conventional.",
   },
   {
     icon: (
@@ -62,9 +29,40 @@ const reasons = [
         <path d="M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
     ),
-    title: "Team Player",
+    title: "Collaborative by Nature",
     description:
-      "I collaborate effectively, adapt to workflows, and contribute positively to team culture.",
+      "I value working with like-minded people. Some of the best ideas emerge from collaboration, and I actively seek out opportunities to connect and co-create.",
+  },
+  {
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+      </svg>
+    ),
+    title: "Adaptable & Open-Minded",
+    description:
+      "I embrace new technologies, methodologies, and perspectives with enthusiasm. Stepping outside my comfort zone is where I do my best learning and growing.",
+  },
+  {
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+        <polyline points="22 4 12 14.01 9 11.01" />
+      </svg>
+    ),
+    title: "Committed to Excellence",
+    description:
+      "When I take on a project, I see it through with dedication and discipline. I hold myself to high standards and take full ownership of my work.",
+  },
+  {
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+      </svg>
+    ),
+    title: "Impact-Oriented",
+    description:
+      "I don't just write code — I build solutions that make a real difference. Every project is an opportunity to create meaningful, lasting impact.",
   },
 ];
 
