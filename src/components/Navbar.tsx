@@ -41,7 +41,12 @@ function ThemeToggle() {
   );
 }
 
-export default function Navbar() {
+type NavbarProps = {
+  chatOpen: boolean;
+  onToggleChat: () => void;
+};
+
+export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -113,6 +118,16 @@ export default function Navbar() {
 
           {/* Nav links slide right with stagger */}
           <div className="flex items-center gap-8">
+            <button
+              onClick={onToggleChat}
+              className={`text-sm transition-colors duration-200 ${
+                chatOpen
+                  ? "text-text-primary"
+                  : "text-text-secondary hover:text-text-primary"
+              }`}
+            >
+              Ask Shadow
+            </button>
             {navLinks.map((link, index) => {
               const t = linkTransition(index);
               return (
@@ -195,6 +210,15 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
+              <button
+                onClick={() => {
+                  setDropdownOpen(false);
+                  onToggleChat();
+                }}
+                className="block w-full text-left px-4 py-3 rounded-lg text-sm text-text-secondary hover:text-text-primary hover:bg-surface-hover transition-all duration-200"
+              >
+                Ask Shadow
+              </button>
               <div className="border-t border-border-color my-2" />
               <div className="px-4 py-3">
                 <ThemeToggle />
