@@ -1,23 +1,30 @@
 const projects = [
   {
-    title: "Project One",
+    title: "Portfolio Website + Ask Shadow AI",
     description:
-      "A full-stack web application built with modern technologies. Features include authentication, real-time updates, and a responsive design.",
-    tags: ["React", "Node.js", "TypeScript", "PostgreSQL"],
+      "A responsive Next.js portfolio with an embedded AI assistant in a right-side drawer. Uses a non-blocking 5:2 split layout so visitors can browse sections while asking context-aware questions.",
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "AI Chatbot"],
     link: "#",
   },
   {
-    title: "Project Two",
+    title: "Surface Defect Detection Ensemble",
     description:
-      "A mobile-first e-commerce platform with a clean UI, fast checkout experience, and integrated payment processing.",
-    tags: ["Next.js", "Tailwind CSS", "Stripe", "Prisma"],
+      "A computer vision pipeline using Faster R-CNN with a generalist + specialist routing strategy for defect localization. Improved detection quality over a single-model baseline with reproducible artifact-driven evaluation.",
+    tags: ["Python", "PyTorch", "TorchVision", "Faster R-CNN", "MLOps"],
     link: "#",
   },
   {
-    title: "Project Three",
+    title: "MUSES (GuitarBud)",
     description:
-      "An open-source developer tool that simplifies workflow automation and improves team productivity.",
-    tags: ["TypeScript", "CLI", "GitHub Actions"],
+      "A role-based guitar learning and live performance platform for students and teachers. Includes lesson authoring, premium content workflows, guided practice tools, and synchronized live session control.",
+    tags: ["React", "Vite", "Express.js", "MongoDB", "WebSockets"],
+    link: "#",
+  },
+  {
+    title: "Qrypt Secure Messaging",
+    description:
+      "A full-stack realtime messaging app with BB84-inspired quantum key simulation. Combines friend graph, persistent chats, live presence, and socket-driven updates with a security-focused architecture.",
+    tags: ["React", "Flask", "Socket.IO", "MongoDB", "Qiskit"],
     link: "#",
   },
 ];
