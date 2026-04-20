@@ -95,7 +95,7 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
     }`,
     style: {
       transitionDuration: "500ms",
-      transitionDelay: scrolled ? `${navLinks.length * 60}ms` : "0ms",
+      transitionDelay: scrolled ? `${(navLinks.length + 1) * 60}ms` : "0ms",
     },
   };
 
@@ -118,18 +118,24 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
 
           {/* Nav links slide right with stagger */}
           <div className="flex items-center gap-8">
-            <button
-              onClick={onToggleChat}
-              className={`text-sm transition-colors duration-200 ${
-                chatOpen
-                  ? "text-text-primary"
-                  : "text-text-secondary hover:text-text-primary"
-              }`}
-            >
-              Ask Shadow
-            </button>
+            {(() => {
+              const t = linkTransition(0);
+              return (
+                <button
+                  onClick={onToggleChat}
+                  className={`text-sm ${t.className} ${
+                    chatOpen
+                      ? "text-text-primary"
+                      : "text-text-secondary hover:text-text-primary"
+                  }`}
+                  style={t.style}
+                >
+                  Ask Shadow
+                </button>
+              );
+            })()}
             {navLinks.map((link, index) => {
-              const t = linkTransition(index);
+              const t = linkTransition(index + 1);
               return (
                 <a
                   key={link.href}
@@ -159,7 +165,7 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
             : "md:opacity-0 md:scale-75 md:pointer-events-none"
         }`}
         style={{
-          transitionDelay: scrolled ? `${(navLinks.length + 1) * 60}ms` : "0ms",
+          transitionDelay: scrolled ? `${(navLinks.length + 2) * 60}ms` : "0ms",
         }}
       >
         <div className="relative">
