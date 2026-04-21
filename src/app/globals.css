@@ -2,18 +2,19 @@
 
 /* ===== Color Palettes ===== */
 /* Light: #FAF7F0 #D8D2C2 #B17457 #4A4947 */
-/* Dark:  #222831 #31363F #76ABAE #EEEEEE */
+/* Dark (CURRENT):  #0A1828 #178582 #BFA181 #F5F5F5 */
+/* Dark (PREVIOUS - rollback): #222831 #31363F #76ABAE #EEEEEE */
 
 :root {
   /* Default to dark */
-  --bg-primary: #222831;
-  --bg-secondary: #31363F;
-  --accent: #76ABAE;
-  --text-primary: #EEEEEE;
-  --text-secondary: #a8a8a8;
-  --border-color: #31363F;
-  --surface: #2b3040;
-  --surface-hover: #353b4a;
+  --bg-primary: #0A1828; /* classic blue */
+  --bg-secondary: #081422; /* slightly deeper for layering */
+  --accent: #178582; /* turquoise */
+  --text-primary: #F5F5F5;
+  --text-secondary: #aeb7c2;
+  --border-color: #10263f;
+  --surface: #0d2136;
+  --surface-hover: #12304d;
 }
 
 .light {
@@ -28,14 +29,14 @@
 }
 
 .dark {
-  --bg-primary: #222831;
-  --bg-secondary: #31363F;
-  --accent: #76ABAE;
-  --text-primary: #EEEEEE;
-  --text-secondary: #a8a8a8;
-  --border-color: #31363F;
-  --surface: #2b3040;
-  --surface-hover: #353b4a;
+  --bg-primary: #0A1828;
+  --bg-secondary: #081422;
+  --accent: #178582;
+  --text-primary: #F5F5F5;
+  --text-secondary: #aeb7c2;
+  --border-color: #10263f;
+  --surface: #0d2136;
+  --surface-hover: #12304d;
 }
 
 @theme inline {
