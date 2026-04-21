@@ -1,3 +1,4 @@
+﻿// filepath: d:\Portfolio\src\components\ThemeProvider.tsx
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
@@ -15,19 +16,22 @@ const ThemeContext = createContext<ThemeContextType>({
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "dark";
     const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored) {
-      setTheme(stored);
-    }
+    return stored ?? "dark";
+  });
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setMounted(true), 0);
+    return () => window.clearTimeout(id);
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
+
     const root = document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);

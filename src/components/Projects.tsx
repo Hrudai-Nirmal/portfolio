@@ -1,3 +1,5 @@
+﻿// filepath: d:\Portfolio\src\components\Projects.tsx
+
 const projects = [
   {
     title: "Portfolio Website + Ask Shadow AI",
@@ -37,20 +39,19 @@ export default function Projects() {
           <span className="text-accent font-mono text-sm tracking-widest uppercase">
             02 / Work
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-3 mb-2">
+          <h2 className="text-4xl md:text-5xl font-bold mt-3 mb-2 text-heading">
             My Work
           </h2>
           <div className="w-16 h-1 bg-accent rounded mt-4" />
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <a
-              key={index}
+              key={project.title}
               href={project.link}
               className="group block p-6 rounded-2xl bg-surface border border-border-color hover:border-accent/50 transition-all duration-400 hover:-translate-y-1 hover:shadow-xl hover:shadow-accent/5"
             >
-              {/* Folder icon */}
               <div className="text-accent mb-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -66,12 +67,15 @@ export default function Projects() {
                   <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold mb-3 group-hover:text-accent transition-colors duration-300">
+
+              <h3 className="text-lg font-semibold mb-3 text-heading group-hover:text-heading transition-colors duration-300">
                 {project.title}
               </h3>
+
               <p className="text-text-secondary text-sm leading-relaxed mb-5">
                 {project.description}
               </p>
+
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
                   <span
