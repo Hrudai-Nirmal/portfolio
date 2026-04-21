@@ -9,7 +9,7 @@
   /* Default to dark */
   --bg-primary: #0A1828; /* classic blue */
   --bg-secondary: #081422; /* slightly deeper for layering */
-  --accent: #BFA181; /* gold */
+  --accent: #178582; /* turquoise */
   --text-primary: #F5F5F5;
   --text-secondary: #aeb7c2;
   --border-color: #10263f;
@@ -31,7 +31,7 @@
 .dark {
   --bg-primary: #0A1828;
   --bg-secondary: #081422;
-  --accent: #178582;
+  --accent: #BFA181;
   --text-primary: #F5F5F5;
   --text-secondary: #aeb7c2;
   --border-color: #10263f;
