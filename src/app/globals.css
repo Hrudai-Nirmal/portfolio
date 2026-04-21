@@ -2,20 +2,20 @@
 
 /* ===== Color Palettes ===== */
 /* Light: #FAF7F0 #D8D2C2 #B17457 #4A4947 */
-/* Dark (CURRENT):  #0A1828 #178582 #BFA181 #F5F5F5 */
-/* Dark (PREVIOUS - rollback): #222831 #31363F #76ABAE #EEEEEE */
+/* Dark (CURRENT):  #6E1A37 #AE2448 #72BAA9 #D5E7B5 */
+/* Dark (PREVIOUS - rollback): #0A1828 #178582 #BFA181 #F5F5F5 */
 
 :root {
   /* Default to dark */
-  --bg-primary: #0a1828; /* classic blue */
-  --bg-secondary: #081422; /* slightly deeper for layering */
-  --accent: #178582; /* turquoise */
-  --heading: #bfa181; /* gold */
-  --text-primary: #f5f5f5;
-  --text-secondary: #aeb7c2;
-  --border-color: #10263f;
-  --surface: #0d2136;
-  --surface-hover: #12304d;
+  --bg-primary: #6e1a37; /* classic blue */
+  --bg-secondary: #ae2448; /* slightly deeper for layering */
+  --accent: #72baa9; /* turquoise */
+  --heading: #d5e7b5; /* gold */
+  --text-primary: #d5e7b5;
+  --text-secondary: #b9d6c9;
+  --border-color: #ae2448;
+  --surface: #7f1f40;
+  --surface-hover: #8d2144;
 }
 
 .light {
@@ -31,15 +31,15 @@
 }
 
 .dark {
-  --bg-primary: #0a1828;
-  --bg-secondary: #081422;
-  --accent: #178582;
-  --heading: #bfa181;
-  --text-primary: #f5f5f5;
-  --text-secondary: #aeb7c2;
-  --border-color: #10263f;
-  --surface: #0d2136;
-  --surface-hover: #12304d;
+  --bg-primary: #6e1a37;
+  --bg-secondary: #ae2448;
+  --accent: #72baa9;
+  --heading: #d5e7b5;
+  --text-primary: #d5e7b5;
+  --text-secondary: #b9d6c9;
+  --border-color: #ae2448;
+  --surface: #7f1f40;
+  --surface-hover: #8d2144;
 }
 
 @theme inline {
