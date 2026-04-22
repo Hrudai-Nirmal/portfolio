@@ -2,17 +2,17 @@
 
 /* ===== Color Palettes ===== */
 /* Light: #FAF7F0 #D8D2C2 #B17457 #4A4947 */
-/* Dark (CURRENT):  #222831 #393E46 #00ADB5 #EEEEEE */
-/* Dark (PREVIOUS - rollback): #212121 #323232 #0D7377 #14FFEC */
+/* Dark (CURRENT):  #222831 #393E46 #948979 #DFD0B8 */
+/* Dark (PREVIOUS - rollback): #222831 #393E46 #00ADB5 #EEEEEE */
 
 :root {
   /* Default to dark */
   --bg-primary: #222831; /* classic blue */
   --bg-secondary: #393e46; /* slightly deeper for layering */
-  --accent: #00adb5; /* turquoise */
-  --heading: #eeeeee; /* gold */
-  --text-primary: #eeeeee;
-  --text-secondary: #cfcfcf;
+  --accent: #948979; /* turquoise */
+  --heading: #dfd0b8; /* gold */
+  --text-primary: #dfd0b8;
+  --text-secondary: #b8ab97;
   --border-color: #393e46;
   --surface: #2c3138;
   --surface-hover: #343a43;
@@ -33,10 +33,10 @@
 .dark {
   --bg-primary: #222831;
   --bg-secondary: #393e46;
-  --accent: #00adb5;
-  --heading: #eeeeee;
-  --text-primary: #eeeeee;
-  --text-secondary: #cfcfcf;
+  --accent: #948979;
+  --heading: #dfd0b8;
+  --text-primary: #dfd0b8;
+  --text-secondary: #b8ab97;
   --border-color: #393e46;
   --surface: #2c3138;
   --surface-hover: #343a43;
