@@ -64,10 +64,10 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
     return () => document.removeEventListener("click", handleClick);
   }, [dropdownOpen]);
 
-  // Stagger delays: name slides last (longest travel), links slide right with increasing delay
+  // Stagger delays: links slide right with increasing delay
   // This creates the effect of elements "funneling" into the dropdown button on the right
   const nameTransition = scrolled
-    ? "translate-x-[calc(100vw)] opacity-0"
+    ? "translate-x-6 opacity-0"
     : "translate-x-0 opacity-100";
 
   const linkTransition = (index: number) => {
@@ -101,6 +101,17 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
+      {/* Floating name: always visible on mobile, pinned on scroll for desktop */}
+      <a
+        href="#home"
+        className={`fixed top-4 left-4 md:top-6 md:left-8 z-50 rounded-lg px-3 py-1.5 font-bold tracking-tight text-accent transition-all duration-500 ease-in-out ${
+          scrolled
+            ? "opacity-100 translate-x-0 scale-100 text-lg bg-accent/10 ring-1 ring-accent/40 shadow-[0_0_24px_rgba(34,197,94,0.18)]"
+            : "opacity-100 translate-x-0 scale-100 text-base md:opacity-0 md:-translate-x-3 md:scale-95 md:pointer-events-none"
+        }`}
+      >
+        Hrudai Nirmal
+      </a>
       {/* ===== Full Header (desktop) — elements slide right on scroll ===== */}
       <div
         className={`hidden md:block transition-all duration-700 ease-in-out ${
@@ -108,7 +119,7 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
         }`}
       >
         <div className="max-w-6xl mx-auto px-8 py-5 flex items-center justify-between">
-          {/* Name slides right */}
+          {/* Name fades out so the floating pinned name can take over */}
           <a
             href="#home"
             className={`text-xl font-bold tracking-tight text-accent transition-all duration-700 ease-in-out ${nameTransition}`}
