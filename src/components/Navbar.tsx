@@ -104,9 +104,9 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
       {/* Floating name: always visible on mobile, pinned on scroll for desktop */}
       <a
         href="#home"
-        className={`fixed top-4 left-4 md:top-6 md:left-8 z-50 rounded-lg px-3 py-1.5 font-bold tracking-tight text-accent transition-all duration-500 ease-in-out ${
+        className={`fixed top-4 left-4 md:top-6 md:left-8 z-50 font-bold tracking-tight text-accent transition-all duration-500 ease-in-out ${
           scrolled
-            ? "opacity-100 translate-x-0 scale-100 text-lg bg-accent/10 ring-1 ring-accent/40 shadow-[0_0_24px_rgba(34,197,94,0.18)]"
+            ? "opacity-100 translate-x-0 scale-100 text-[1.6rem] text-accent brightness-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.18)]"
             : "opacity-100 translate-x-0 scale-100 text-base md:opacity-0 md:-translate-x-3 md:scale-95 md:pointer-events-none"
         }`}
       >
