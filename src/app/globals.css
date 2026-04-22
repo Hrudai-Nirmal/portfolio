@@ -2,20 +2,20 @@
 
 /* ===== Color Palettes ===== */
 /* Light: #FAF7F0 #D8D2C2 #B17457 #4A4947 */
-/* Dark (CURRENT):  #212121 #323232 #0D7377 #14FFEC */
-/* Dark (PREVIOUS - rollback): #362222 #171010 #423F3E #2B2B2B */
+/* Dark (CURRENT):  #222831 #393E46 #00ADB5 #EEEEEE */
+/* Dark (PREVIOUS - rollback): #212121 #323232 #0D7377 #14FFEC */
 
 :root {
   /* Default to dark */
-  --bg-primary: #212121; /* classic blue */
-  --bg-secondary: #323232; /* slightly deeper for layering */
-  --accent: #0d7377; /* turquoise */
-  --heading: #14ffec; /* gold */
-  --text-primary: #14ffec;
-  --text-secondary: #8de2da;
-  --border-color: #323232;
-  --surface: #2a2a2a;
-  --surface-hover: #3a3a3a;
+  --bg-primary: #222831; /* classic blue */
+  --bg-secondary: #393e46; /* slightly deeper for layering */
+  --accent: #00adb5; /* turquoise */
+  --heading: #eeeeee; /* gold */
+  --text-primary: #eeeeee;
+  --text-secondary: #cfcfcf;
+  --border-color: #393e46;
+  --surface: #2c3138;
+  --surface-hover: #343a43;
 }
 
 .light {
@@ -31,15 +31,15 @@
 }
 
 .dark {
-  --bg-primary: #212121;
-  --bg-secondary: #323232;
-  --accent: #0d7377;
-  --heading: #14ffec;
-  --text-primary: #14ffec;
-  --text-secondary: #8de2da;
-  --border-color: #323232;
-  --surface: #2a2a2a;
-  --surface-hover: #3a3a3a;
+  --bg-primary: #222831;
+  --bg-secondary: #393e46;
+  --accent: #00adb5;
+  --heading: #eeeeee;
+  --text-primary: #eeeeee;
+  --text-secondary: #cfcfcf;
+  --border-color: #393e46;
+  --surface: #2c3138;
+  --surface-hover: #343a43;
 }
 
 @theme inline {
