@@ -1,45 +1,44 @@
 @import "tailwindcss";
 
 /* ===== Color Palettes ===== */
-/* Light: #FAF7F0 #D8D2C2 #B17457 #4A4947 */
-/* Dark (CURRENT):  #222831 #393E46 #948979 #DFD0B8 */
-/* Dark (PREVIOUS - rollback): #222831 #393E46 #00ADB5 #EEEEEE */
+/* Light: #FFFFFF #F3F4F6 #4B5563 #111111 */
+/* Dark:  #0B0B0B #1A1A1A #D1D5DB #F9FAFB */
 
 :root {
   /* Default to dark */
-  --bg-primary: #222831; /* classic blue */
-  --bg-secondary: #393e46; /* slightly deeper for layering */
-  --accent: #948979; /* turquoise */
-  --heading: #dfd0b8; /* gold */
-  --text-primary: #dfd0b8;
-  --text-secondary: #b8ab97;
-  --border-color: #393e46;
-  --surface: #2c3138;
-  --surface-hover: #343a43;
+  --bg-primary: #0b0b0b;
+  --bg-secondary: #1a1a1a;
+  --accent: #d1d5db;
+  --heading: #f9fafb;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --border-color: #2a2a2a;
+  --surface: #141414;
+  --surface-hover: #1f1f1f;
 }
 
 .light {
-  --bg-primary: #faf7f0;
-  --bg-secondary: #d8d2c2;
-  --accent: #b17457;
-  --heading: #4a4947;
-  --text-primary: #4a4947;
-  --text-secondary: #6e6b68;
-  --border-color: #d8d2c2;
-  --surface: #f0ede5;
-  --surface-hover: #e8e4db;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --accent: #4b5563;
+  --heading: #111111;
+  --text-primary: #111111;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --surface: #f9fafb;
+  --surface-hover: #f3f4f6;
 }
 
 .dark {
-  --bg-primary: #222831;
-  --bg-secondary: #393e46;
-  --accent: #948979;
-  --heading: #dfd0b8;
-  --text-primary: #dfd0b8;
-  --text-secondary: #b8ab97;
-  --border-color: #393e46;
-  --surface: #2c3138;
-  --surface-hover: #343a43;
+  --bg-primary: #0b0b0b;
+  --bg-secondary: #1a1a1a;
+  --accent: #d1d5db;
+  --heading: #f9fafb;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --border-color: #2a2a2a;
+  --surface: #141414;
+  --surface-hover: #1f1f1f;
 }
 
 @theme inline {
