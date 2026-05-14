@@ -95,7 +95,7 @@ const contactLinks = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="snap-section px-6">
+    <section id="contact" className="snap-section px-6 bg-transparent">
       <div className="max-w-4xl mx-auto w-full text-center">
         <div className="mb-12">
           <span className="text-accent font-mono text-sm tracking-widest uppercase">

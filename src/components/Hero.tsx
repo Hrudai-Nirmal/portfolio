@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section id="home" className="snap-section relative overflow-hidden">
+    <section id="home" className="snap-section relative overflow-hidden bg-transparent">
       {/* Subtle background decoration */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-accent rounded-full blur-[120px]" />

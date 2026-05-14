@@ -128,7 +128,7 @@ const reasons = [
 
 export default function WhyWorkWithMe() {
   return (
-    <section className="snap-section px-6">
+    <section className="snap-section px-6 bg-transparent">
       <div className="max-w-5xl mx-auto w-full">
         <div className="mb-12">
           <span className="text-accent font-mono text-sm tracking-widest uppercase">

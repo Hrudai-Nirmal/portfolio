@@ -1,4 +1,4 @@
-﻿// filepath: d:\Portfolio\src\components\Projects.tsx
+// filepath: d:\Portfolio\src\components\Projects.tsx
 
 const projects = [
   {
@@ -33,7 +33,7 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="work" className="snap-section px-6">
+    <section id="work" className="snap-section px-6 bg-transparent">
       <div className="max-w-5xl mx-auto w-full">
         <div className="mb-12">
           <span className="text-accent font-mono text-sm tracking-widest uppercase">

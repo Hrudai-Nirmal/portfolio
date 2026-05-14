@@ -13,7 +13,7 @@ export default function ParticlesBackground({ enabled }: ParticlesBackgroundProp
       className={`fixed inset-0 pointer-events-none transition-opacity duration-300 ${
         enabled ? "opacity-100" : "opacity-0"
       }`}
-      style={{ zIndex: 0 }}
+      style={{ zIndex: 1 }}
     >
       <Particles
         particleColors={["#ffffff"]}
