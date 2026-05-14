@@ -17,7 +17,7 @@ function ThemeToggle() {
   const handlePull = () => {
     setPulling(true);
     toggleDarkRays();
-    window.setTimeout(() => setPulling(false), 380);
+    window.setTimeout(() => setPulling(false), 240);
   };
 
   return (
@@ -55,13 +55,13 @@ function ThemeToggle() {
           className="group flex flex-col items-center text-text-secondary hover:text-text-primary transition-colors duration-200"
         >
           <span
-            className={`w-[2px] h-8 bg-text-secondary/70 rounded-full transition-transform duration-300 ${
-              pulling ? "translate-y-2" : "translate-y-0"
+            className={`w-[2px] h-8 bg-text-secondary/70 rounded-full origin-top transition-[transform,height] duration-200 ease-out ${
+              pulling ? "scale-y-125" : "scale-y-100"
             }`}
           />
           <span
-            className={`w-3 h-3 rounded-full border border-current bg-surface shadow-sm transition-transform duration-300 ${
-              pulling ? "translate-y-2" : "translate-y-0"
+            className={`w-3 h-3 rounded-full border border-current bg-surface shadow-sm transition-transform duration-200 ease-out ${
+              pulling ? "translate-y-2.5" : "translate-y-0"
             }`}
           />
         </button>
