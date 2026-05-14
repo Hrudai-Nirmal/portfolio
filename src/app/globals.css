@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ===== Color Palettes ===== */
-/* Light: #FFFFFF #F3F4F6 #4B5563 #111111 */
+/* Light: #222831 #393E46 #948979 #DFD0B8 */
 /* Dark:  #0B0B0B #1A1A1A #D1D5DB #F9FAFB */
 
 :root {
@@ -18,15 +18,15 @@
 }
 
 .light {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f3f4f6;
-  --accent: #4b5563;
-  --heading: #111111;
-  --text-primary: #111111;
-  --text-secondary: #6b7280;
-  --border-color: #e5e7eb;
-  --surface: #f9fafb;
-  --surface-hover: #f3f4f6;
+  --bg-primary: #dfd0b8;
+  --bg-secondary: #948979;
+  --accent: #393e46;
+  --heading: #222831;
+  --text-primary: #222831;
+  --text-secondary: #393e46;
+  --border-color: #948979;
+  --surface: #dfd0b8;
+  --surface-hover: #948979;
 }
 
 .dark {
