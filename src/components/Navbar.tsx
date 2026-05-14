@@ -52,15 +52,15 @@ function ThemeToggle() {
           onClick={handlePull}
           aria-label="Toggle dark mode rays"
           title={darkRaysEnabled ? "Turn rays off" : "Turn rays on"}
-          className="group flex flex-col items-center text-text-secondary hover:text-text-primary transition-colors duration-200"
+          className="group relative w-4 h-11 text-text-secondary hover:text-text-primary transition-colors duration-200"
         >
           <span
-            className={`w-[2px] h-8 bg-text-secondary/70 rounded-full origin-top transition-[transform,height] duration-200 ease-out ${
+            className={`absolute left-1/2 top-0 -translate-x-1/2 w-[2px] h-[38px] bg-text-secondary/70 rounded-full origin-top z-0 transition-transform duration-200 ease-out ${
               pulling ? "scale-y-125" : "scale-y-100"
             }`}
           />
           <span
-            className={`w-3 h-3 rounded-full border border-current bg-surface shadow-sm transition-transform duration-200 ease-out ${
+            className={`absolute left-1/2 top-8 -translate-x-1/2 w-3 h-3 rounded-full border border-current bg-surface shadow-sm z-10 transition-transform duration-200 ease-out ${
               pulling ? "translate-y-2.5" : "translate-y-0"
             }`}
           />
