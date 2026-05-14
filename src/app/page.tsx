@@ -8,12 +8,9 @@ import Projects from "@/components/Projects";
 import WhyWorkWithMe from "@/components/WhyWorkWithMe";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import ParticlesBackground from "@/components/ParticlesBackground";
-import { useTheme } from "@/components/ThemeProvider";
 
 export default function Home() {
   const [chatOpen, setChatOpen] = useState(false);
-  const { theme } = useTheme();
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -28,7 +25,6 @@ export default function Home() {
 
   return (
     <>
-      {theme === "dark" && <ParticlesBackground enabled />}
       <Navbar
         chatOpen={chatOpen}
         onToggleChat={() => setChatOpen((current) => !current)}
