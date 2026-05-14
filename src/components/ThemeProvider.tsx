@@ -8,11 +8,15 @@ type Theme = "light" | "dark";
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
+  darkRaysEnabled: boolean;
+  toggleDarkRays: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: "dark",
   toggleTheme: () => {},
+  darkRaysEnabled: true,
+  toggleDarkRays: () => {},
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -22,6 +26,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (typeof window === "undefined") return "dark";
     const stored = localStorage.getItem("theme") as Theme | null;
     return stored ?? "dark";
+  });
+  const [darkRaysEnabled, setDarkRaysEnabled] = useState<boolean>(() => {
+    if (typeof window === "undefined") return true;
+    const stored = localStorage.getItem("dark-rays-enabled");
+    return stored === null ? true : stored === "true";
   });
 
   useEffect(() => {
@@ -38,8 +47,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("theme", theme);
   }, [theme, mounted]);
 
+  useEffect(() => {
+    if (!mounted) return;
+    localStorage.setItem("dark-rays-enabled", String(darkRaysEnabled));
+  }, [darkRaysEnabled, mounted]);
+
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
+  const toggleDarkRays = () => {
+    setDarkRaysEnabled((prev) => !prev);
   };
 
   if (!mounted) {
@@ -47,7 +65,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{ theme, toggleTheme, darkRaysEnabled, toggleDarkRays }}
+    >
       {children}
     </ThemeContext.Provider>
   );

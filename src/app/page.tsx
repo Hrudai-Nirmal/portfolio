@@ -8,9 +8,12 @@ import Projects from "@/components/Projects";
 import WhyWorkWithMe from "@/components/WhyWorkWithMe";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import LightRaysBackground from "@/components/LightRaysBackground";
+import { useTheme } from "@/components/ThemeProvider";
 
 export default function Home() {
   const [chatOpen, setChatOpen] = useState(false);
+  const { theme, darkRaysEnabled } = useTheme();
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -25,12 +28,19 @@ export default function Home() {
 
   return (
     <>
+      {theme === "dark" && (
+        <LightRaysBackground
+          enabled={darkRaysEnabled}
+          mouseInfluence={0}
+          raysSpeed={0.2}
+        />
+      )}
       <Navbar
         chatOpen={chatOpen}
         onToggleChat={() => setChatOpen((current) => !current)}
       />
       <div
-        className={`grid min-h-screen transition-[grid-template-columns] duration-500 ease-in-out ${
+        className={`relative z-10 grid min-h-screen transition-[grid-template-columns] duration-500 ease-in-out ${
           chatOpen ? "grid-cols-[5fr_2fr]" : "grid-cols-1"
         }`}
       >
