@@ -11,14 +11,7 @@ const navLinks = [
 ];
 
 function ThemeToggle() {
-  const { theme, toggleTheme, darkRaysEnabled, toggleDarkRays } = useTheme();
-  const [pulling, setPulling] = useState(false);
-
-  const handlePull = () => {
-    setPulling(true);
-    toggleDarkRays();
-    window.setTimeout(() => setPulling(false), 240);
-  };
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="flex items-start gap-3">
@@ -46,26 +39,6 @@ function ThemeToggle() {
         )}
         <span className="text-sm">{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
       </button>
-
-      {theme === "dark" && (
-        <button
-          onClick={handlePull}
-          aria-label="Toggle dark mode rays"
-          title={darkRaysEnabled ? "Turn rays off" : "Turn rays on"}
-          className="group relative w-4 h-11 text-text-secondary hover:text-text-primary transition-colors duration-200"
-        >
-          <span
-            className={`absolute left-1/2 top-0 -translate-x-1/2 w-[2px] h-[38px] bg-text-secondary/70 rounded-full origin-top z-0 transition-transform duration-200 ease-out ${
-              pulling ? "scale-y-125" : "scale-y-100"
-            }`}
-          />
-          <span
-            className={`absolute left-1/2 top-8 -translate-x-1/2 w-3 h-3 rounded-full border border-current bg-surface shadow-sm z-10 transition-transform duration-200 ease-out ${
-              pulling ? "translate-y-2.5" : "translate-y-0"
-            }`}
-          />
-        </button>
-      )}
     </div>
   );
 }
