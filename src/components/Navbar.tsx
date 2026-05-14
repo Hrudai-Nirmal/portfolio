@@ -215,7 +215,7 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
               setDropdownOpen(!dropdownOpen);
             }}
             aria-label="Navigation menu"
-            className="w-12 h-12 rounded-xl bg-surface border border-border-color backdrop-blur-md flex items-center justify-center hover:bg-surface-hover transition-all duration-300 shadow-lg"
+            className="glass w-12 h-12 rounded-xl bg-surface border border-border-color backdrop-blur-md flex items-center justify-center hover:bg-surface-hover transition-all duration-300 shadow-lg"
           >
             <div className="flex flex-col gap-1.5">
               <span
@@ -238,7 +238,7 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
 
           {/* Dropdown panel */}
           <div
-            className={`absolute top-14 right-0 w-56 rounded-xl bg-surface border border-border-color backdrop-blur-md shadow-2xl overflow-hidden transition-all duration-300 origin-top-right ${
+            className={`glass absolute top-14 right-0 w-56 rounded-xl bg-surface border border-border-color backdrop-blur-md shadow-2xl overflow-hidden transition-all duration-300 origin-top-right ${
               dropdownOpen
                 ? "opacity-100 scale-100"
                 : "opacity-0 scale-95 pointer-events-none"

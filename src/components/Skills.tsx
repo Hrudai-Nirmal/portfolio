@@ -146,7 +146,7 @@ export default function WhyWorkWithMe() {
           {reasons.map((reason, index) => (
             <div
               key={index}
-              className="p-6 rounded-2xl bg-surface border border-border-color hover:border-accent/40 transition-all duration-400 group"
+              className="glass p-6 rounded-2xl bg-surface border border-border-color hover:border-accent/40 transition-all duration-400 group"
             >
               <div className="text-accent mb-4 group-hover:scale-110 transition-transform duration-300">
                 {reason.icon}

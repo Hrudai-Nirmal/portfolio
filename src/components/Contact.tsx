@@ -124,7 +124,7 @@ export default function Contact() {
               }
               className="group flex flex-col items-center gap-3"
             >
-              <div className="w-16 h-16 rounded-2xl bg-surface border border-border-color flex items-center justify-center text-text-secondary group-hover:text-accent group-hover:border-accent/50 group-hover:-translate-y-1 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-accent/10">
+              <div className="glass w-16 h-16 rounded-2xl bg-surface border border-border-color flex items-center justify-center text-text-secondary group-hover:text-accent group-hover:border-accent/50 group-hover:-translate-y-1 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-accent/10">
                 {link.icon}
               </div>
               <span className="text-xs text-text-secondary group-hover:text-text-primary transition-colors duration-300">

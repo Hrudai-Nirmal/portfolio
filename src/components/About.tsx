@@ -40,7 +40,7 @@ export default function About() {
 
           {/* Profile image placeholder */}
           <div className="md:col-span-2 flex justify-center">
-            <div className="w-56 h-56 md:w-64 md:h-64 rounded-2xl bg-surface border-2 border-border-color flex items-center justify-center relative group overflow-hidden">
+            <div className="glass w-56 h-56 md:w-64 md:h-64 rounded-2xl bg-surface border-2 border-border-color flex items-center justify-center relative group overflow-hidden">
               <div className="absolute inset-0 bg-accent/10 group-hover:bg-accent/20 transition-colors duration-500" />
               <span className="text-text-secondary text-sm font-mono z-10">
                 Your Photo

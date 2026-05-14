@@ -56,7 +56,7 @@ export default function Home() {
         </div>
 
         {chatOpen && (
-          <aside className="min-w-0 border-l border-border-color bg-surface transition-all duration-500 ease-in-out opacity-100 translate-x-0 pointer-events-auto">
+          <aside className="glass min-w-0 border-l border-border-color bg-surface transition-all duration-500 ease-in-out opacity-100 translate-x-0 pointer-events-auto">
             <div className="sticky top-0 h-screen pt-20">
               <div className="flex h-full flex-col">
                 <div className="flex items-center justify-between border-b border-border-color px-4 py-3">

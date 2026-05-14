@@ -50,7 +50,7 @@ export default function Projects() {
             <a
               key={project.title}
               href={project.link}
-              className="group block p-6 rounded-2xl bg-surface border border-border-color hover:border-accent/50 transition-all duration-400 hover:-translate-y-1 hover:shadow-xl hover:shadow-accent/5"
+              className="group glass block p-6 rounded-2xl bg-surface border border-border-color hover:border-accent/50 transition-all duration-400 hover:-translate-y-1 hover:shadow-xl hover:shadow-accent/5"
             >
               <div className="text-accent mb-5">
                 <svg
