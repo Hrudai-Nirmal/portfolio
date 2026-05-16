@@ -61,7 +61,7 @@ export default function Home() {
                 </div>
                 <div className="h-full w-full min-h-[700px] bg-background">
                   <iframe
-                    src="https://udify.app/chatbot/RplHpzybhni9hA6p"
+                    src="https://udify.app/chatbot/opOcJNW5av6XHYpt"
                     title="Portfolio AI chatbot"
                     className="h-full w-full min-h-[700px]"
                     frameBorder="0"

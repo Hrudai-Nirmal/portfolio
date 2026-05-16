@@ -30,7 +30,7 @@ Architecture and Stack
 
 Chatbot Integration Design
 - Chatbot provider is embedded via an iframe:
-  - URL: https://udify.app/chatbot/RplHpzybhni9hA6p
+- URL: https://udify.app/chatbot/opOcJNW5av6XHYpt
   - Permissions: microphone access enabled for voice-capable interactions.
 - Trigger entry point is labeled "Ask Shadow" in both desktop header and mobile dropdown.
 - Chat open state is managed at page level (`src/app/page.tsx`) and passed to `Navbar` as props (`chatOpen`, `onToggleChat`) to keep behavior centralized.
