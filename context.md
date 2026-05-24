@@ -13,3 +13,6 @@
 - Added `Cortana Personal AI Agent` to the Work section in `src/components/Projects.tsx`.
 - Replaced the About photo placeholder with the provided image in `src/components/About.tsx`.
 - Added image asset to `public/asdSDFs.jpeg`.
+- Added downloadable resume asset at `public/Hrudai_Nirmal_Resume.pdf`.
+- Wired the Contact section `Download CV` button to `href="/Hrudai_Nirmal_Resume.pdf"` in `src/components/Contact.tsx`.
+- Added `Phone` contact action in `src/components/Contact.tsx` that copies `+91 7799934399` to clipboard on click.
