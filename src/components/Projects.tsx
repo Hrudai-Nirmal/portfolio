@@ -23,6 +23,13 @@ const projects = [
     link: "#",
   },
   {
+    title: "Cortana Personal AI Agent",
+    description:
+      "An offline-first desktop AI agent for Windows with an Electron + Python architecture, local Ollama inference, reminders, scheduled autonomous tasks, and privacy-first local memory workflows.",
+    tags: ["Electron", "React", "Python", "Ollama", "SQLite"],
+    link: "#",
+  },
+  {
     title: "Qrypt Secure Messaging",
     description:
       "A full-stack realtime messaging app with BB84-inspired quantum key simulation. Combines friend graph, persistent chats, live presence, and socket-driven updates with a security-focused architecture.",
