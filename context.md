@@ -16,3 +16,6 @@
 - Added downloadable resume asset at `public/Hrudai_Nirmal_Resume.pdf`.
 - Wired the Contact section `Download CV` button to `href="/Hrudai_Nirmal_Resume.pdf"` in `src/components/Contact.tsx`.
 - Added `Phone` contact action in `src/components/Contact.tsx` that copies `+91 7799934399` to clipboard on click.
+
+## Latest Update (2026-05-25)
+- Replaced About section copy in `src/components/About.tsx` with updated full-stack + AI engineering narrative provided by user.

@@ -20,21 +20,23 @@ export default function About() {
               <span className="text-text-primary font-semibold">
                 Hrudai Nirmal
               </span>{" "}
-              — a developer who loves building things for the web. My interest
-              in development started when I first tried customizing a website
-              template — turns out tweaking HTML &amp; CSS taught me a lot about
-              how things work under the hood.
+              — a developer who loves building intelligent, full-stack systems.
+              My interest in engineering started when I first connected a
+              frontend UI to a live database, realizing how satisfying it is to
+              make data move seamlessly across the entire stack.
             </p>
             <p>
-              Fast-forward to today, and I&apos;ve had the privilege of working
-              on a variety of projects spanning web applications, design
-              systems, and more. My main focus these days is building
-              accessible, inclusive products and digital experiences.
+              Fast-forward to today, and I operate at the intersection of
+              robust web applications and production-ready AI pipelines. My
+              main focus these days is designing resilient backend
+              architectures, deploying RAG systems, and engineering the
+              real-time data plumbing that makes machine learning models
+              practical and scalable for real users.
             </p>
             <p>
-              When I&apos;m not coding, you&apos;ll find me exploring new
-              technologies, contributing to open source, or learning something
-              new.
+              When I&apos;m not coding, you&apos;ll find me benchmarking local
+              LLM orchestration, or finding new ways to turn messy, real-world
+              data into automated workflows.
             </p>
           </div>
 
