@@ -2,10 +2,15 @@
 
 const projects = [
   {
-    title: "Portfolio Website + Ask Shadow AI",
-    description:
-      "A responsive Next.js portfolio with an embedded AI assistant in a right-side drawer. Uses a non-blocking 5:2 split layout so visitors can browse sections while asking context-aware questions.",
-    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "AI Chatbot"],
+    title: "Meridian",
+    description: "TODO: Add project description.",
+    tags: [],
+    link: "#",
+  },
+  {
+    title: "Cortex",
+    description: "TODO: Add project description.",
+    tags: [],
     link: "#",
   },
   {
