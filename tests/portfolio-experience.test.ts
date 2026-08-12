@@ -8,6 +8,7 @@ import { test } from "node:test";
 import {
   heroTypingPhrases,
   heroSubheading,
+  getWorkTitleRemainingScrollDistance,
   headerCollapseScrollY,
   lightfallProps,
   menuButtonColors,
@@ -71,10 +72,17 @@ test("header collapse and hamburger colors match the restored interaction", () =
 test("work motion holds horizontal travel until the title phase completes", () => {
   assert.deepEqual(workMotionConfig, {
     strokeDrawDuration: 3.2,
-    strokeScrollDistanceVh: 208,
-    horizontalStartVh: 208,
+    strokeScrollDistanceVh: 104,
+    strokeTriggerStartViewportRatio: 0.86,
     desktopScrub: true,
     cardRevealViewportRatio: 0.36,
     headerExitStepPx: 52,
   });
+
+  const remainingTitleDistance = getWorkTitleRemainingScrollDistance({
+    sectionTop: 720,
+    titleTop: 960,
+    viewportHeight: 720,
+  });
+  assert.ok(Math.abs(remainingTitleDistance - 369.6) < 0.001);
 });

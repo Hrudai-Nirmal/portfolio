@@ -23,6 +23,7 @@ export interface StrokeTextProps {
   strokeWidth?: number;
   drawDuration?: number;
   scrollDistanceVh?: number;
+  scrollStartViewportRatio?: number;
   fillDelay?: number;
   stagger?: number;
   ease?: string;
@@ -53,6 +54,7 @@ const StrokeText = ({
   strokeWidth = 1.4,
   drawDuration = 1.6,
   scrollDistanceVh,
+  scrollStartViewportRatio = 0.86,
   fillDelay = 0.2,
   stagger = 0.05,
   ease = 'power2.out',
@@ -219,9 +221,15 @@ const StrokeText = ({
         const scrollEnd = validScrollDistanceVh
           ? () => `+=${window.innerHeight * (validScrollDistanceVh / 100)}`
           : 'top 34%';
+        const validScrollStartViewportRatio =
+          Number.isFinite(scrollStartViewportRatio) &&
+          scrollStartViewportRatio >= 0 &&
+          scrollStartViewportRatio <= 1
+            ? scrollStartViewportRatio
+            : 0.86;
         scrollTrigger = ScrollTrigger.create({
           trigger: root,
-          start: 'top 86%',
+          start: `top ${validScrollStartViewportRatio * 100}%`,
           end: scrollEnd,
           animation: timeline,
           scrub: true,
@@ -238,7 +246,7 @@ const StrokeText = ({
       timeline?.kill();
       gsap.killTweensOf(targets);
     };
-  }, [box, dash, drawDuration, scrollDistanceVh, fillDelay, stagger, ease, trigger, fillMode, reverse]);
+  }, [box, dash, drawDuration, scrollDistanceVh, scrollStartViewportRatio, fillDelay, stagger, ease, trigger, fillMode, reverse]);
 
   const viewBox = box ? `${box.x} ${box.y} ${box.width} ${box.height}` : `0 ${-fontSize} 600 ${fontSize * 1.3}`;
 

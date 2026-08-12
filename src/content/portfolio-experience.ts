@@ -58,12 +58,47 @@ export const menuButtonColors = {
 
 export const workMotionConfig = {
   strokeDrawDuration: 3.2,
-  strokeScrollDistanceVh: 208,
-  horizontalStartVh: 208,
+  strokeScrollDistanceVh: 104,
+  strokeTriggerStartViewportRatio: 0.86,
   desktopScrub: true,
   cardRevealViewportRatio: 0.36,
   headerExitStepPx: 52,
 } as const;
+
+export interface WorkTitleScrollMeasurements {
+  sectionTop: number;
+  titleTop: number;
+  viewportHeight: number;
+}
+
+/** Calculates the title travel still outstanding when the Work section pins. */
+export function getWorkTitleRemainingScrollDistance({
+  sectionTop,
+  titleTop,
+  viewportHeight,
+}: WorkTitleScrollMeasurements) {
+  if (
+    !Number.isFinite(sectionTop) ||
+    !Number.isFinite(titleTop) ||
+    !Number.isFinite(viewportHeight) ||
+    viewportHeight <= 0
+  ) {
+    throw new RangeError(
+      "Work title scroll measurements must be finite with a positive viewport",
+    );
+  }
+
+  const titleScrollDistance =
+    viewportHeight * (workMotionConfig.strokeScrollDistanceVh / 100);
+  const titleTriggerStart =
+    titleTop -
+    viewportHeight * workMotionConfig.strokeTriggerStartViewportRatio;
+
+  return Math.max(
+    0,
+    titleTriggerStart + titleScrollDistance - sectionTop,
+  );
+}
 
 export const orderedWorkTitles = [
   "Meridian AI Workflow Control Room",

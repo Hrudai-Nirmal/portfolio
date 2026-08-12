@@ -10,6 +10,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StrokeText from "@/components/StrokeText";
 import {
+  getWorkTitleRemainingScrollDistance,
   orderedWorkTitles,
   workMotionConfig,
 } from "@/content/portfolio-experience";
@@ -45,8 +46,19 @@ export default function Projects() {
     const mediaContext = gsap.matchMedia();
 
     mediaContext.add("(min-width: 768px)", () => {
-      const horizontalStartDistance =
-        window.innerHeight * (workMotionConfig.horizontalStartVh / 100);
+      const titleTrigger = track.querySelector<HTMLElement>(
+        "[data-work-title-trigger]",
+      );
+      if (!titleTrigger) {
+        return undefined;
+      }
+
+      const currentScrollY = window.scrollY;
+      const horizontalStartDistance = getWorkTitleRemainingScrollDistance({
+        sectionTop: section.getBoundingClientRect().top + currentScrollY,
+        titleTop: titleTrigger.getBoundingClientRect().top + currentScrollY,
+        viewportHeight: window.innerHeight,
+      });
       const scrollDistance = () =>
         Math.max(0, track.scrollWidth - window.innerWidth);
       const horizontalTravelDistance = () =>
@@ -61,8 +73,6 @@ export default function Projects() {
           pin: true,
           scrub: workMotionConfig.desktopScrub,
           invalidateOnRefresh: true,
-          anticipatePin: 1,
-          fastScrollEnd: true,
         },
       });
 
@@ -154,24 +164,29 @@ export default function Projects() {
             <p className="mb-5 font-mono text-[clamp(0.7rem,0.62vw,0.95rem)] uppercase tracking-[0.28em] text-[#A78BFA]">
               Selected projects · 2024—2026
             </p>
-            <StrokeText
-              text="My Work"
-              strokeColor="#A78BFA"
-              fillColor="#F8FAFC"
-              strokeWidth={1.4}
-              drawDuration={workMotionConfig.strokeDrawDuration}
-              scrollDistanceVh={workMotionConfig.strokeScrollDistanceVh}
-              fillDelay={0.2}
-              stagger={0.05}
-              ease="power2.out"
-              trigger="scroll"
-              fillMode="wipe"
-              fontSize={128}
-              fontWeight={800}
-              letterSpacing={-4}
-              reverse={false}
-              className="max-w-[min(82vw,82rem)]"
-            />
+            <div data-work-title-trigger>
+              <StrokeText
+                text="My Work"
+                strokeColor="#A78BFA"
+                fillColor="#F8FAFC"
+                strokeWidth={1.4}
+                drawDuration={workMotionConfig.strokeDrawDuration}
+                scrollDistanceVh={workMotionConfig.strokeScrollDistanceVh}
+                scrollStartViewportRatio={
+                  workMotionConfig.strokeTriggerStartViewportRatio
+                }
+                fillDelay={0.2}
+                stagger={0.05}
+                ease="power2.out"
+                trigger="scroll"
+                fillMode="wipe"
+                fontSize={128}
+                fontWeight={800}
+                letterSpacing={-4}
+                reverse={false}
+                className="max-w-[min(82vw,82rem)]"
+              />
+            </div>
             <p className="mt-8 max-w-[42rem] text-[clamp(1rem,1vw,1.4rem)] leading-[1.65] text-white/55">
               Product-minded engineering across AI systems, developer tools, and
               full-stack experiences. Keep scrolling to move through the work.

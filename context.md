@@ -36,3 +36,4 @@
 - Corrected the scrubbed `My Work` pacing by doubling its actual scroll range from 52vh to 104vh; timeline duration alone does not control the speed of a scroll-scrubbed animation.
 - Extended the `My Work` scrub range again to 208vh for a deliberately slower draw and fill progression.
 - Kept the pinned Work track stationary for the same 208vh intro phase, so horizontal project movement begins only after the `My Work` stroke sequence has completed; card reveals share that offset and remain reversible.
+- Restored the `My Work` scrub range to 104vh and replaced the fixed horizontal hold with a measured handoff based on the title trigger's remaining travel. Removed ScrollTrigger's velocity-completion heuristic so forward and reverse motion stay directly coupled to scroll without a dead zone after Meridian.
