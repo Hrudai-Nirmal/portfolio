@@ -35,3 +35,4 @@
 - Replaced the nested desktop Work card ScrollTriggers with one reversible pinned GSAP timeline to remove reverse-scroll catch-up around Cortex. Doubled the `My Work` stroke draw duration to 3.2 seconds, added GPU transform hints, centered the header with staggered right-edge exits, expanded fluid type scales for large displays, and blended the hero into Work with an upward-transparent black gradient.
 - Corrected the scrubbed `My Work` pacing by doubling its actual scroll range from 52vh to 104vh; timeline duration alone does not control the speed of a scroll-scrubbed animation.
 - Extended the `My Work` scrub range again to 208vh for a deliberately slower draw and fill progression.
+- Kept the pinned Work track stationary for the same 208vh intro phase, so horizontal project movement begins only after the `My Work` stroke sequence has completed; card reveals share that offset and remain reversible.

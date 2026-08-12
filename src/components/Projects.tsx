@@ -45,9 +45,14 @@ export default function Projects() {
     const mediaContext = gsap.matchMedia();
 
     mediaContext.add("(min-width: 768px)", () => {
-      const scrollDistance = () => Math.max(0, track.scrollWidth - window.innerWidth);
-      const totalScrollDistance = () =>
+      const horizontalStartDistance =
+        window.innerHeight * (workMotionConfig.horizontalStartVh / 100);
+      const scrollDistance = () =>
+        Math.max(0, track.scrollWidth - window.innerWidth);
+      const horizontalTravelDistance = () =>
         scrollDistance() + window.innerWidth * 0.35;
+      const totalScrollDistance = () =>
+        horizontalStartDistance + horizontalTravelDistance();
       const workTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -65,11 +70,11 @@ export default function Projects() {
         track,
         {
           x: () => -scrollDistance(),
-          duration: () => totalScrollDistance(),
+          duration: horizontalTravelDistance(),
           ease: "none",
           force3D: true,
         },
-        0,
+        horizontalStartDistance,
       );
 
       const workCards = Array.from(
@@ -100,7 +105,7 @@ export default function Projects() {
             ease: "none",
             force3D: true,
           },
-          revealStart,
+          horizontalStartDistance + revealStart,
         );
       });
 
