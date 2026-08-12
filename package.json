@@ -6,12 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "kb:sync": "node -r ts-node/register scripts/kb-sync/run-sync.ts",
+    "kb:sync:dry": "node -r ts-node/register scripts/kb-sync/run-sync.ts --dry-run=true",
+    "kb:mcp": "node -r ts-node/register scripts/kb-sync/mcp-server.ts",
+    "test:kb": "node -r ts-node/register --test tests/kb-sync.test.ts",
+    "test:projects": "node -r ts-node/register --test tests/projects.test.ts",
+    "test:experience": "node -r ts-node/register --test tests/portfolio-experience.test.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "gsap": "^3.15.0",
     "next": "16.1.6",
+    "ogl": "^1.0.11",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -22,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

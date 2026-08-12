@@ -1,106 +1,206 @@
-// filepath: d:\Portfolio\src\components\Projects.tsx
+"use client";
 
-const projects = [
-  {
-    title: "Meridian",
-    description: "TODO: Add project description.",
-    tags: [],
-    link: "#",
-  },
-  {
-    title: "Cortex",
-    description: "TODO: Add project description.",
-    tags: [],
-    link: "#",
-  },
-  {
-    title: "Surface Defect Detection Ensemble",
-    description:
-      "A computer vision pipeline using Faster R-CNN with a generalist + specialist routing strategy for defect localization. Improved detection quality over a single-model baseline with reproducible artifact-driven evaluation.",
-    tags: ["Python", "PyTorch", "TorchVision", "Faster R-CNN", "MLOps"],
-    link: "#",
-  },
-  {
-    title: "MUSES (GuitarBud)",
-    description:
-      "A role-based guitar learning and live performance platform for students and teachers. Includes lesson authoring, premium content workflows, guided practice tools, and synchronized live session control.",
-    tags: ["React", "Vite", "Express.js", "MongoDB", "WebSockets"],
-    link: "#",
-  },
-  {
-    title: "Cortana Personal AI Agent",
-    description:
-      "An offline-first desktop AI agent for Windows with an Electron + Python architecture, local Ollama inference, reminders, scheduled autonomous tasks, and privacy-first local memory workflows.",
-    tags: ["Electron", "React", "Python", "Ollama", "SQLite"],
-    link: "#",
-  },
-  {
-    title: "Qrypt Secure Messaging",
-    description:
-      "A full-stack realtime messaging app with BB84-inspired quantum key simulation. Combines friend graph, persistent chats, live presence, and socket-driven updates with a security-focused architecture.",
-    tags: ["React", "Flask", "Socket.IO", "MongoDB", "Qiskit"],
-    link: "#",
-  },
-];
+/**
+ * Scroll-driven work showcase. Desktop scrolling pins a horizontal narrative;
+ * smaller screens receive the same ordered projects as a vertical sequence.
+ */
 
+import { useLayoutEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import StrokeText from "@/components/StrokeText";
+import { orderedWorkTitles } from "@/content/portfolio-experience";
+import { projects } from "@/content/projects";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const projectsByTitle = new Map(
+  projects.map((project) => [project.title, project] as const),
+);
+
+const orderedProjects = orderedWorkTitles.map((projectTitle) => {
+  const project = projectsByTitle.get(projectTitle);
+  if (!project) {
+    throw new Error(`Missing portfolio project: ${projectTitle}`);
+  }
+
+  return project;
+});
+
+/** Renders the scroll-scrubbed portfolio project sequence. */
 export default function Projects() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) {
+      return undefined;
+    }
+
+    const mediaContext = gsap.matchMedia();
+
+    mediaContext.add("(min-width: 768px)", () => {
+      const scrollDistance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const horizontalTween = gsap.to(track, {
+        x: () => -scrollDistance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${scrollDistance() + window.innerWidth * 0.35}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+        },
+      });
+
+      const workCards = Array.from(
+        track.querySelectorAll<HTMLElement>("[data-work-card]"),
+      );
+      workCards.forEach((workCard) => {
+        const cardSurface = workCard.querySelector<HTMLElement>(
+          "[data-work-card-surface]",
+        );
+        if (!cardSurface) {
+          return;
+        }
+
+        gsap.fromTo(
+          cardSurface,
+          { opacity: 0.16, y: 72, scale: 0.93 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: workCard,
+              containerAnimation: horizontalTween,
+              start: "left 88%",
+              end: "left 52%",
+              scrub: true,
+            },
+          },
+        );
+      });
+
+      return () => horizontalTween.kill();
+    });
+
+    mediaContext.add("(max-width: 767px)", () => {
+      const cardSurfaces = Array.from(
+        track.querySelectorAll<HTMLElement>("[data-work-card-surface]"),
+      );
+      cardSurfaces.forEach((cardSurface) => {
+        gsap.fromTo(
+          cardSurface,
+          { opacity: 0.35, y: 48 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: cardSurface,
+              start: "top 90%",
+              end: "top 62%",
+              scrub: true,
+            },
+          },
+        );
+      });
+    });
+
+    ScrollTrigger.refresh();
+    return () => mediaContext.revert();
+  }, []);
+
   return (
-    <section id="work" className="snap-section px-6 bg-transparent">
-      <div className="max-w-5xl mx-auto w-full">
-        <div className="mb-12">
-          <span className="text-accent font-mono text-sm tracking-widest uppercase">
-            02 / Work
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-3 mb-2 text-heading">
-            My Work
-          </h2>
-          <div className="w-16 h-1 bg-accent rounded mt-4" />
+    <section
+      id="work"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-black text-white"
+    >
+      <div
+        ref={trackRef}
+        className="flex flex-col md:h-screen md:w-max md:flex-row"
+      >
+        <div className="flex min-h-[88svh] w-full shrink-0 items-center justify-center px-6 py-24 md:h-screen md:w-screen md:px-16 md:py-0">
+          <div className="w-full max-w-6xl">
+            <p className="mb-5 font-mono text-xs uppercase tracking-[0.28em] text-[#A78BFA]">
+              Selected projects · 2024—2026
+            </p>
+            <StrokeText
+              text="My Work"
+              strokeColor="#A78BFA"
+              fillColor="#F8FAFC"
+              strokeWidth={1.4}
+              drawDuration={1.6}
+              fillDelay={0.2}
+              stagger={0.05}
+              ease="power2.out"
+              trigger="scroll"
+              fillMode="wipe"
+              fontSize={128}
+              fontWeight={800}
+              letterSpacing={-4}
+              reverse={false}
+              className="max-w-5xl"
+            />
+            <p className="mt-8 max-w-xl text-base leading-7 text-white/55 md:text-lg">
+              Product-minded engineering across AI systems, developer tools, and
+              full-stack experiences. Keep scrolling to move through the work.
+            </p>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
-            <a
-              key={project.title}
-              href={project.link}
-              className="group glass block p-6 rounded-2xl bg-surface border border-border-color hover:border-accent/50 transition-all duration-400 hover:-translate-y-1 hover:shadow-xl hover:shadow-accent/5"
+        {orderedProjects.map((project, projectIndex) => (
+          <article
+            key={project.title}
+            data-work-card
+            className="flex min-h-[78svh] w-full shrink-0 items-center px-6 py-12 md:h-screen md:w-[min(78vw,980px)] md:px-10 md:py-20"
+          >
+            <div
+              data-work-card-surface
+              className="relative flex min-h-[34rem] w-full flex-col justify-between overflow-hidden rounded-[2rem] border border-white/12 bg-[#101012] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.45)] md:min-h-[70vh] md:p-12"
             >
-              <div className="text-accent mb-5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="36"
-                  height="36"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-                </svg>
-              </div>
-
-              <h3 className="text-lg font-semibold mb-3 text-heading group-hover:text-heading transition-colors duration-300">
-                {project.title}
-              </h3>
-
-              <p className="text-text-secondary text-sm leading-relaxed mb-5">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs font-mono text-accent bg-accent/10 px-2.5 py-1 rounded-md"
-                  >
-                    {tag}
+              <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[#5227FF]/18 blur-[90px]" />
+              <div className="relative">
+                <div className="flex items-start justify-between gap-6">
+                  <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#A78BFA]">
+                    Project {String(projectIndex + 1).padStart(2, "0")}
+                  </p>
+                  <span className="font-mono text-xs text-white/35">
+                    {String(orderedProjects.length).padStart(2, "0")}
                   </span>
-                ))}
+                </div>
+                <h2 className="mt-16 max-w-[13ch] text-[clamp(2.6rem,5vw,5.75rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-white">
+                  {project.title}
+                </h2>
               </div>
-            </a>
-          ))}
-        </div>
+
+              <div className="relative mt-14 grid gap-8 border-t border-white/10 pt-7 md:grid-cols-[1.35fr_1fr]">
+                <p className="max-w-2xl text-base leading-7 text-white/62 md:text-lg md:leading-8">
+                  {project.description}
+                </p>
+                <ul className="flex flex-wrap content-start gap-2" aria-label="Technologies">
+                  {project.tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="rounded-full border border-white/12 px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-white/58"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </article>
+        ))}
+
+        <div className="hidden h-screen w-[12vw] shrink-0 md:block" aria-hidden="true" />
       </div>
     </section>
   );

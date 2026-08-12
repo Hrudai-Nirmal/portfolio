@@ -1,0 +1,60 @@
+/**
+ * Shared content and animation settings for the portfolio's primary experience.
+ * Keeping these values outside the UI makes the requested order and wording testable.
+ */
+
+export const heroTypingPhrases = [
+  "Hrudai Nirmal",
+  "Agentic AI engineer",
+  "Full stack developer",
+] as const;
+
+export const heroSubheading =
+  "Bangalore based software engineer who blends design, creativity, and a little vibe-coding.";
+
+export const lightfallProps = {
+  colors: ["#A6C8FF", "#5227FF", "#FF9FFC"],
+  backgroundColor: "#000000",
+  speed: 0.5,
+  streakCount: 2,
+  streakWidth: 1,
+  streakLength: 3,
+  glow: 0.2,
+  density: 0.4,
+  twinkle: 1,
+  zoom: 3,
+  backgroundGlow: 0,
+  opacity: 1,
+  mouseInteraction: true,
+  mouseStrength: 0.5,
+  mouseRadius: 1,
+  color1: "#A6C8FF",
+  color2: "#5227FF",
+  color3: "#FF9FFC",
+} as const;
+
+export const menuItems = [
+  { label: "Home", ariaLabel: "Go to the home section", link: "#home" },
+  { label: "Work", ariaLabel: "Explore selected work", link: "#work" },
+  { label: "About", ariaLabel: "Learn more about Hrudai", link: "#about" },
+  { label: "Contact", ariaLabel: "Get in touch", link: "#contact" },
+] as const;
+
+export const socialItems = [
+  { label: "GitHub", link: "https://github.com/Hrudai-Nirmal" },
+  {
+    label: "LinkedIn",
+    link: "https://www.linkedin.com/in/hrudai-nirmal-0b589b1b8",
+  },
+  { label: "Instagram", link: "https://www.instagram.com/hrudianirmal" },
+] as const;
+
+export const orderedWorkTitles = [
+  "Meridian AI Workflow Control Room",
+  "Cortex Enterprise RAG",
+  "Cortana Personal AI Agent",
+  "Surface Defect Detection Ensemble",
+  "MUSES (GuitarBud)",
+  "Qrypt Secure Messaging",
+  "Portfolio Website + Ask Shadow AI",
+] as const;
