@@ -13,6 +13,7 @@ import {
   menuButtonColors,
   menuItems,
   orderedWorkTitles,
+  workMotionConfig,
 } from "../src/content/portfolio-experience.ts";
 
 test("hero typing phrases follow the requested loop order", () => {
@@ -64,5 +65,14 @@ test("header collapse and hamburger colors match the restored interaction", () =
   assert.deepEqual(menuButtonColors, {
     closed: "#ffffff",
     open: "#111111",
+  });
+});
+
+test("work motion uses one responsive timeline and doubles the title draw", () => {
+  assert.deepEqual(workMotionConfig, {
+    strokeDrawDuration: 3.2,
+    desktopScrub: true,
+    cardRevealViewportRatio: 0.36,
+    headerExitStepPx: 52,
   });
 });

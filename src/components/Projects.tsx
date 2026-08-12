@@ -9,7 +9,10 @@ import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StrokeText from "@/components/StrokeText";
-import { orderedWorkTitles } from "@/content/portfolio-experience";
+import {
+  orderedWorkTitles,
+  workMotionConfig,
+} from "@/content/portfolio-experience";
 import { projects } from "@/content/projects";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -43,19 +46,31 @@ export default function Projects() {
 
     mediaContext.add("(min-width: 768px)", () => {
       const scrollDistance = () => Math.max(0, track.scrollWidth - window.innerWidth);
-      const horizontalTween = gsap.to(track, {
-        x: () => -scrollDistance(),
-        ease: "none",
+      const totalScrollDistance = () =>
+        scrollDistance() + window.innerWidth * 0.35;
+      const workTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => `+=${scrollDistance() + window.innerWidth * 0.35}`,
+          end: () => `+=${totalScrollDistance()}`,
           pin: true,
-          scrub: 1,
+          scrub: workMotionConfig.desktopScrub,
           invalidateOnRefresh: true,
           anticipatePin: 1,
+          fastScrollEnd: true,
         },
       });
+
+      workTimeline.to(
+        track,
+        {
+          x: () => -scrollDistance(),
+          duration: () => totalScrollDistance(),
+          ease: "none",
+          force3D: true,
+        },
+        0,
+      );
 
       const workCards = Array.from(
         track.querySelectorAll<HTMLElement>("[data-work-card]"),
@@ -68,26 +83,28 @@ export default function Projects() {
           return;
         }
 
-        gsap.fromTo(
+        const revealStart = Math.max(
+          0,
+          workCard.offsetLeft - window.innerWidth * 0.88,
+        );
+        const revealDistance =
+          window.innerWidth * workMotionConfig.cardRevealViewportRatio;
+
+        workTimeline.fromTo(
           cardSurface,
-          { opacity: 0.16, y: 72, scale: 0.93 },
+          { opacity: 0.2, y: 56 },
           {
             opacity: 1,
             y: 0,
-            scale: 1,
+            duration: revealDistance,
             ease: "none",
-            scrollTrigger: {
-              trigger: workCard,
-              containerAnimation: horizontalTween,
-              start: "left 88%",
-              end: "left 52%",
-              scrub: true,
-            },
+            force3D: true,
           },
+          revealStart,
         );
       });
 
-      return () => horizontalTween.kill();
+      return () => workTimeline.kill();
     });
 
     mediaContext.add("(max-width: 767px)", () => {
@@ -128,8 +145,8 @@ export default function Projects() {
         className="flex flex-col md:h-screen md:w-max md:flex-row"
       >
         <div className="flex min-h-[88svh] w-full shrink-0 items-center justify-center px-6 py-24 md:h-screen md:w-screen md:px-16 md:py-0">
-          <div className="w-full max-w-6xl">
-            <p className="mb-5 font-mono text-xs uppercase tracking-[0.28em] text-[#A78BFA]">
+          <div className="w-full max-w-[min(88vw,96rem)]">
+            <p className="mb-5 font-mono text-[clamp(0.7rem,0.62vw,0.95rem)] uppercase tracking-[0.28em] text-[#A78BFA]">
               Selected projects · 2024—2026
             </p>
             <StrokeText
@@ -137,7 +154,7 @@ export default function Projects() {
               strokeColor="#A78BFA"
               fillColor="#F8FAFC"
               strokeWidth={1.4}
-              drawDuration={1.6}
+              drawDuration={workMotionConfig.strokeDrawDuration}
               fillDelay={0.2}
               stagger={0.05}
               ease="power2.out"
@@ -147,9 +164,9 @@ export default function Projects() {
               fontWeight={800}
               letterSpacing={-4}
               reverse={false}
-              className="max-w-5xl"
+              className="max-w-[min(82vw,82rem)]"
             />
-            <p className="mt-8 max-w-xl text-base leading-7 text-white/55 md:text-lg">
+            <p className="mt-8 max-w-[42rem] text-[clamp(1rem,1vw,1.4rem)] leading-[1.65] text-white/55">
               Product-minded engineering across AI systems, developer tools, and
               full-stack experiences. Keep scrolling to move through the work.
             </p>
@@ -160,11 +177,11 @@ export default function Projects() {
           <article
             key={project.title}
             data-work-card
-            className="flex min-h-[78svh] w-full shrink-0 items-center px-6 py-12 md:h-screen md:w-[min(78vw,980px)] md:px-10 md:py-20"
+            className="flex min-h-[78svh] w-full shrink-0 items-center px-6 py-12 md:h-screen md:w-[min(78vw,76rem)] md:px-[clamp(2.5rem,3vw,5rem)] md:py-[clamp(5rem,8vh,9rem)]"
           >
             <div
               data-work-card-surface
-              className="relative flex min-h-[34rem] w-full flex-col justify-between overflow-hidden rounded-[2rem] border border-white/12 bg-[#101012] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.45)] md:min-h-[70vh] md:p-12"
+              className="relative flex min-h-[34rem] w-full transform-gpu flex-col justify-between overflow-hidden rounded-[clamp(2rem,2vw,3rem)] border border-white/12 bg-[#101012] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.45)] will-change-[transform,opacity] md:min-h-[70vh] md:p-[clamp(3rem,3.5vw,5.5rem)]"
             >
               <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[#5227FF]/18 blur-[90px]" />
               <div className="relative">
@@ -176,13 +193,13 @@ export default function Projects() {
                     {String(orderedProjects.length).padStart(2, "0")}
                   </span>
                 </div>
-                <h2 className="mt-16 max-w-[13ch] text-[clamp(2.6rem,5vw,5.75rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-white">
+                <h2 className="mt-[clamp(4rem,8vh,8rem)] max-w-[13ch] text-[clamp(2.6rem,4.7vw,7rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-white">
                   {project.title}
                 </h2>
               </div>
 
               <div className="relative mt-14 grid gap-8 border-t border-white/10 pt-7 md:grid-cols-[1.35fr_1fr]">
-                <p className="max-w-2xl text-base leading-7 text-white/62 md:text-lg md:leading-8">
+                <p className="max-w-3xl text-[clamp(1rem,1vw,1.4rem)] leading-[1.65] text-white/62">
                   {project.description}
                 </p>
                 <ul className="flex flex-wrap content-start gap-2" aria-label="Technologies">

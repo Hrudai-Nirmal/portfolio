@@ -56,6 +56,13 @@ export const menuButtonColors = {
   open: "#111111",
 } as const;
 
+export const workMotionConfig = {
+  strokeDrawDuration: 3.2,
+  desktopScrub: true,
+  cardRevealViewportRatio: 0.36,
+  headerExitStepPx: 52,
+} as const;
+
 export const orderedWorkTitles = [
   "Meridian AI Workflow Control Room",
   "Cortex Enterprise RAG",

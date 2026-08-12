@@ -38,6 +38,10 @@ export default function Home() {
       <div className="relative z-10 min-h-screen">
         <main>
           <Hero />
+          <div
+            className="pointer-events-none relative z-20 -mt-[clamp(8rem,16vh,14rem)] h-[clamp(8rem,16vh,14rem)] bg-gradient-to-b from-transparent via-black/50 to-black"
+            aria-hidden="true"
+          />
           <Projects />
           <WhyWorkWithMe />
           <About />

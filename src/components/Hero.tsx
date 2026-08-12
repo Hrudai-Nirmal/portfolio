@@ -41,14 +41,14 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.5)_52%,rgba(0,0,0,0.16)_100%)]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent" />
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl">
-        <p className="mb-6 font-mono text-xs font-medium uppercase tracking-[0.28em] text-[#A6C8FF] md:text-sm">
+      <div className="relative z-10 mx-auto w-full max-w-[min(90vw,112rem)]">
+        <p className="mb-[clamp(1.5rem,2vw,2.75rem)] font-mono text-[clamp(0.72rem,0.65vw,1rem)] font-medium uppercase tracking-[0.28em] text-[#A6C8FF]">
           Software engineer · Bangalore
         </p>
-        <h1 className="max-w-[15ch] text-[clamp(3.25rem,8vw,8.5rem)] font-semibold leading-[0.9] tracking-[-0.065em] text-white">
+        <h1 className="max-w-[15ch] text-[clamp(3.25rem,7.6vw,11rem)] font-semibold leading-[0.9] tracking-[-0.065em] text-white">
           <TypingHeadline phrases={heroTypingPhrases} />
         </h1>
-        <p className="mt-8 max-w-2xl text-base leading-7 text-white/72 md:mt-10 md:text-xl md:leading-8">
+        <p className="mt-[clamp(2rem,2.5vw,3.5rem)] max-w-[48rem] text-[clamp(1rem,1.15vw,1.6rem)] leading-[1.6] text-white/72">
           {heroSubheading}
         </p>
 

@@ -12,6 +12,7 @@ import {
   menuButtonColors,
   menuItems,
   socialItems,
+  workMotionConfig,
 } from "@/content/portfolio-experience";
 
 interface NavbarProps {
@@ -37,28 +38,37 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
   return (
     <nav aria-label="Primary navigation">
       <div
-        className={`fixed inset-x-0 top-0 z-50 hidden items-center justify-between px-8 py-6 text-white transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] md:flex lg:px-12 ${
+        className={`fixed left-1/2 top-[clamp(1.25rem,1.5vw,2.5rem)] z-50 hidden max-w-[min(92vw,100rem)] -translate-x-1/2 overflow-hidden text-white [mask-image:linear-gradient(to_right,transparent_0,black_5%,black_88%,transparent_100%)] md:block ${
           isHeaderCollapsed || isMenuOpen
-            ? "pointer-events-none -translate-y-4 opacity-0"
-            : "translate-y-0 opacity-100"
+            ? "pointer-events-none"
+            : "pointer-events-auto"
         }`}
         aria-hidden={isHeaderCollapsed || isMenuOpen}
       >
-        <a
-          href="#home"
-          className="text-sm font-semibold tracking-[-0.02em] text-white"
-          tabIndex={isHeaderCollapsed || isMenuOpen ? -1 : undefined}
-        >
-          Hrudai Nirmal
-        </a>
-        <div className="flex items-center gap-8">
+        <div className="flex items-center justify-center gap-[clamp(1.4rem,2.2vw,3.75rem)] whitespace-nowrap px-[clamp(2rem,4vw,6rem)]">
+          <a
+            href="#home"
+            className="text-[clamp(0.8rem,0.72vw,1.05rem)] font-semibold tracking-[-0.02em] text-white transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+            tabIndex={isHeaderCollapsed || isMenuOpen ? -1 : undefined}
+            style={{
+              opacity: isHeaderCollapsed || isMenuOpen ? 0 : 1,
+              transform: `translateX(${isHeaderCollapsed || isMenuOpen ? workMotionConfig.headerExitStepPx : 0}px)`,
+            }}
+          >
+            Hrudai Nirmal
+          </a>
           <button
             type="button"
             onClick={onToggleChat}
             aria-expanded={chatOpen}
             aria-controls="shadow-chat-panel"
             tabIndex={isHeaderCollapsed || isMenuOpen ? -1 : undefined}
-            className="text-sm text-white/65 transition-colors duration-200 hover:text-white"
+            className="text-[clamp(0.8rem,0.72vw,1.05rem)] text-white/65 transition-[transform,opacity,color] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:text-white"
+            style={{
+              opacity: isHeaderCollapsed || isMenuOpen ? 0 : 1,
+              transform: `translateX(${isHeaderCollapsed || isMenuOpen ? workMotionConfig.headerExitStepPx * 2 : 0}px)`,
+              transitionDelay: "45ms",
+            }}
           >
             {chatOpen ? "Close Shadow" : "Ask Shadow"}
           </button>
@@ -68,10 +78,12 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
               href={menuItem.link}
               aria-label={menuItem.ariaLabel}
               tabIndex={isHeaderCollapsed || isMenuOpen ? -1 : undefined}
-              className={`text-sm text-white/65 transition-all duration-500 hover:text-white ${
-                isHeaderCollapsed ? "translate-x-10 opacity-0" : "translate-x-0 opacity-100"
-              }`}
-              style={{ transitionDelay: `${menuItemIndex * 45}ms` }}
+              className="text-[clamp(0.8rem,0.72vw,1.05rem)] text-white/65 transition-[transform,opacity,color] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:text-white"
+              style={{
+                opacity: isHeaderCollapsed || isMenuOpen ? 0 : 1,
+                transform: `translateX(${isHeaderCollapsed || isMenuOpen ? workMotionConfig.headerExitStepPx * (menuItemIndex + 3) : 0}px)`,
+                transitionDelay: `${(menuItemIndex + 2) * 45}ms`,
+              }}
             >
               {menuItem.label}
             </a>
