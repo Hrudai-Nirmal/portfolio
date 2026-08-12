@@ -8,7 +8,9 @@ import { test } from "node:test";
 import {
   heroTypingPhrases,
   heroSubheading,
+  headerCollapseScrollY,
   lightfallProps,
+  menuButtonColors,
   menuItems,
   orderedWorkTitles,
 } from "../src/content/portfolio-experience.ts";
@@ -55,4 +57,12 @@ test("menu links remain section-based and work begins with the requested project
     "Cortex Enterprise RAG",
     "Cortana Personal AI Agent",
   ]);
+});
+
+test("header collapse and hamburger colors match the restored interaction", () => {
+  assert.equal(headerCollapseScrollY, 64);
+  assert.deepEqual(menuButtonColors, {
+    closed: "#ffffff",
+    open: "#111111",
+  });
 });

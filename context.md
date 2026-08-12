@@ -31,3 +31,4 @@
 - Replaced the legacy dropdown navigation with the React Bits `StaggeredMenu` animation while keeping Ask Shadow accessible as a separate control.
 - Moved Work directly after the hero and made it a GSAP-pinned horizontal story on desktop, with reversible scroll-scrubbed `StrokeText` and project entrances. The first three projects are Meridian, Cortex, and Cortana; mobile uses the same order in a vertical flow.
 - Kept About later in the page so its existing personal context remains available without interrupting the hero-to-work transition.
+- Restored the desktop header-to-menu transition: the full header is visible at the top, collapses after 64px of scroll, and reveals the supplied SVG hamburger animation. The button is white while closed and dark when the staggered menu is open; mobile keeps the compact control visible.

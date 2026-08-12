@@ -49,6 +49,13 @@ export const socialItems = [
   { label: "Instagram", link: "https://www.instagram.com/hrudianirmal" },
 ] as const;
 
+export const headerCollapseScrollY = 64;
+
+export const menuButtonColors = {
+  closed: "#ffffff",
+  open: "#111111",
+} as const;
+
 export const orderedWorkTitles = [
   "Meridian AI Workflow Control Room",
   "Cortex Enterprise RAG",
