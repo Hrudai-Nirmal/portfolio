@@ -58,6 +58,7 @@ export const menuButtonColors = {
 
 export const workMotionConfig = {
   strokeDrawDuration: 3.2,
+  strokeScrollDistanceVh: 104,
   desktopScrub: true,
   cardRevealViewportRatio: 0.36,
   headerExitStepPx: 52,

@@ -22,6 +22,7 @@ export interface StrokeTextProps {
   fillColor?: string;
   strokeWidth?: number;
   drawDuration?: number;
+  scrollDistanceVh?: number;
   fillDelay?: number;
   stagger?: number;
   ease?: string;
@@ -51,6 +52,7 @@ const StrokeText = ({
   fillColor = '#F8FAFC',
   strokeWidth = 1.4,
   drawDuration = 1.6,
+  scrollDistanceVh,
   fillDelay = 0.2,
   stagger = 0.05,
   ease = 'power2.out',
@@ -208,12 +210,22 @@ const StrokeText = ({
     } else {
       timeline = build();
       if (trigger === 'scroll') {
+        const validScrollDistanceVh =
+          typeof scrollDistanceVh === 'number' &&
+          Number.isFinite(scrollDistanceVh) &&
+          scrollDistanceVh > 0
+            ? scrollDistanceVh
+            : undefined;
+        const scrollEnd = validScrollDistanceVh
+          ? () => `+=${window.innerHeight * (validScrollDistanceVh / 100)}`
+          : 'top 34%';
         scrollTrigger = ScrollTrigger.create({
           trigger: root,
           start: 'top 86%',
-          end: 'top 34%',
+          end: scrollEnd,
           animation: timeline,
-          scrub: true
+          scrub: true,
+          invalidateOnRefresh: Boolean(validScrollDistanceVh)
         });
       } else {
         timeline.play(0);
@@ -226,7 +238,7 @@ const StrokeText = ({
       timeline?.kill();
       gsap.killTweensOf(targets);
     };
-  }, [box, dash, drawDuration, fillDelay, stagger, ease, trigger, fillMode, reverse]);
+  }, [box, dash, drawDuration, scrollDistanceVh, fillDelay, stagger, ease, trigger, fillMode, reverse]);
 
   const viewBox = box ? `${box.x} ${box.y} ${box.width} ${box.height}` : `0 ${-fontSize} 600 ${fontSize * 1.3}`;
 

@@ -68,9 +68,10 @@ test("header collapse and hamburger colors match the restored interaction", () =
   });
 });
 
-test("work motion uses one responsive timeline and doubles the title draw", () => {
+test("work motion uses one timeline and doubles the title scroll travel", () => {
   assert.deepEqual(workMotionConfig, {
     strokeDrawDuration: 3.2,
+    strokeScrollDistanceVh: 104,
     desktopScrub: true,
     cardRevealViewportRatio: 0.36,
     headerExitStepPx: 52,
