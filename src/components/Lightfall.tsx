@@ -7,6 +7,10 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
+import {
+  getLightfallRenderDpr,
+  shouldRenderLightfallFrame,
+} from '@/lib/lightfall-performance';
 
 export interface LightfallProps {
   className?: string;
@@ -234,13 +238,15 @@ const Lightfall: React.FC<LightfallProps> = ({
   const rendererRef = useRef<Renderer | null>(null);
   const mouseTargetRef = useRef<[number, number]>([0, 0]);
   const lastTimeRef = useRef(0);
+  const isInViewportRef = useRef(true);
+  const isDocumentVisibleRef = useRef(true);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const renderer = new Renderer({
-      dpr: dpr ?? (typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1),
+      dpr: getLightfallRenderDpr(window.devicePixelRatio || 1, dpr),
       alpha: true,
       antialias: true
     });
@@ -306,6 +312,19 @@ const Lightfall: React.FC<LightfallProps> = ({
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(container);
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isInViewportRef.current = entry.isIntersecting;
+      },
+      { rootMargin: '120px 0px' },
+    );
+    visibilityObserver.observe(container);
+
+    const onVisibilityChange = () => {
+      isDocumentVisibleRef.current = document.visibilityState === 'visible';
+    };
+    onVisibilityChange();
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     const onPointerMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -338,7 +357,12 @@ const Lightfall: React.FC<LightfallProps> = ({
       } else {
         lastTimeRef.current = t;
       }
-      if (!paused && programRef.current && meshRef.current) {
+      const shouldRender = shouldRenderLightfallFrame({
+        isPaused: paused,
+        isInViewport: isInViewportRef.current,
+        isDocumentVisible: isDocumentVisibleRef.current,
+      });
+      if (shouldRender && programRef.current && meshRef.current) {
         try {
           renderer.render({ scene: meshRef.current });
         } catch (e) {
@@ -352,6 +376,8 @@ const Lightfall: React.FC<LightfallProps> = ({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       if (mouseInteraction) canvas.removeEventListener('pointermove', onPointerMove);
       ro.disconnect();
+      visibilityObserver.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       if (canvas.parentElement === container) {
         container.removeChild(canvas);
       }

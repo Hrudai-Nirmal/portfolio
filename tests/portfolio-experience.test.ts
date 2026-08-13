@@ -16,6 +16,10 @@ import {
   orderedWorkTitles,
   workMotionConfig,
 } from "../src/content/portfolio-experience.ts";
+import {
+  getLightfallRenderDpr,
+  shouldRenderLightfallFrame,
+} from "../src/lib/lightfall-performance.ts";
 
 test("hero typing phrases follow the requested loop order", () => {
   assert.deepEqual(heroTypingPhrases, [
@@ -85,4 +89,26 @@ test("work motion holds horizontal travel until the title phase completes", () =
     viewportHeight: 720,
   });
   assert.ok(Math.abs(remainingTitleDistance - 369.6) < 0.001);
+});
+
+test("Lightfall limits GPU cost and renders only while visible", () => {
+  assert.equal(getLightfallRenderDpr(2), 1.5);
+  assert.equal(getLightfallRenderDpr(1), 1);
+  assert.equal(getLightfallRenderDpr(2, 1.25), 1.25);
+  assert.equal(
+    shouldRenderLightfallFrame({
+      isPaused: false,
+      isInViewport: true,
+      isDocumentVisible: true,
+    }),
+    true,
+  );
+  assert.equal(
+    shouldRenderLightfallFrame({
+      isPaused: false,
+      isInViewport: false,
+      isDocumentVisible: true,
+    }),
+    false,
+  );
 });
