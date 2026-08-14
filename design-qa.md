@@ -15,11 +15,13 @@
 - CSS viewport: 1280 × 720 at 1× density
 - Browser screenshots: `/tmp/mission-control-radar-header.png` and `/tmp/mission-control-radar-menu.png` (1274 × 717; browser scrollbar excluded)
 - Latest retro header and chat screenshots: `/tmp/retro-console-header.png`, `/tmp/shadow-custom-chat.png`, and `/tmp/shadow-custom-chat-mobile.png`
+- Icon-only animated-radar screenshot: `/tmp/icon-only-animated-radar-header.png`
 - Rendered radar module bounds: 213.18 × 108.43 CSS pixels at x 233.80, y 8.84
 - Compared state: hero at the top, menu closed, Shadow chat closed
 - Normalization: reference focus crop resized to 842 × 140 and centered above the implementation's 1274 × 150 top region, matching the user-requested 70% rail scale
 - Reference and final-state comparison: `/tmp/mission-control-radar-comparison.png`
 - Latest three-state comparison: `/tmp/retro-console-shadow-comparison.png` (selected header reference, closed implementation, and active custom conversation)
+- Label-removal comparison: `/tmp/icon-only-radar-comparison.png` (previous labeled keys above, icon-only keys and animated radar below)
 - Compact screenshot: `/tmp/mission-control-svg-compact.png` at a 390 × 844 CSS viewport
 - A separate micro-crop was unnecessary because the combined comparison keeps the radar route, navigation labels, Shadow display, status copy, screws, and thrust control legible
 
@@ -31,7 +33,9 @@
 - Thrust changes only the rate of the existing Lightfall field. Streak length, glow, geometry, and hero contrast remain unchanged as requested.
 - The handoff keeps the same endpoints and trigger but now completes in 0.94 seconds, with a restrained sine dip, exponential header launch, and exponential menu drop.
 - The left module keeps its original footprint and hardware but replaces personal copy with a monochrome-green CRT route display. The dotted trajectory, orbital rings, destination reticle, segmented progress bar, scanline texture, and phosphor glow remain legible at the rail's 70% scale.
-- The four navigation keys now read as individual serviced spacecraft controls rather than generic app tiles: each has a chamfered inset face, numbered NAV plate, corner hardware, dashed seam, tactile hover/press response, and its existing status lamp.
+- The four navigation keys now read as individual serviced spacecraft controls rather than generic app tiles: each has a chamfered inset face, inset top hardware plate, corner hardware, dashed seam, tactile hover/press response, and its existing status lamp.
+- The final navigation pass removes every visible NAV/KEY and HOME/WORK/ABOUT/CONTACT label from the four key faces. Icons remain at their prior coordinates, while semantic link labels and SVG titles preserve keyboard and screen-reader meaning.
+- A luminous dotted overlay follows the decorative map's existing route from x 114/y 127 to the planet target at x 354/y 108. Browser sampling confirmed dash offset changed from -14.12px to -29.18px over 420ms, while the origin beacon changed scale and opacity independently.
 - Shadow Comms uses the same cream, charcoal, red, yellow, purple, blue, and green hardware palette as the rail. Its red title plate, secured-channel strip, rounded speech bubbles, thick outlines, and generated crewmate/robot portraits deliver the requested playful social-deduction-game chat energy without using franchise branding or assets.
 - At 1280 × 720, the panel occupies x 810–1250, y 144–623.98, and exactly 479.98 pixels of height (two-thirds of the viewport). The rail ends above the panel, so the chat is not overlapped.
 - At 390 × 844, the panel is 366.59 × 562.66 pixels, stays within the viewport, and wraps quick prompts rather than creating horizontal overflow.
@@ -62,6 +66,9 @@
 17. **P2 — missing chat identity:** Added distinct generated pilot and Shadow robot portraits to every message row and the comms title plate.
 18. **P2 — mobile quick prompts overflowed:** Replaced the horizontal suggestion scroller with wrapped controls; the document and panel widths now remain below the 390-pixel viewport.
 19. **Post-fix evidence:** `/tmp/retro-console-shadow-comparison.png` shows the selected header reference, closed retro-console implementation, and a completed custom Shadow exchange.
+20. **Requested icon-only key faces:** Removed both layers of visible button copy while retaining the icons in their original positions, the retro hardware, hover lamps, live destinations, and accessible names.
+21. **Requested safe radar motion:** Added a pointer-inert animated route overlay and pulsing origin beacon entirely inside the existing radar viewport. The raster map, module bounds, header layout, scroll handoff, and thrust control remain unchanged.
+22. **Post-fix evidence:** `/tmp/icon-only-radar-comparison.png` shows the labeled and icon-only header states at the same 1280 × 720 viewport.
 
 ## Functional verification
 
@@ -83,6 +90,7 @@
 - Custom chat verification: the old iframe is absent, the floating dialog opens and closes from both Shadow triggers, the quick mission prompt posts a user message, the server returns Meridian/Cortex/Cortana in local mode, and the status changes from UPLINK STANDBY to LOCAL NAV MODE.
 - The `/api/shadow` route validates empty and oversized input, keeps the optional Dify chat key server-side, carries conversation IDs forward, surfaces upstream errors, and uses an explicit local-mode response when unconfigured.
 - TDD evidence for this pass: retro-key structure, custom-chat dimensions and wiring, local query validation, mission-intent routing, and mobile wrapping assertions each failed before their corresponding implementation and passed afterward.
+- Latest TDD and browser evidence: icon-only source assertions and radar motion/reduced-motion assertions failed before implementation, then passed; live computed styles confirmed both radar animations advance without console errors.
 
 ## Follow-up polish
 

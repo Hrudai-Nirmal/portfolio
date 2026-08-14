@@ -128,16 +128,36 @@ test("spaceship header applies the requested compact scale and key-light hover s
   assert.equal(spaceshipHeaderSource.includes('event.key === "ArrowRight"'), true);
 });
 
-test("spaceship navigation keys use tactile retro console detailing", () => {
+test("spaceship navigation keys keep retro hardware with icons only", () => {
   const spaceshipHeaderSource = readFileSync(
     new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),
     "utf8",
   );
 
-  assert.equal(spaceshipHeaderSource.includes("data-console-key"), true);
-  assert.equal(spaceshipHeaderSource.includes("NAV 0"), true);
-  assert.equal(spaceshipHeaderSource.includes("KEY"), true);
+  assert.equal(spaceshipHeaderSource.includes("data-console-key"), false);
+  assert.equal(spaceshipHeaderSource.includes("NAV 0"), false);
+  assert.equal(spaceshipHeaderSource.includes("menuItem.label.toUpperCase()"), false);
   assert.equal(spaceshipHeaderSource.includes("strokeDasharray=\"4 5\""), true);
+});
+
+test("destination radar safely animates route progress and current position", () => {
+  const spaceshipHeaderSource = readFileSync(
+    new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),
+    "utf8",
+  );
+  const globalStylesSource = readFileSync(
+    new URL("../src/app/globals.css", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(spaceshipHeaderSource.includes("radar-route-progress"), true);
+  assert.equal(spaceshipHeaderSource.includes("radar-current-beacon"), true);
+  assert.equal(globalStylesSource.includes("@keyframes radarRouteFlow"), true);
+  assert.equal(globalStylesSource.includes("@keyframes radarBeaconPulse"), true);
+  assert.match(
+    globalStylesSource,
+    /prefers-reduced-motion: reduce[\s\S]*radar-route-progress[\s\S]*animation: none/,
+  );
 });
 
 test("spaceship header replaces identity copy with a compact destination radar", () => {

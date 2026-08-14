@@ -151,6 +151,28 @@ export default function SpaceshipHeader({
             height="120"
             preserveAspectRatio="xMidYMid slice"
           />
+          <g aria-hidden="true" pointerEvents="none">
+            <path
+              d="M 114 127 C 184 121 246 80 354 108"
+              fill="none"
+              stroke="#80da22"
+              strokeWidth="7"
+              strokeLinecap="round"
+              opacity="0.12"
+            />
+            <path
+              d="M 114 127 C 184 121 246 80 354 108"
+              fill="none"
+              stroke="#b7ff4f"
+              strokeWidth="3"
+              strokeLinecap="round"
+              className="radar-route-progress [filter:drop-shadow(0_0_5px_#80da22)]"
+            />
+            <g className="radar-current-beacon [filter:drop-shadow(0_0_7px_#b7ff4f)]">
+              <circle cx="114" cy="127" r="10" fill="none" stroke="#b7ff4f" strokeWidth="2" />
+              <circle cx="114" cy="127" r="4" fill="#d9ff9d" />
+            </g>
+          </g>
           <rect x="63" y="61" width="347" height="108" rx="10" fill="none" stroke="#80da22" strokeOpacity="0.35" strokeWidth="2" />
           <rect x="196" y="26" width="98" height="24" rx="7" fill="#1f2025" stroke="#08080b" strokeWidth="7" />
           <rect x="215" y="33" width="60" height="8" rx="4" fill="#80da22" className="[filter:drop-shadow(0_0_7px_#80da22)]" />
@@ -178,22 +200,16 @@ export default function SpaceshipHeader({
           {menuItems.map((menuItem, menuItemIndex) => {
             const keyX = keyPositions[menuItemIndex];
             return (
-              <a key={menuItem.link} href={menuItem.link} aria-label={menuItem.ariaLabel} data-console-key={`NAV 0${menuItemIndex + 1}`} className="group pointer-events-auto text-[#f2f0ea] outline-none">
+              <a key={menuItem.link} href={menuItem.link} aria-label={menuItem.ariaLabel} className="group pointer-events-auto text-[#f2f0ea] outline-none">
                 <title>{menuItem.label}</title>
                 <rect x={keyX} y="57" width="127" height="119" rx="14" fill="#34353d" stroke="#070709" strokeWidth="7" className="group-focus-visible:stroke-[#60a5fa]" />
                 <path d={`M ${keyX + 10} 70 L ${keyX + 20} 63 H ${keyX + 107} L ${keyX + 117} 70 V 151 L ${keyX + 108} 158 H ${keyX + 19} L ${keyX + 10} 151 Z`} fill="#17181d" stroke="#08080b" strokeWidth="5" className="transition-[fill,transform] duration-200 group-hover:fill-[#f2ecdf] group-active:[transform:translateY(2px)]" />
                 <rect x={keyX + 18} y="68" width="91" height="18" rx="5" fill="#08090c" stroke="#6b6d76" strokeWidth="2" />
-                <text x={keyX + 63.5} y="80" textAnchor="middle" fill="#f2b90b" fontFamily="var(--font-geist-mono), monospace" fontSize="9" fontWeight="900" letterSpacing="1.4">
-                  {`NAV 0${menuItemIndex + 1} · KEY`}
-                </text>
                 <rect x={keyX + 16} y="91" width="95" height="58" rx="8" fill="none" stroke="#646670" strokeWidth="2" strokeDasharray="4 5" className="transition-colors group-hover:stroke-[#777168]" />
                 <circle cx={keyX + 17} cy="67" r="3.5" fill="#aeb0b4" stroke="#08080b" strokeWidth="2" />
                 <circle cx={keyX + 110} cy="67" r="3.5" fill="#aeb0b4" stroke="#08080b" strokeWidth="2" />
                 <g className="transition-colors duration-200 group-hover:text-[#111216] group-active:[transform:translateY(2px)]">
                   <NavigationGlyph index={menuItemIndex} x={keyX} />
-                  <text x={keyX + 63.5} y="140" textAnchor="middle" fill="currentColor" fontFamily="var(--font-geist-mono), monospace" fontSize="16" fontWeight="900">
-                    {menuItem.label.toUpperCase()}
-                  </text>
                 </g>
                 <rect x={keyX + 34} y="158" width="59" height="7" rx="3.5" fill="#238dff" className="transition-[fill,filter] duration-200 [filter:drop-shadow(0_0_5px_#238dff)] group-hover:fill-[#f0b90b] group-hover:[filter:drop-shadow(0_0_5px_#f0b90b)]" />
               </a>
