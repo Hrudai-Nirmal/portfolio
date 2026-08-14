@@ -96,6 +96,30 @@ test("spaceship header is composed as interactive SVG instead of a full-header i
   assert.equal(spaceshipHeaderSource.includes("menuItems.map"), true);
 });
 
+test("spaceship header applies the requested compact scale and key-light hover state", () => {
+  const spaceshipHeaderSource = readFileSync(
+    new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(spaceshipHeaderSource.includes("scale-[0.7]"), true);
+  assert.equal(spaceshipHeaderSource.includes("group-hover:fill-[#f0b90b]"), true);
+  assert.equal(spaceshipHeaderSource.includes('stroke="#f0b90b"'), false);
+});
+
+test("compact menu stays right-aligned above the Shadow control", () => {
+  const staggeredMenuSource = readFileSync(
+    new URL("../src/components/StaggeredMenu.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(
+    staggeredMenuSource,
+    /max-width: 1279px[\s\S]*justify-content: flex-end;/,
+  );
+  assert.match(staggeredMenuSource, /max-width: 1279px[\s\S]*z-index: 60;/);
+});
+
 test("navbar keeps the mission-control rail fixed instead of collapsing on scroll", () => {
   const navbarSource = readFileSync(
     new URL("../src/components/Navbar.tsx", import.meta.url),

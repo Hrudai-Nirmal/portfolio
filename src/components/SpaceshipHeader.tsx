@@ -74,7 +74,7 @@ export default function SpaceshipHeader({
   };
 
   return (
-    <div className="spaceship-header pointer-events-none fixed left-1/2 top-3 z-30 hidden w-[min(94vw,100rem)] -translate-x-1/2 xl:block">
+    <div className="spaceship-header pointer-events-none fixed left-1/2 top-3 z-30 hidden w-[min(94vw,100rem)] origin-top -translate-x-1/2 scale-[0.7] xl:block">
       <svg
         viewBox="0 0 1600 240"
         role="img"
@@ -96,7 +96,6 @@ export default function SpaceshipHeader({
           <rect x="196" y="26" width="98" height="24" rx="7" fill="#1f2025" stroke="#08080b" strokeWidth="7" />
           <rect x="215" y="33" width="60" height="8" rx="4" fill="#35a8ff" className="[filter:drop-shadow(0_0_7px_#35a8ff)]" />
           <path d="M 314 43 H 362 L 371 25 H 323 Z" fill="#d83420" stroke="#08080b" strokeWidth="6" />
-          <path d="M 327 37 L 336 27 M 344 39 L 353 29" stroke="#f0b90b" strokeWidth="6" />
           <path d="M 120 36 V 8" stroke="#6f7075" strokeWidth="8" />
           <circle cx="120" cy="7" r="13" fill="#b64cff" stroke="#08080b" strokeWidth="6" />
           <circle cx="115" cy="2" r="4" fill="#efb3ff" />
@@ -132,7 +131,7 @@ export default function SpaceshipHeader({
                     {menuItem.label.toUpperCase()}
                   </text>
                 </g>
-                <rect x={keyX + 34} y="158" width="59" height="7" rx="3.5" fill="#238dff" className="[filter:drop-shadow(0_0_5px_#238dff)]" />
+                <rect x={keyX + 34} y="158" width="59" height="7" rx="3.5" fill="#238dff" className="transition-[fill,filter] duration-200 [filter:drop-shadow(0_0_5px_#238dff)] group-hover:fill-[#f0b90b] group-hover:[filter:drop-shadow(0_0_5px_#f0b90b)]" />
               </a>
             );
           })}

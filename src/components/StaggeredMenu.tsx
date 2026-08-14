@@ -285,7 +285,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
   return (
     <div
-      className={`sm-scope pointer-events-none z-40 ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden' : 'w-full h-full'}`}
+      className={`sm-scope pointer-events-none z-[60] ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden' : 'w-full h-full'}`}
     >
       <div
         className={
@@ -490,7 +490,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     width: min(94vw, 100rem);
     aspect-ratio: 1600 / 240;
     padding: 0;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(0.7);
+    transform-origin: top center;
   }
   .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle {
     position: absolute;
@@ -533,7 +534,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   }
 }
 @media (max-width: 1279px) {
-  .sm-scope .staggered-menu-wrapper[data-control-board] .staggered-menu-header { top: 1.25rem; padding: 0 1.25rem; }
+  .sm-scope .staggered-menu-wrapper[data-control-board] .staggered-menu-header { top: 1.25rem; padding: 0 1.25rem; justify-content: flex-end; z-index: 60; }
   .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle { display: flex; width: 3.6rem; height: 3.6rem; align-items: center; justify-content: center; border: 3px solid #08080b; border-radius: 0.8rem; background: #f0b90b; color: #111116; box-shadow: 4px 4px 0 #08080b; }
   .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle::before { display: none; }
   .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle svg { height: 2.2rem; margin-top: 0; }

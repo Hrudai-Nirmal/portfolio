@@ -11,16 +11,18 @@
 
 - Local implementation: `http://127.0.0.1:3000/`
 - CSS viewport: 1280 × 720 at 1× density
-- Browser screenshot: `/tmp/mission-control-svg-live-v3.png` (1274 × 717; browser scrollbar excluded)
-- Rendered SVG bounds: 1203.19 × 180.47 CSS pixels at x 35.41, y 12
+- Browser screenshot: `/tmp/mission-control-svg-scaled-desktop.png` (1274 × 717; browser scrollbar excluded)
+- Rendered SVG bounds: 842.23 × 126.33 CSS pixels at x 215.88, y 12
 - Compared state: hero at the top, menu closed, Shadow chat closed
-- Normalization: reference focus crop (2048 × 340 at x 40, y 70) resized to 1274 × 212; implementation top region captured at the same 1274 × 212 dimensions
-- Full-view and focused header comparison: `/tmp/mission-control-svg-comparison-v2.png`
+- Normalization: reference focus crop resized to 842 × 140 and centered above the implementation's 1274 × 150 top region, matching the user-requested 70% rail scale
+- Focused header comparison: `/tmp/mission-control-svg-scaled-comparison.png`
+- Compact screenshot: `/tmp/mission-control-svg-compact.png` at a 390 × 844 CSS viewport
 - A separate micro-crop was unnecessary because both normalized frames keep the name, navigation labels, Shadow display, status copy, screws, and hazard stripe legible
 
 ## Findings
 
 - No actionable P0, P1, or P2 mismatches remain.
+- The 70% desktop scale is an intentional user-directed refinement; both the SVG rail and the real menu control share the same top-center transform and remain aligned.
 - Fonts and typography: heavy sans-serif identity text, condensed monospace navigation labels, blue engineering subtitle, and purple terminal display preserve the reference hierarchy and optical weight.
 - Spacing and layout rhythm: the identity, four-key navigation bank, and command housing retain the reference's three-module sequence, connected spine, thick chassis, inset panels, rounded corners, and fixed top placement.
 - Colors and visual tokens: cream, near-black, charcoal, electric blue, purple, red, and safety yellow match the source art direction with high-contrast outlines and flat neo-brutalist shadows.
@@ -31,16 +33,20 @@
 
 1. **P1 — full-header raster shortcut:** The prior implementation rendered the selected demo as a single image with invisible hit areas. Fix: removed the PNG from the public bundle and replaced it with an interactive SVG composed from vector chassis, panels, icons, labels, indicators, cabling, screws, and linked controls.
 2. **P2 — copy and hazard-detail drift:** The first SVG pass displayed SYSTEM NOMINAL and lacked the selected menu plate's striped safety footer. Fix: changed the status to PRIMARY ACTION, added the striped footer, added the red hazard indicator, and enlarged the identity name.
-3. **Post-fix evidence:** `/tmp/mission-control-svg-comparison-v2.png` shows the selected reference above and the final browser-rendered SVG below.
+3. **P2 — compact control collision:** The small-screen menu shared the left-aligned header row and a lower stacking layer with Ask Shadow. Fix: right-aligned the compact header and raised its stacking layer to 60, leaving Ask Shadow at the top-left with no overlap.
+4. **P3 — indicator feedback:** Removed the yellow markings from the red alert indicator and added a yellow light state to each navigation key on hover.
+5. **Post-fix evidence:** `/tmp/mission-control-svg-scaled-comparison.png` shows the scaled reference above and the final browser-rendered rail below; `/tmp/mission-control-svg-compact.png` confirms the separated compact controls.
 
 ## Functional verification
 
 - The four SVG navigation keys link to Home, Work, About, and Contact.
+- Hovering each navigation key changes only its associated blue status light to yellow with a matching glow.
 - The SVG Shadow screen opens and closes the chat panel with pointer and keyboard handling.
 - The aligned yellow menu control opens and closes the staggered menu.
+- At 390 × 844, Ask Shadow occupies x 20–137.20 and the menu occupies x 312.41–370; they do not overlap, and the menu is in the higher stacking layer.
 - At `scrollY: 720`, the rail remains visible at `top: 12px`; no fade or collapse listener exists.
-- Browser logs contain no error-level entries after navigation, chat, menu, and persistence checks.
-- TDD evidence: tests rejected both the raster asset path and absence of SVG before the vector implementation; they pass after the SVG replacement.
+- Browser logs contain no error-level entries after desktop hover and compact menu-open checks.
+- TDD evidence: the new refinement tests failed before the compact scale, hover state, and mobile alignment were implemented, then passed after the fixes.
 
 ## Follow-up polish
 
