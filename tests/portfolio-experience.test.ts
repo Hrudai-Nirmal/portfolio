@@ -3,13 +3,13 @@
  * experience before visual components are wired to them.
  */
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { test } from "node:test";
 
 import {
   heroTypingPhrases,
   heroSubheading,
   getWorkTitleRemainingScrollDistance,
-  headerCollapseScrollY,
   lightfallProps,
   menuButtonColors,
   menuItems,
@@ -66,8 +66,7 @@ test("menu links remain section-based and work begins with the requested project
   ]);
 });
 
-test("header collapse and hamburger colors match the restored interaction", () => {
-  assert.equal(headerCollapseScrollY, 64);
+test("hamburger colors match the restored interaction", () => {
   assert.deepEqual(menuButtonColors, {
     closed: "#ffffff",
     open: "#111111",
@@ -76,12 +75,24 @@ test("header collapse and hamburger colors match the restored interaction", () =
 
 test("spaceship header keeps the selected mission-control hierarchy", () => {
   assert.deepEqual(spaceshipHeaderConfig, {
+    assetPath: "/mission-control-rail.png",
+    isPersistent: true,
     systemLabel: "NAV-COM // 01",
     roleLabel: "SOFTWARE ENGINEER · BANGALORE",
     statusLabel: "SYSTEM NOMINAL",
     aiLabel: "ASK SHADOW",
     menuLabel: "MENU",
   });
+});
+
+test("navbar keeps the mission-control rail fixed instead of collapsing on scroll", () => {
+  const navbarSource = readFileSync(
+    new URL("../src/components/Navbar.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(navbarSource.includes("isHeaderCollapsed"), false);
+  assert.equal(navbarSource.includes('addEventListener("scroll"'), false);
 });
 
 test("work motion holds horizontal travel until the title phase completes", () => {
@@ -91,7 +102,6 @@ test("work motion holds horizontal travel until the title phase completes", () =
     strokeTriggerStartViewportRatio: 0.86,
     desktopScrub: true,
     cardRevealViewportRatio: 0.36,
-    headerExitStepPx: 52,
   });
 
   const remainingTitleDistance = getWorkTitleRemainingScrollDistance({

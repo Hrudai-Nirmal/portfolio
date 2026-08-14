@@ -49,14 +49,14 @@ export const socialItems = [
   { label: "Instagram", link: "https://www.instagram.com/hrudianirmal" },
 ] as const;
 
-export const headerCollapseScrollY = 64;
-
 export const menuButtonColors = {
   closed: "#ffffff",
   open: "#111111",
 } as const;
 
 export const spaceshipHeaderConfig = {
+  assetPath: "/mission-control-rail.png",
+  isPersistent: true,
   systemLabel: "NAV-COM // 01",
   roleLabel: "SOFTWARE ENGINEER · BANGALORE",
   statusLabel: "SYSTEM NOMINAL",
@@ -70,7 +70,6 @@ export const workMotionConfig = {
   strokeTriggerStartViewportRatio: 0.86,
   desktopScrub: true,
   cardRevealViewportRatio: 0.36,
-  headerExitStepPx: 52,
 } as const;
 
 export interface WorkTitleScrollMeasurements {

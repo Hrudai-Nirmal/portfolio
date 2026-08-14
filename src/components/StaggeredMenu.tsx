@@ -31,7 +31,6 @@ export interface StaggeredMenuProps {
   openMenuButtonColor?: string;
   accentColor?: string;
   isFixed: boolean;
-  isHeaderCollapsed?: boolean;
   controlBoardMode?: boolean;
   menuLabel?: string;
   changeMenuColorOnOpen?: boolean;
@@ -55,7 +54,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   changeMenuColorOnOpen = true,
   accentColor = '#5227FF',
   isFixed = false,
-  isHeaderCollapsed = true,
   controlBoardMode = false,
   menuLabel = 'Menu',
   closeOnClickAway = true,
@@ -304,7 +302,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         }
         data-position={position}
         data-open={open || undefined}
-        data-header-collapsed={isHeaderCollapsed}
         data-control-board={controlBoardMode || undefined}
         data-menu-label={menuLabel}
       >
@@ -485,50 +482,46 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after { counter-increment: smItem; content: counter(smItem, decimal-leading-zero); position: absolute; top: 0.1em; right: 3.2em; font-size: 18px; font-weight: 400; color: var(--sm-accent, #ff0000); letter-spacing: 0; pointer-events: none; user-select: none; opacity: var(--sm-num-opacity, 0); }
 @media (max-width: 1024px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; } }
 @media (max-width: 640px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .sm-panel-item { font-size: clamp(2.65rem, 14vw, 4rem); } }
-@media (min-width: 768px) {
-  .sm-scope .staggered-menu-wrapper[data-header-collapsed='false']:not([data-open]) .sm-logo,
-  .sm-scope .staggered-menu-wrapper[data-header-collapsed='false']:not([data-open]) .sm-toggle { opacity: 0; transform: translateY(-12px) scale(0.72); pointer-events: none; }
-  .sm-scope .sm-logo { transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1), transform 500ms cubic-bezier(0.4, 0, 0.2, 1); }
-}
 .sm-scope .staggered-menu-wrapper[data-control-board] .sm-logo { display: none; }
-.sm-scope .staggered-menu-wrapper[data-control-board] .staggered-menu-header {
-  top: 1.25rem;
-  padding: 0 max(1.5rem, calc((100vw - 74rem) / 2));
-  justify-content: flex-end;
-}
-.sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle {
-  display: flex;
-  width: 5.35rem;
-  height: 7.1rem;
-  align-items: center;
-  justify-content: center;
-  border: 5px solid #08080b;
-  border-radius: 1rem;
-  background: #f0b90b;
-  color: #111116;
-  box-shadow: 7px 8px 0 #08080b;
-}
-.sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle::before {
-  content: attr(data-menu-label);
-  position: absolute;
-  top: 0.55rem;
-  font: 800 0.55rem/1 var(--font-geist-mono), monospace;
-  letter-spacing: 0.14em;
-}
-.sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle svg { height: 2.65rem; margin-top: 0.75rem; }
 @media (min-width: 1280px) {
-  .sm-scope .staggered-menu-wrapper[data-control-board][data-header-collapsed='false']:not([data-open]) .sm-toggle {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
+  .sm-scope .staggered-menu-wrapper[data-control-board] .staggered-menu-header {
+    top: 0;
+    left: 50%;
+    width: min(96vw, 130.5rem);
+    aspect-ratio: 2088 / 500;
+    padding: 0;
+    transform: translateX(-50%);
+  }
+  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle {
+    position: absolute;
+    top: 26%;
+    right: 7.1%;
+    width: 6.8%;
+    height: 44%;
+    border: 0;
+    border-radius: 0.8rem;
+    background: transparent;
+    color: #111116;
+    box-shadow: none;
+  }
+  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle::before { display: none; }
+  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle svg { height: 42%; opacity: 0; }
+  .sm-scope .staggered-menu-wrapper[data-control-board][data-open] .sm-toggle {
+    border: 4px solid #08080b;
+    background: #f0b90b;
+    box-shadow: 5px 6px 0 #08080b;
+  }
+  .sm-scope .staggered-menu-wrapper[data-control-board][data-open] .sm-toggle svg { opacity: 1; }
+  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle:focus-visible {
+    outline: 4px solid #f4efe5;
+    outline-offset: 3px;
   }
 }
 @media (max-width: 1279px) {
   .sm-scope .staggered-menu-wrapper[data-control-board] .staggered-menu-header { top: 1.25rem; padding: 0 1.25rem; }
-  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle { width: 3.6rem; height: 3.6rem; border-width: 3px; border-radius: 0.8rem; box-shadow: 4px 4px 0 #08080b; }
+  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle { display: flex; width: 3.6rem; height: 3.6rem; align-items: center; justify-content: center; border: 3px solid #08080b; border-radius: 0.8rem; background: #f0b90b; color: #111116; box-shadow: 4px 4px 0 #08080b; }
   .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle::before { display: none; }
   .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle svg { height: 2.2rem; margin-top: 0; }
-  .sm-scope .staggered-menu-wrapper[data-control-board][data-header-collapsed='false']:not([data-open]) .sm-toggle { opacity: 1; transform: none; pointer-events: auto; }
 }
       `}</style>
     </div>

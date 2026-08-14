@@ -1,15 +1,14 @@
 "use client";
 
 /**
- * The desktop header collapses into the animated menu control after the visitor
- * leaves the hero's opening position. Mobile keeps the compact controls visible.
+ * The desktop mission-control rail stays fixed while mobile keeps compact
+ * Shadow and menu controls available at the viewport edges.
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SpaceshipHeader from "@/components/SpaceshipHeader";
 import StaggeredMenu from "@/components/StaggeredMenu";
 import {
-  headerCollapseScrollY,
   menuButtonColors,
   menuItems,
   socialItems,
@@ -23,24 +22,12 @@ interface NavbarProps {
 
 /** Renders the full header, its collapsed hamburger state, and chatbot control. */
 export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
-  const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const updateHeaderState = () => {
-      setIsHeaderCollapsed(window.scrollY > headerCollapseScrollY);
-    };
-
-    updateHeaderState();
-    window.addEventListener("scroll", updateHeaderState, { passive: true });
-    return () => window.removeEventListener("scroll", updateHeaderState);
-  }, []);
 
   return (
     <nav aria-label="Primary navigation">
       <SpaceshipHeader
         chatOpen={chatOpen}
-        isHidden={isHeaderCollapsed || isMenuOpen}
         onToggleChat={onToggleChat}
       />
 
@@ -57,7 +44,6 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
         logoUrl="/asdSDFs.jpeg"
         accentColor="#5227FF"
         isFixed
-        isHeaderCollapsed={isHeaderCollapsed}
         controlBoardMode
         menuLabel={spaceshipHeaderConfig.menuLabel}
         onMenuOpen={() => setIsMenuOpen(true)}
