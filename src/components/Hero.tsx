@@ -7,10 +7,21 @@
 
 import Lightfall from "@/components/Lightfall";
 import TypingHeadline from "@/components/TypingHeadline";
-import { heroSubheading, heroTypingPhrases } from "@/content/portfolio-experience";
+import {
+  heroSubheading,
+  heroTypingPhrases,
+  lightfallProps,
+} from "@/content/portfolio-experience";
+import { getHeroThrustEffects } from "@/lib/hero-thrust";
+
+interface HeroProps {
+  thrustLevel: number;
+}
 
 /** Renders the animated portfolio hero. */
-export default function Hero() {
+export default function Hero({ thrustLevel }: HeroProps) {
+  const thrustEffects = getHeroThrustEffects(thrustLevel);
+
   return (
     <section
       id="home"
@@ -18,24 +29,10 @@ export default function Hero() {
     >
       <div className="absolute inset-0">
         <Lightfall
-          colors={["#A6C8FF", "#5227FF", "#FF9FFC"]}
-          backgroundColor="#000000"
-          speed={0.5}
-          streakCount={2}
-          streakWidth={1}
-          streakLength={3}
-          glow={0.2}
-          density={0.4}
-          twinkle={1}
-          zoom={3}
-          backgroundGlow={0}
-          opacity={1}
-          mouseInteraction
-          mouseStrength={0.5}
-          mouseRadius={1}
-          color1="#A6C8FF"
-          color2="#5227FF"
-          color3="#FF9FFC"
+          {...lightfallProps}
+          speed={thrustEffects.speed}
+          streakLength={thrustEffects.streakLength}
+          glow={thrustEffects.glow}
         />
       </div>
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.5)_52%,rgba(0,0,0,0.16)_100%)]" />

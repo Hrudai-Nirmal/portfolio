@@ -5,15 +5,22 @@
  * navigation key and command screen is a semantic link or button target.
  */
 
-import type { KeyboardEvent } from "react";
+import { useRef } from "react";
+import type { KeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import { menuItems, spaceshipHeaderConfig } from "@/content/portfolio-experience";
+import { normalizeThrustLevel } from "@/lib/hero-thrust";
 
 interface SpaceshipHeaderProps {
   chatOpen: boolean;
+  thrustLevel: number;
   onToggleChat: () => void;
+  onThrustChange: (nextThrustLevel: number) => void;
 }
 
 const keyPositions = [480, 625, 770, 915] as const;
+const THRUST_TRACK_START_X = 1438;
+const THRUST_TRACK_END_X = 1513;
+const THRUST_KEYBOARD_STEP = 0.05;
 
 function NavigationGlyph({ index, x }: { index: number; x: number }) {
   const glyphX = x + 49;
@@ -64,13 +71,56 @@ function PanelScrew({ x, y }: { x: number; y: number }) {
 /** Renders the persistent, responsive spaceship control-board header. */
 export default function SpaceshipHeader({
   chatOpen,
+  thrustLevel,
   onToggleChat,
+  onThrustChange,
 }: SpaceshipHeaderProps) {
+  const isThrustDraggingRef = useRef(false);
+  const normalizedThrustLevel = normalizeThrustLevel(thrustLevel);
+  const thrustPercentage = Math.round(normalizedThrustLevel * 100);
+  const thrustKnobX =
+    THRUST_TRACK_START_X +
+    normalizedThrustLevel * (THRUST_TRACK_END_X - THRUST_TRACK_START_X);
+
   const handleShadowKeyDown = (event: KeyboardEvent<SVGGElement>) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       onToggleChat();
     }
+  };
+
+  const updateThrustFromPointer = (event: ReactPointerEvent<SVGGElement>) => {
+    const svgElement = event.currentTarget.ownerSVGElement;
+    if (!svgElement) return;
+
+    const svgBounds = svgElement.getBoundingClientRect();
+    if (svgBounds.width <= 0) return;
+
+    const pointerX =
+      ((event.clientX - svgBounds.left) / svgBounds.width) * 1600;
+    const nextThrustLevel =
+      (pointerX - THRUST_TRACK_START_X) /
+      (THRUST_TRACK_END_X - THRUST_TRACK_START_X);
+    onThrustChange(normalizeThrustLevel(nextThrustLevel));
+  };
+
+  const handleThrustKeyDown = (event: KeyboardEvent<SVGGElement>) => {
+    let nextThrustLevel = normalizedThrustLevel;
+
+    if (event.key === "ArrowRight" || event.key === "ArrowUp") {
+      nextThrustLevel += THRUST_KEYBOARD_STEP;
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
+      nextThrustLevel -= THRUST_KEYBOARD_STEP;
+    } else if (event.key === "Home") {
+      nextThrustLevel = 0;
+    } else if (event.key === "End") {
+      nextThrustLevel = 1;
+    } else {
+      return;
+    }
+
+    event.preventDefault();
+    onThrustChange(normalizeThrustLevel(nextThrustLevel));
   };
 
   return (
@@ -177,21 +227,55 @@ export default function SpaceshipHeader({
             {spaceshipHeaderConfig.statusLabel}
           </text>
 
-          <g aria-hidden="true">
-            <rect x="1404" y="49" width="143" height="146" rx="16" fill="#202126" stroke="#08080b" strokeWidth="8" />
+          <g
+            role="slider"
+            tabIndex={0}
+            aria-label="Hero background thrust"
+            aria-controls="home"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={thrustPercentage}
+            aria-valuetext={`${thrustPercentage}% thrust`}
+            onKeyDown={handleThrustKeyDown}
+            onPointerDown={(event) => {
+              isThrustDraggingRef.current = true;
+              event.currentTarget.setPointerCapture(event.pointerId);
+              updateThrustFromPointer(event);
+            }}
+            onPointerMove={(event) => {
+              if (isThrustDraggingRef.current) {
+                updateThrustFromPointer(event);
+              }
+            }}
+            onPointerUp={(event) => {
+              isThrustDraggingRef.current = false;
+              if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+                event.currentTarget.releasePointerCapture(event.pointerId);
+              }
+            }}
+            onPointerCancel={() => {
+              isThrustDraggingRef.current = false;
+            }}
+            onLostPointerCapture={() => {
+              isThrustDraggingRef.current = false;
+            }}
+            className="group pointer-events-auto cursor-ew-resize outline-none [touch-action:none]"
+          >
+            <title>Adjust the hero background speed</title>
+            <rect x="1404" y="49" width="143" height="146" rx="16" fill="#202126" stroke="#08080b" strokeWidth="8" className="group-focus-visible:stroke-[#f4efe5]" />
             <rect x="1417" y="62" width="117" height="28" rx="7" fill="#f0b90b" stroke="#08080b" strokeWidth="5" />
             <text x="1475.5" y="81" textAnchor="middle" fill="#111216" fontFamily="var(--font-geist-mono), monospace" fontSize="12" fontWeight="900" letterSpacing="1.2">
               AUX THRUST
             </text>
             <rect x="1422" y="101" width="107" height="42" rx="8" fill="#101116" stroke="#08080b" strokeWidth="5" />
-            <path d="M 1438 122 H 1513" stroke="#484a53" strokeWidth="8" strokeLinecap="round" />
-            <path d="M 1438 122 H 1491" stroke="#35a8ff" strokeWidth="8" strokeLinecap="round" className="[filter:drop-shadow(0_0_5px_#35a8ff)]" />
-            <circle cx="1491" cy="122" r="13" fill="#d83420" stroke="#08080b" strokeWidth="5" />
-            <circle cx="1487" cy="118" r="4" fill="#ff8a72" />
+            <path d={`M ${THRUST_TRACK_START_X} 122 H ${THRUST_TRACK_END_X}`} stroke="#484a53" strokeWidth="8" strokeLinecap="round" />
+            <path d={`M ${THRUST_TRACK_START_X} 122 H ${thrustKnobX}`} stroke="#35a8ff" strokeWidth="8" strokeLinecap="round" className="[filter:drop-shadow(0_0_5px_#35a8ff)]" />
+            <circle cx={thrustKnobX} cy="122" r="13" fill={normalizedThrustLevel >= 0.7 ? "#f0b90b" : "#d83420"} stroke="#08080b" strokeWidth="5" />
+            <circle cx={thrustKnobX - 4} cy="118" r="4" fill={normalizedThrustLevel >= 0.7 ? "#fff0a8" : "#ff8a72"} />
             <rect x="1420" y="153" width="111" height="27" rx="6" fill="#16171b" stroke="#08080b" strokeWidth="5" />
             <circle cx="1435" cy="166.5" r="5" fill="#35a8ff" className="[filter:drop-shadow(0_0_4px_#35a8ff)]" />
-            <text x="1447" y="171" fill="#f2ecdf" fontFamily="var(--font-geist-mono), monospace" fontSize="10" fontWeight="900" letterSpacing="0.8">
-              THRUSTER READY
+            <text x="1447" y="171" fill="#f2ecdf" fontFamily="var(--font-geist-mono), monospace" fontSize="10" fontWeight="900" letterSpacing="0.4">
+              {`THRUST ${String(thrustPercentage).padStart(3, "0")}%`}
             </text>
           </g>
         </g>

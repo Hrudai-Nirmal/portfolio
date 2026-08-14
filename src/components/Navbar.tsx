@@ -21,11 +21,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface NavbarProps {
   chatOpen: boolean;
+  thrustLevel: number;
   onToggleChat: () => void;
+  onThrustChange: (nextThrustLevel: number) => void;
 }
 
 /** Renders the scroll-linked header handoff, navigation menu, and chatbot control. */
-export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
+export default function Navbar({
+  chatOpen,
+  thrustLevel,
+  onToggleChat,
+  onThrustChange,
+}: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigationRef = useRef<HTMLElement | null>(null);
 
@@ -97,7 +104,9 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
     <nav ref={navigationRef} aria-label="Primary navigation">
       <SpaceshipHeader
         chatOpen={chatOpen}
+        thrustLevel={thrustLevel}
         onToggleChat={onToggleChat}
+        onThrustChange={onThrustChange}
       />
 
       <StaggeredMenu

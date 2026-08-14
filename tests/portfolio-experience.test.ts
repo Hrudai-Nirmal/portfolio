@@ -21,6 +21,10 @@ import {
   getLightfallRenderDpr,
   shouldRenderLightfallFrame,
 } from "../src/lib/lightfall-performance.ts";
+import {
+  getHeroThrustEffects,
+  normalizeThrustLevel,
+} from "../src/lib/hero-thrust.ts";
 
 test("hero typing phrases follow the requested loop order", () => {
   assert.deepEqual(heroTypingPhrases, [
@@ -108,7 +112,48 @@ test("spaceship header applies the requested compact scale and key-light hover s
   assert.equal(spaceshipHeaderSource.includes("group-hover:fill-[#f0b90b]"), true);
   assert.equal(spaceshipHeaderSource.includes('stroke="#f0b90b"'), false);
   assert.equal(spaceshipHeaderSource.includes("AUX THRUST"), true);
-  assert.equal(spaceshipHeaderSource.includes("THRUSTER READY"), true);
+  assert.equal(spaceshipHeaderSource.includes('role="slider"'), true);
+  assert.equal(spaceshipHeaderSource.includes("onPointerMove"), true);
+  assert.equal(spaceshipHeaderSource.includes("isThrustDraggingRef.current"), true);
+  assert.equal(spaceshipHeaderSource.includes('event.key === "ArrowRight"'), true);
+});
+
+test("hero thrust maps the control range to a stronger Lightfall warp", () => {
+  assert.equal(normalizeThrustLevel(-1), 0);
+  assert.equal(normalizeThrustLevel(2), 1);
+  assert.equal(normalizeThrustLevel(Number.NaN), 0);
+
+  assert.deepEqual(getHeroThrustEffects(0), {
+    speed: 0.5,
+    streakLength: 3,
+    glow: 0.2,
+  });
+  assert.deepEqual(getHeroThrustEffects(1), {
+    speed: 4.5,
+    streakLength: 10,
+    glow: 0.5,
+  });
+});
+
+test("page wires the thrust control to Hero and updates Lightfall uniforms live", () => {
+  const pageSource = readFileSync(
+    new URL("../src/app/page.tsx", import.meta.url),
+    "utf8",
+  );
+  const heroSource = readFileSync(
+    new URL("../src/components/Hero.tsx", import.meta.url),
+    "utf8",
+  );
+  const lightfallSource = readFileSync(
+    new URL("../src/components/Lightfall.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(pageSource.includes("heroThrustLevel"), true);
+  assert.equal(pageSource.includes("onThrustChange"), true);
+  assert.equal(heroSource.includes("getHeroThrustEffects"), true);
+  assert.equal(lightfallSource.includes("uSpeed.value = speed"), true);
+  assert.equal(lightfallSource.includes("uStreakLength.value = streakLength"), true);
 });
 
 test("compact menu stays right-aligned above the Shadow control", () => {

@@ -16,7 +16,7 @@ export interface LightfallProps {
   className?: string;
   dpr?: number;
   paused?: boolean;
-  colors?: string[];
+  colors?: readonly string[];
   color1?: string;
   color2?: string;
   color3?: string;
@@ -50,7 +50,7 @@ const hexToRGB = (hex: string): RGB => {
   return [r, g, b];
 };
 
-const prepColors = (input?: string[]) => {
+const prepColors = (input?: readonly string[]) => {
   const base = (input && input.length ? input : ['#A6C8FF', '#5227FF', '#FF9FFC']).slice(0, MAX_COLORS);
   const count = base.length;
   const arr: RGB[] = [];
@@ -240,6 +240,17 @@ const Lightfall: React.FC<LightfallProps> = ({
   const lastTimeRef = useRef(0);
   const isInViewportRef = useRef(true);
   const isDocumentVisibleRef = useRef(true);
+  const dynamicUniformValuesRef = useRef({ speed, streakLength, glow });
+
+  useEffect(() => {
+    dynamicUniformValuesRef.current = { speed, streakLength, glow };
+    const activeProgram = programRef.current;
+    if (!activeProgram) return;
+
+    activeProgram.uniforms.uSpeed.value = speed;
+    activeProgram.uniforms.uStreakLength.value = streakLength;
+    activeProgram.uniforms.uGlow.value = glow;
+  }, [speed, streakLength, glow]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -264,6 +275,7 @@ const Lightfall: React.FC<LightfallProps> = ({
     );
     const resolvedColors = colors.length ? colors : namedColors;
     const { arr, count, avg } = prepColors(resolvedColors);
+    const dynamicUniformValues = dynamicUniformValuesRef.current;
 
     const uniforms = {
       iResolution: { value: [gl.drawingBufferWidth, gl.drawingBufferHeight, 1] },
@@ -280,11 +292,11 @@ const Lightfall: React.FC<LightfallProps> = ({
       uColorCount: { value: count },
       uBgColor: { value: hexToRGB(backgroundColor) },
       uMouseColor: { value: avg },
-      uSpeed: { value: speed },
+      uSpeed: { value: dynamicUniformValues.speed },
       uStreakCount: { value: Math.max(1, Math.min(16, Math.round(streakCount))) },
       uStreakWidth: { value: streakWidth },
-      uStreakLength: { value: streakLength },
-      uGlow: { value: glow },
+      uStreakLength: { value: dynamicUniformValues.streakLength },
+      uGlow: { value: dynamicUniformValues.glow },
       uDensity: { value: density },
       uTwinkle: { value: twinkle },
       uZoom: { value: zoom },
@@ -404,11 +416,8 @@ const Lightfall: React.FC<LightfallProps> = ({
     color2,
     color3,
     backgroundColor,
-    speed,
     streakCount,
     streakWidth,
-    streakLength,
-    glow,
     density,
     twinkle,
     zoom,

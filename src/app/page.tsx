@@ -13,10 +13,12 @@ import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Projects from "@/components/Projects";
 import WhyWorkWithMe from "@/components/WhyWorkWithMe";
+import { normalizeThrustLevel } from "@/lib/hero-thrust";
 
 /** Renders the portfolio page and its optional AI chat drawer. */
 export default function Home() {
   const [chatOpen, setChatOpen] = useState(false);
+  const [heroThrustLevel, setHeroThrustLevel] = useState(0);
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -33,11 +35,15 @@ export default function Home() {
     <>
       <Navbar
         chatOpen={chatOpen}
+        thrustLevel={heroThrustLevel}
         onToggleChat={() => setChatOpen((currentState) => !currentState)}
+        onThrustChange={(nextThrustLevel) => {
+          setHeroThrustLevel(normalizeThrustLevel(nextThrustLevel));
+        }}
       />
       <div className="relative z-10 min-h-screen">
         <main>
-          <Hero />
+          <Hero thrustLevel={heroThrustLevel} />
           <div
             className="pointer-events-none relative z-20 -mt-[clamp(8rem,16vh,14rem)] h-[clamp(8rem,16vh,14rem)] bg-gradient-to-b from-transparent via-black/50 to-black"
             aria-hidden="true"
