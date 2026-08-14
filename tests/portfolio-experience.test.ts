@@ -14,6 +14,7 @@ import {
   menuButtonColors,
   menuItems,
   orderedWorkTitles,
+  spaceshipHeaderConfig,
   workMotionConfig,
 } from "../src/content/portfolio-experience.ts";
 import {
@@ -70,6 +71,16 @@ test("header collapse and hamburger colors match the restored interaction", () =
   assert.deepEqual(menuButtonColors, {
     closed: "#ffffff",
     open: "#111111",
+  });
+});
+
+test("spaceship header keeps the selected mission-control hierarchy", () => {
+  assert.deepEqual(spaceshipHeaderConfig, {
+    systemLabel: "NAV-COM // 01",
+    roleLabel: "SOFTWARE ENGINEER · BANGALORE",
+    statusLabel: "SYSTEM NOMINAL",
+    aiLabel: "ASK SHADOW",
+    menuLabel: "MENU",
   });
 });
 

@@ -56,6 +56,14 @@ export const menuButtonColors = {
   open: "#111111",
 } as const;
 
+export const spaceshipHeaderConfig = {
+  systemLabel: "NAV-COM // 01",
+  roleLabel: "SOFTWARE ENGINEER · BANGALORE",
+  statusLabel: "SYSTEM NOMINAL",
+  aiLabel: "ASK SHADOW",
+  menuLabel: "MENU",
+} as const;
+
 export const workMotionConfig = {
   strokeDrawDuration: 3.2,
   strokeScrollDistanceVh: 104,
