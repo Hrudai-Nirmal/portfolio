@@ -138,6 +138,16 @@ test("spaceship navigation keys keep retro hardware with icons only", () => {
   assert.equal(spaceshipHeaderSource.includes("NAV 0"), false);
   assert.equal(spaceshipHeaderSource.includes("menuItem.label.toUpperCase()"), false);
   assert.equal(spaceshipHeaderSource.includes("strokeDasharray=\"4 5\""), true);
+  assert.equal(spaceshipHeaderSource.includes("const glyphCenterX = x + 63.5"), true);
+  assert.equal(spaceshipHeaderSource.includes("const glyphCenterY = 110"), true);
+  assert.equal(
+    spaceshipHeaderSource.includes('y="68" width="91" height="18"'),
+    false,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes('y="70" width="97" height="80"'),
+    true,
+  );
 });
 
 test("destination radar safely animates route progress and current position", () => {

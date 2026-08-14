@@ -23,12 +23,13 @@ const THRUST_TRACK_END_X = 1513;
 const THRUST_KEYBOARD_STEP = 0.05;
 
 function NavigationGlyph({ index, x }: { index: number; x: number }) {
-  const glyphX = x + 49;
+  const glyphCenterX = x + 63.5;
+  const glyphCenterY = 110;
 
   if (index === 0) {
     return (
       <g fill="currentColor">
-        <path d={`M ${glyphX - 17} 91 L ${glyphX} 76 L ${glyphX + 17} 91 L ${glyphX + 13} 91 V 111 H ${glyphX + 3} V 98 H ${glyphX - 5} V 111 H ${glyphX - 13} V 91 Z`} />
+        <path d={`M ${glyphCenterX - 21} ${glyphCenterY - 5} L ${glyphCenterX} ${glyphCenterY - 24} L ${glyphCenterX + 21} ${glyphCenterY - 5} L ${glyphCenterX + 16} ${glyphCenterY - 5} V ${glyphCenterY + 22} H ${glyphCenterX + 5} V ${glyphCenterY + 5} H ${glyphCenterX - 5} V ${glyphCenterY + 22} H ${glyphCenterX - 16} V ${glyphCenterY - 5} Z`} />
       </g>
     );
   }
@@ -36,8 +37,8 @@ function NavigationGlyph({ index, x }: { index: number; x: number }) {
   if (index === 1) {
     return (
       <g fill="none" stroke="currentColor" strokeWidth="5" strokeLinejoin="round">
-        <rect x={glyphX - 18} y="87" width="36" height="23" rx="3" />
-        <path d={`M ${glyphX - 8} 87 V 81 H ${glyphX + 8} V 87 M ${glyphX - 18} 97 H ${glyphX + 18}`} />
+        <rect x={glyphCenterX - 23} y={glyphCenterY - 12} width="46" height="31" rx="3" />
+        <path d={`M ${glyphCenterX - 9} ${glyphCenterY - 12} V ${glyphCenterY - 20} H ${glyphCenterX + 9} V ${glyphCenterY - 12} M ${glyphCenterX - 23} ${glyphCenterY - 1} H ${glyphCenterX + 23}`} />
       </g>
     );
   }
@@ -45,16 +46,16 @@ function NavigationGlyph({ index, x }: { index: number; x: number }) {
   if (index === 2) {
     return (
       <g fill="currentColor">
-        <circle cx={glyphX} cy="86" r="9" />
-        <path d={`M ${glyphX - 17} 110 C ${glyphX - 16} 97 ${glyphX + 16} 97 ${glyphX + 17} 110 Z`} />
+        <circle cx={glyphCenterX} cy={glyphCenterY - 17} r="10" />
+        <path d={`M ${glyphCenterX - 20} ${glyphCenterY + 21} C ${glyphCenterX - 19} ${glyphCenterY + 6} ${glyphCenterX + 19} ${glyphCenterY + 6} ${glyphCenterX + 20} ${glyphCenterY + 21} Z`} />
       </g>
     );
   }
 
   return (
     <g fill="none" stroke="currentColor" strokeWidth="5" strokeLinejoin="round">
-      <rect x={glyphX - 20} y="84" width="40" height="27" rx="3" />
-      <path d={`M ${glyphX - 18} 88 L ${glyphX} 101 L ${glyphX + 18} 88`} />
+      <rect x={glyphCenterX - 25} y={glyphCenterY - 16} width="50" height="34" rx="3" />
+      <path d={`M ${glyphCenterX - 23} ${glyphCenterY - 12} L ${glyphCenterX} ${glyphCenterY + 4} L ${glyphCenterX + 23} ${glyphCenterY - 12}`} />
     </g>
   );
 }
@@ -204,8 +205,7 @@ export default function SpaceshipHeader({
                 <title>{menuItem.label}</title>
                 <rect x={keyX} y="57" width="127" height="119" rx="14" fill="#34353d" stroke="#070709" strokeWidth="7" className="group-focus-visible:stroke-[#60a5fa]" />
                 <path d={`M ${keyX + 10} 70 L ${keyX + 20} 63 H ${keyX + 107} L ${keyX + 117} 70 V 151 L ${keyX + 108} 158 H ${keyX + 19} L ${keyX + 10} 151 Z`} fill="#17181d" stroke="#08080b" strokeWidth="5" className="transition-[fill,transform] duration-200 group-hover:fill-[#f2ecdf] group-active:[transform:translateY(2px)]" />
-                <rect x={keyX + 18} y="68" width="91" height="18" rx="5" fill="#08090c" stroke="#6b6d76" strokeWidth="2" />
-                <rect x={keyX + 16} y="91" width="95" height="58" rx="8" fill="none" stroke="#646670" strokeWidth="2" strokeDasharray="4 5" className="transition-colors group-hover:stroke-[#777168]" />
+                <rect x={keyX + 15} y="70" width="97" height="80" rx="9" fill="none" stroke="#646670" strokeWidth="2" strokeDasharray="4 5" className="transition-colors group-hover:stroke-[#777168]" />
                 <circle cx={keyX + 17} cy="67" r="3.5" fill="#aeb0b4" stroke="#08080b" strokeWidth="2" />
                 <circle cx={keyX + 110} cy="67" r="3.5" fill="#aeb0b4" stroke="#08080b" strokeWidth="2" />
                 <g className="transition-colors duration-200 group-hover:text-[#111216] group-active:[transform:translateY(2px)]">
