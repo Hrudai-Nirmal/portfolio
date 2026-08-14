@@ -128,6 +128,32 @@ test("spaceship header applies the requested compact scale and key-light hover s
   assert.equal(spaceshipHeaderSource.includes('event.key === "ArrowRight"'), true);
 });
 
+test("spaceship header hangs from two viewport-covering suspension bars", () => {
+  const spaceshipHeaderSource = readFileSync(
+    new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(
+    spaceshipHeaderSource.includes(
+      "const HEADER_SUSPENSION_BAR_X_POSITIONS = [590, 962] as const",
+    ),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes("const HEADER_SUSPENSION_TOP_Y = -120"),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes('data-header-suspension="true"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes("HEADER_SUSPENSION_BAR_X_POSITIONS.map"),
+    true,
+  );
+});
+
 test("spaceship navigation keys keep retro hardware with icons only", () => {
   const spaceshipHeaderSource = readFileSync(
     new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),

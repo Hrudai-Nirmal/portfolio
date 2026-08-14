@@ -18,6 +18,9 @@ interface SpaceshipHeaderProps {
 }
 
 const keyPositions = [480, 625, 770, 915] as const;
+const HEADER_SUSPENSION_BAR_X_POSITIONS = [590, 962] as const;
+const HEADER_SUSPENSION_TOP_Y = -120;
+const HEADER_SUSPENSION_BOTTOM_Y = 166;
 const THRUST_TRACK_START_X = 1438;
 const THRUST_TRACK_END_X = 1513;
 const THRUST_KEYBOARD_STEP = 0.05;
@@ -65,6 +68,55 @@ function PanelScrew({ x, y }: { x: number; y: number }) {
     <g stroke="#08080b" strokeWidth="3" strokeLinecap="round">
       <circle cx={x} cy={y} r="8" fill="#8f908f" />
       <path d={`M ${x - 3} ${y - 3} L ${x + 3} ${y + 3} M ${x + 3} ${y - 3} L ${x - 3} ${y + 3}`} />
+    </g>
+  );
+}
+
+function HeaderSuspensionBar({ x }: { x: number }) {
+  return (
+    <g data-header-suspension="true" aria-hidden="true">
+      <rect
+        x={x - 16}
+        y={HEADER_SUSPENSION_TOP_Y}
+        width="32"
+        height={HEADER_SUSPENSION_BOTTOM_Y - HEADER_SUSPENSION_TOP_Y}
+        rx="9"
+        fill="#292a31"
+        stroke="#070709"
+        strokeWidth="8"
+      />
+      <path
+        d={`M ${x - 7} ${HEADER_SUSPENSION_TOP_Y + 6} V 23`}
+        fill="none"
+        stroke="#5f616b"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <path
+        d={`M ${x - 14} -20 H ${x + 14} M ${x - 14} 4 H ${x + 14}`}
+        fill="none"
+        stroke="#0b0c0f"
+        strokeWidth="6"
+      />
+      <path
+        d={`M ${x - 10} -20 H ${x + 10} M ${x - 10} 4 H ${x + 10}`}
+        fill="none"
+        stroke="#4a4c55"
+        strokeWidth="2"
+      />
+      <rect
+        x={x - 27}
+        y="13"
+        width="54"
+        height="42"
+        rx="10"
+        fill="#34353d"
+        stroke="#070709"
+        strokeWidth="7"
+      />
+      <circle cx={x - 14} cy="29" r="5" fill="#9a9ba0" stroke="#08080b" strokeWidth="3" />
+      <circle cx={x + 14} cy="29" r="5" fill="#9a9ba0" stroke="#08080b" strokeWidth="3" />
+      <path d={`M ${x - 18} 46 H ${x + 18}`} stroke="#17181d" strokeWidth="5" strokeLinecap="round" />
     </g>
   );
 }
@@ -133,6 +185,10 @@ export default function SpaceshipHeader({
         className="h-auto w-full overflow-visible [filter:drop-shadow(8px_10px_0_#050507)]"
       >
         <title id="mission-control-title">Mission control navigation</title>
+
+        {HEADER_SUSPENSION_BAR_X_POSITIONS.map((suspensionBarX) => (
+          <HeaderSuspensionBar key={suspensionBarX} x={suspensionBarX} />
+        ))}
 
         <g aria-hidden="true">
           <path d="M 58 100 H 1548 Q 1575 100 1575 126 Q 1575 152 1548 152 H 58 Q 25 152 25 126 Q 25 100 58 100 Z" fill="#24252b" stroke="#070709" strokeWidth="9" />
