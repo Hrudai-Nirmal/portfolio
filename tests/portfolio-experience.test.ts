@@ -75,14 +75,25 @@ test("hamburger colors match the restored interaction", () => {
 
 test("spaceship header keeps the selected mission-control hierarchy", () => {
   assert.deepEqual(spaceshipHeaderConfig, {
-    assetPath: "/mission-control-rail.png",
     isPersistent: true,
     systemLabel: "NAV-COM // 01",
     roleLabel: "SOFTWARE ENGINEER · BANGALORE",
-    statusLabel: "SYSTEM NOMINAL",
+    statusLabel: "PRIMARY ACTION",
     aiLabel: "ASK SHADOW",
     menuLabel: "MENU",
   });
+});
+
+test("spaceship header is composed as interactive SVG instead of a full-header image", () => {
+  const spaceshipHeaderSource = readFileSync(
+    new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(spaceshipHeaderSource.includes("next/image"), false);
+  assert.equal(spaceshipHeaderSource.includes("mission-control-rail.png"), false);
+  assert.equal(spaceshipHeaderSource.includes("<svg"), true);
+  assert.equal(spaceshipHeaderSource.includes("menuItems.map"), true);
 });
 
 test("navbar keeps the mission-control rail fixed instead of collapsing on scroll", () => {

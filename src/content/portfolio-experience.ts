@@ -55,11 +55,10 @@ export const menuButtonColors = {
 } as const;
 
 export const spaceshipHeaderConfig = {
-  assetPath: "/mission-control-rail.png",
   isPersistent: true,
   systemLabel: "NAV-COM // 01",
   roleLabel: "SOFTWARE ENGINEER · BANGALORE",
-  statusLabel: "SYSTEM NOMINAL",
+  statusLabel: "PRIMARY ACTION",
   aiLabel: "ASK SHADOW",
   menuLabel: "MENU",
 } as const;

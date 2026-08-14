@@ -485,33 +485,48 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .staggered-menu-wrapper[data-control-board] .sm-logo { display: none; }
 @media (min-width: 1280px) {
   .sm-scope .staggered-menu-wrapper[data-control-board] .staggered-menu-header {
-    top: 0;
+    top: 0.75rem;
     left: 50%;
-    width: min(96vw, 130.5rem);
-    aspect-ratio: 2088 / 500;
+    width: min(94vw, 100rem);
+    aspect-ratio: 1600 / 240;
     padding: 0;
     transform: translateX(-50%);
   }
   .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle {
     position: absolute;
-    top: 26%;
-    right: 7.1%;
-    width: 6.8%;
-    height: 44%;
-    border: 0;
-    border-radius: 0.8rem;
-    background: transparent;
-    color: #111116;
-    box-shadow: none;
-  }
-  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle::before { display: none; }
-  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle svg { height: 42%; opacity: 0; }
-  .sm-scope .staggered-menu-wrapper[data-control-board][data-open] .sm-toggle {
-    border: 4px solid #08080b;
+    top: 25%;
+    right: 2.25%;
+    width: 8.7%;
+    height: 55%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 7px solid #08080b;
+    border-radius: 0.9rem;
     background: #f0b90b;
-    box-shadow: 5px 6px 0 #08080b;
+    color: #111116;
+    box-shadow: inset 0 0 0 3px #d99f08, 0 7px 0 #08080b;
   }
-  .sm-scope .staggered-menu-wrapper[data-control-board][data-open] .sm-toggle svg { opacity: 1; }
+  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle::before {
+    content: attr(data-menu-label);
+    position: absolute;
+    top: 0.65rem;
+    font: 900 clamp(0.45rem, 0.55vw, 0.62rem)/1 var(--font-geist-mono), monospace;
+    letter-spacing: 0.14em;
+  }
+  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle::after {
+    content: '';
+    position: absolute;
+    right: -7px;
+    bottom: -7px;
+    left: -7px;
+    height: 1.15rem;
+    border: 5px solid #08080b;
+    border-radius: 0 0 0.8rem 0.8rem;
+    background: repeating-linear-gradient(135deg, #08080b 0 0.7rem, #f0b90b 0.7rem 1.4rem);
+  }
+  .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle svg { height: 42%; margin-top: 1rem; opacity: 1; }
+  .sm-scope .staggered-menu-wrapper[data-control-board][data-open] .sm-toggle { background: #17171c; color: #f2ecdf; }
   .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle:focus-visible {
     outline: 4px solid #f4efe5;
     outline-offset: 3px;
