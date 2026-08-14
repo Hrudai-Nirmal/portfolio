@@ -11,6 +11,29 @@ export interface LightfallFrameState {
   isDocumentVisible: boolean;
 }
 
+/** Advances animation time by a speed-scaled delta without seeking the field. */
+export function advanceLightfallTime(
+  currentAnimationTime: number,
+  frameDeltaSeconds: number,
+  speed: number,
+) {
+  if (
+    !Number.isFinite(currentAnimationTime) ||
+    currentAnimationTime < 0 ||
+    !Number.isFinite(frameDeltaSeconds) ||
+    frameDeltaSeconds < 0 ||
+    !Number.isFinite(speed) ||
+    speed < 0
+  ) {
+    throw new RangeError(
+      "Lightfall time, frame delta, and speed must be finite non-negative values",
+    );
+  }
+
+  const boundedFrameDeltaSeconds = Math.min(frameDeltaSeconds, 0.1);
+  return currentAnimationTime + boundedFrameDeltaSeconds * speed;
+}
+
 /** Returns a bounded DPR so the background cannot monopolize the GPU. */
 export function getLightfallRenderDpr(
   devicePixelRatio: number,

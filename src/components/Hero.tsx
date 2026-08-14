@@ -31,8 +31,6 @@ export default function Hero({ thrustLevel }: HeroProps) {
         <Lightfall
           {...lightfallProps}
           speed={thrustEffects.speed}
-          streakLength={thrustEffects.streakLength}
-          glow={thrustEffects.glow}
         />
       </div>
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.5)_52%,rgba(0,0,0,0.16)_100%)]" />

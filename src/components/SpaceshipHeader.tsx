@@ -238,6 +238,8 @@ export default function SpaceshipHeader({
             aria-valuetext={`${thrustPercentage}% thrust`}
             onKeyDown={handleThrustKeyDown}
             onPointerDown={(event) => {
+              event.currentTarget.focus();
+              event.preventDefault();
               isThrustDraggingRef.current = true;
               event.currentTarget.setPointerCapture(event.pointerId);
               updateThrustFromPointer(event);
@@ -259,7 +261,7 @@ export default function SpaceshipHeader({
             onLostPointerCapture={() => {
               isThrustDraggingRef.current = false;
             }}
-            className="group pointer-events-auto cursor-ew-resize outline-none [touch-action:none]"
+            className="group pointer-events-auto cursor-ew-resize select-none outline-none [touch-action:none]"
           >
             <title>Adjust the hero background speed</title>
             <rect x="1404" y="49" width="143" height="146" rx="16" fill="#202126" stroke="#08080b" strokeWidth="8" className="group-focus-visible:stroke-[#f4efe5]" />

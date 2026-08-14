@@ -18,6 +18,7 @@ import {
   workMotionConfig,
 } from "../src/content/portfolio-experience.ts";
 import {
+  advanceLightfallTime,
   getLightfallRenderDpr,
   shouldRenderLightfallFrame,
 } from "../src/lib/lightfall-performance.ts";
@@ -80,7 +81,7 @@ test("hamburger colors match the restored interaction", () => {
 test("spaceship header keeps the selected mission-control hierarchy", () => {
   assert.deepEqual(spaceshipHeaderConfig, {
     isPersistent: false,
-    scrollHandoffDistancePx: 240,
+    scrollHandoffTriggerPx: 160,
     bounceDistancePx: 18,
     systemLabel: "NAV-COM // 01",
     roleLabel: "SOFTWARE ENGINEER · BANGALORE",
@@ -115,6 +116,11 @@ test("spaceship header applies the requested compact scale and key-light hover s
   assert.equal(spaceshipHeaderSource.includes('role="slider"'), true);
   assert.equal(spaceshipHeaderSource.includes("onPointerMove"), true);
   assert.equal(spaceshipHeaderSource.includes("isThrustDraggingRef.current"), true);
+  assert.equal(spaceshipHeaderSource.includes("select-none"), true);
+  assert.match(
+    spaceshipHeaderSource,
+    /onPointerDown=\{\(event\)[\s\S]*event\.preventDefault\(\)/,
+  );
   assert.equal(spaceshipHeaderSource.includes('event.key === "ArrowRight"'), true);
 });
 
@@ -125,14 +131,19 @@ test("hero thrust maps the control range to a stronger Lightfall warp", () => {
 
   assert.deepEqual(getHeroThrustEffects(0), {
     speed: 0.5,
-    streakLength: 3,
-    glow: 0.2,
   });
   assert.deepEqual(getHeroThrustEffects(1), {
     speed: 4.5,
-    streakLength: 10,
-    glow: 0.5,
   });
+});
+
+test("Lightfall speed changes advance time continuously instead of seeking", () => {
+  const restingFrameTime = advanceLightfallTime(12, 1 / 60, 0.5);
+  const boostedFrameTime = advanceLightfallTime(restingFrameTime, 1 / 60, 4.5);
+
+  assert.ok(restingFrameTime > 12);
+  assert.ok(boostedFrameTime > restingFrameTime);
+  assert.ok(Math.abs(boostedFrameTime - restingFrameTime - 0.075) < 0.000001);
 });
 
 test("page wires the thrust control to Hero and updates Lightfall uniforms live", () => {
@@ -152,8 +163,9 @@ test("page wires the thrust control to Hero and updates Lightfall uniforms live"
   assert.equal(pageSource.includes("heroThrustLevel"), true);
   assert.equal(pageSource.includes("onThrustChange"), true);
   assert.equal(heroSource.includes("getHeroThrustEffects"), true);
-  assert.equal(lightfallSource.includes("uSpeed.value = speed"), true);
-  assert.equal(lightfallSource.includes("uStreakLength.value = streakLength"), true);
+  assert.equal(lightfallSource.includes("advanceLightfallTime"), true);
+  assert.equal(lightfallSource.includes("speedRef.current = speed"), true);
+  assert.equal(lightfallSource.includes("iTime * uSpeed"), false);
 });
 
 test("compact menu stays right-aligned above the Shadow control", () => {
@@ -169,16 +181,22 @@ test("compact menu stays right-aligned above the Shadow control", () => {
   assert.match(staggeredMenuSource, /max-width: 1279px[\s\S]*z-index: 60;/);
 });
 
-test("navbar scrubs an exactly reversible header-to-menu scroll handoff", () => {
+test("navbar triggers a slower reversible header-to-menu handoff at one scroll point", () => {
   const navbarSource = readFileSync(
     new URL("../src/components/Navbar.tsx", import.meta.url),
     "utf8",
   );
 
   assert.equal(navbarSource.includes("ScrollTrigger.create"), true);
-  assert.equal(navbarSource.includes("scrub: true"), true);
+  assert.equal(navbarSource.includes("scrub: true"), false);
+  assert.equal(navbarSource.includes("onEnter"), true);
+  assert.equal(navbarSource.includes("onLeaveBack"), true);
+  assert.equal(navbarSource.includes("handoffTimeline.play()"), true);
+  assert.equal(navbarSource.includes("handoffTimeline.reverse()"), true);
   assert.equal(navbarSource.includes("bounceDistancePx"), true);
-  assert.equal(navbarSource.includes("scrollHandoffDistancePx"), true);
+  assert.equal(navbarSource.includes("scrollHandoffTriggerPx"), true);
+  assert.equal(navbarSource.includes("duration: 1.05"), true);
+  assert.equal(navbarSource.includes("duration: 1"), true);
   assert.equal(navbarSource.includes("revealOnDesktopScroll"), true);
 });
 

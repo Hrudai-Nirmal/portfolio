@@ -57,7 +57,7 @@ export default function Navbar({
       handoffTimeline
         .to(spaceshipHeader, {
           y: spaceshipHeaderConfig.bounceDistancePx,
-          duration: 0.22,
+          duration: 0.32,
           ease: "power2.out",
         })
         .to(
@@ -65,10 +65,10 @@ export default function Navbar({
           {
             y: -220,
             autoAlpha: 0,
-            duration: 0.78,
+            duration: 1.05,
             ease: "power4.in",
           },
-          0.22,
+          0.32,
         )
         .fromTo(
           compactMenuHeader,
@@ -76,20 +76,22 @@ export default function Navbar({
           {
             y: 0,
             autoAlpha: 1,
-            duration: 0.68,
+            duration: 1,
             ease: "back.out(1.4)",
           },
-          0.32,
+          0.46,
         );
 
       const handoffTrigger = ScrollTrigger.create({
         trigger: document.documentElement,
-        start: 0,
-        end: spaceshipHeaderConfig.scrollHandoffDistancePx,
-        animation: handoffTimeline,
-        scrub: true,
-        invalidateOnRefresh: true,
+        start: spaceshipHeaderConfig.scrollHandoffTriggerPx,
+        onEnter: () => handoffTimeline.play(),
+        onLeaveBack: () => handoffTimeline.reverse(),
       });
+
+      if (window.scrollY >= spaceshipHeaderConfig.scrollHandoffTriggerPx) {
+        handoffTimeline.progress(1);
+      }
 
       return () => {
         handoffTrigger.kill();

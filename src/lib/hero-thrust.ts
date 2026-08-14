@@ -5,8 +5,6 @@
 
 export interface HeroThrustEffects {
   speed: number;
-  streakLength: number;
-  glow: number;
 }
 
 /** Constrains an arbitrary thrust value to the supported zero-to-one range. */
@@ -21,7 +19,5 @@ export function getHeroThrustEffects(thrustLevel: number): HeroThrustEffects {
 
   return {
     speed: 0.5 + normalizedThrustLevel * 4,
-    streakLength: 3 + normalizedThrustLevel * 7,
-    glow: 0.2 + normalizedThrustLevel * 0.3,
   };
 }

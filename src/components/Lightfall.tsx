@@ -8,6 +8,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
 import {
+  advanceLightfallTime,
   getLightfallRenderDpr,
   shouldRenderLightfallFrame,
 } from '@/lib/lightfall-performance';
@@ -96,7 +97,6 @@ uniform int   uColorCount;
 
 uniform vec3  uBgColor;
 uniform vec3  uMouseColor;
-uniform float uSpeed;
 uniform int   uStreakCount;
 uniform float uStreakWidth;
 uniform float uStreakLength;
@@ -148,7 +148,7 @@ vec2 sceneC(vec2 frag, vec2 r) {
 void mainImage(out vec4 o, vec2 C) {
   vec2 r = iResolution.xy;
   vec2 uv0 = (C + C - r) / r.x;
-  float T = 0.1 * iTime * uSpeed + 9.0;
+  float T = 0.1 * iTime + 9.0;
   float angRings = max(1.0, floor(6.28318530718 * max(uDensity, 0.05) + 0.5));
   vec2 Y = vec2(5e-3, 6.28318530718 / angRings);
 
@@ -237,20 +237,15 @@ const Lightfall: React.FC<LightfallProps> = ({
   const geometryRef = useRef<Triangle | null>(null);
   const rendererRef = useRef<Renderer | null>(null);
   const mouseTargetRef = useRef<[number, number]>([0, 0]);
-  const lastTimeRef = useRef(0);
+  const lastFrameTimestampRef = useRef<number | null>(null);
+  const animationTimeRef = useRef(0);
+  const speedRef = useRef(speed);
   const isInViewportRef = useRef(true);
   const isDocumentVisibleRef = useRef(true);
-  const dynamicUniformValuesRef = useRef({ speed, streakLength, glow });
 
   useEffect(() => {
-    dynamicUniformValuesRef.current = { speed, streakLength, glow };
-    const activeProgram = programRef.current;
-    if (!activeProgram) return;
-
-    activeProgram.uniforms.uSpeed.value = speed;
-    activeProgram.uniforms.uStreakLength.value = streakLength;
-    activeProgram.uniforms.uGlow.value = glow;
-  }, [speed, streakLength, glow]);
+    speedRef.current = speed;
+  }, [speed]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -275,7 +270,6 @@ const Lightfall: React.FC<LightfallProps> = ({
     );
     const resolvedColors = colors.length ? colors : namedColors;
     const { arr, count, avg } = prepColors(resolvedColors);
-    const dynamicUniformValues = dynamicUniformValuesRef.current;
 
     const uniforms = {
       iResolution: { value: [gl.drawingBufferWidth, gl.drawingBufferHeight, 1] },
@@ -292,11 +286,10 @@ const Lightfall: React.FC<LightfallProps> = ({
       uColorCount: { value: count },
       uBgColor: { value: hexToRGB(backgroundColor) },
       uMouseColor: { value: avg },
-      uSpeed: { value: dynamicUniformValues.speed },
       uStreakCount: { value: Math.max(1, Math.min(16, Math.round(streakCount))) },
       uStreakWidth: { value: streakWidth },
-      uStreakLength: { value: dynamicUniformValues.streakLength },
-      uGlow: { value: dynamicUniformValues.glow },
+      uStreakLength: { value: streakLength },
+      uGlow: { value: glow },
       uDensity: { value: density },
       uTwinkle: { value: twinkle },
       uZoom: { value: zoom },
@@ -354,20 +347,25 @@ const Lightfall: React.FC<LightfallProps> = ({
 
     const loop = (t: number) => {
       rafRef.current = requestAnimationFrame(loop);
-      uniforms.iTime.value = t * 0.001;
+      const previousFrameTimestamp = lastFrameTimestampRef.current;
+      const frameDeltaSeconds = previousFrameTimestamp === null
+        ? 0
+        : (t - previousFrameTimestamp) / 1000;
+      lastFrameTimestampRef.current = t;
+      animationTimeRef.current = advanceLightfallTime(
+        animationTimeRef.current,
+        frameDeltaSeconds,
+        speedRef.current,
+      );
+      uniforms.iTime.value = animationTimeRef.current;
       if (mouseDampening > 0) {
-        if (!lastTimeRef.current) lastTimeRef.current = t;
-        const dt = (t - lastTimeRef.current) / 1000;
-        lastTimeRef.current = t;
         const tau = Math.max(1e-4, mouseDampening);
-        let factor = 1 - Math.exp(-dt / tau);
+        let factor = 1 - Math.exp(-frameDeltaSeconds / tau);
         if (factor > 1) factor = 1;
         const target = mouseTargetRef.current;
         const cur = uniforms.iMouse.value as number[];
         cur[0] += (target[0] - cur[0]) * factor;
         cur[1] += (target[1] - cur[1]) * factor;
-      } else {
-        lastTimeRef.current = t;
       }
       const shouldRender = shouldRenderLightfallFrame({
         isPaused: paused,
@@ -407,6 +405,7 @@ const Lightfall: React.FC<LightfallProps> = ({
       geometryRef.current = null;
       meshRef.current = null;
       rendererRef.current = null;
+      lastFrameTimestampRef.current = null;
     };
   }, [
     dpr,
@@ -418,6 +417,8 @@ const Lightfall: React.FC<LightfallProps> = ({
     backgroundColor,
     streakCount,
     streakWidth,
+    streakLength,
+    glow,
     density,
     twinkle,
     zoom,
