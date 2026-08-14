@@ -11,11 +11,11 @@
 
 - Local implementation: `http://127.0.0.1:3000/`
 - CSS viewport: 1280 × 720 at 1× density
-- Browser screenshots: `/tmp/mission-control-trigger-restored.png` and `/tmp/mission-control-trigger-menu.png` (1274 × 717; browser scrollbar excluded)
+- Browser screenshots: `/tmp/mission-control-fast-header.png` and `/tmp/mission-control-fast-menu.png` (1274 × 717; browser scrollbar excluded)
 - Rendered SVG bounds: 842.23 × 126.33 CSS pixels at x 215.88, y 12
 - Compared state: hero at the top, menu closed, Shadow chat closed
 - Normalization: reference focus crop resized to 842 × 140 and centered above the implementation's 1274 × 150 top region, matching the user-requested 70% rail scale
-- Reference and trigger-state comparison: `/tmp/mission-control-trigger-comparison.png`
+- Reference and trigger-state comparison: `/tmp/mission-control-fast-comparison.png`
 - Compact screenshot: `/tmp/mission-control-svg-compact.png` at a 390 × 844 CSS viewport
 - A separate micro-crop was unnecessary because both normalized frames keep the name, navigation labels, Shadow display, status copy, screws, and hazard stripe legible
 
@@ -25,6 +25,7 @@
 - The 70% desktop scale is an intentional user-directed refinement; the SVG rail remains centered while the detached compact menu owns the top-right after the handoff.
 - The AUX THRUST control keeps the reference's yellow hardware accent and now exposes a real horizontal range, live percentage readout, and red-to-yellow knob state without changing the rail's silhouette.
 - Thrust changes only the rate of the existing Lightfall field. Streak length, glow, geometry, and hero contrast remain unchanged as requested.
+- The handoff keeps the same endpoints and trigger but now completes in 1.12 seconds, with a restrained sine dip, exponential header launch, and exponential menu drop.
 - Fonts and typography: heavy sans-serif identity text, condensed monospace navigation labels, blue engineering subtitle, and purple terminal display preserve the reference hierarchy and optical weight.
 - Spacing and layout rhythm: the identity, four-key navigation bank, and command housing retain the reference's three-module sequence, connected spine, thick chassis, inset panels, rounded corners, and fixed top placement.
 - Colors and visual tokens: cream, near-black, charcoal, electric blue, purple, red, and safety yellow match the source art direction with high-contrast outlines and flat neo-brutalist shadows.
@@ -42,8 +43,9 @@
 7. **P2 — pointer drag stopped at its initial value:** Pointer capture alone did not reliably report intermediate SVG drag movement. Fix: track the active drag explicitly and update from every captured pointer move; a full browser drag now reaches 99% thrust.
 8. **P1 — speed changes sought through animation time:** The shader multiplied absolute time by the current speed, so a speed update instantly moved the field backward or forward. Fix: integrate frame deltas into continuous animation time and apply the current speed only to the next increment.
 9. **P2 — thrust label text selection:** Dragging across the SVG could select AUX THRUST. Fix: suppress the pointer-down default after explicitly focusing the slider and apply `user-select: none` to the complete control.
-10. **P2 — scrubbed header handoff:** Header/menu transforms previously followed every scroll pixel. Fix: crossing 160px now plays a 1.46-second timeline; crossing upward reverses it from its current position.
-11. **Post-fix evidence:** `/tmp/mission-control-trigger-comparison.png` shows the selected reference above and the triggered header/menu states below.
+10. **P2 — scrubbed header handoff:** Header/menu transforms previously followed every scroll pixel. Fix: crossing 160px now plays an autonomous timeline; crossing upward reverses it from its current position.
+11. **P3 — handoff felt too linear and slow:** Fix: divided timings by approximately 1.3 and replaced the gentler power/back eases with `sine.inOut`, `expo.in`, and `expo.out` for a slower middle and sharper sling phases.
+12. **Post-fix evidence:** `/tmp/mission-control-fast-comparison.png` shows the selected reference above and the final triggered header/menu states below.
 
 ## Functional verification
 
@@ -57,9 +59,10 @@
 - At `scrollY: 120`, the rail remained at y 12 and the menu stayed hidden after a 700ms wait, confirming that transforms no longer scrub with scroll.
 - Crossing to `scrollY: 170` first placed the rail at y 25.74 during its bounce, then completed autonomously with the rail at y -208 and menu at y 20.
 - Crossing back to `scrollY: 150` reversed the active timeline and restored the rail to y 12 while hiding the menu.
+- The faster pass completed both directions within a 1.2-second browser sampling window; midpoint samples confirmed the header holds near its 18px dip before accelerating offscreen while the menu drops rapidly and settles.
 - At 390 × 844, Ask Shadow occupies x 20–137.20 and the menu occupies x 312.41–370; they do not overlap, and the menu is in the higher stacking layer.
 - Browser logs contain no error-level entries after thrust dragging and both directions of the trigger animation.
-- TDD evidence: continuous-time, selection suppression, single-point trigger, slower timing, and reversible playback tests failed before their implementations, then passed after each behavior was added.
+- TDD evidence: the 1.3× timing and sine/exponential easing assertions failed before implementation, then passed after the refined timeline was added.
 
 ## Follow-up polish
 

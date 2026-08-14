@@ -181,7 +181,7 @@ test("compact menu stays right-aligned above the Shadow control", () => {
   assert.match(staggeredMenuSource, /max-width: 1279px[\s\S]*z-index: 60;/);
 });
 
-test("navbar triggers a slower reversible header-to-menu handoff at one scroll point", () => {
+test("navbar triggers a faster nonlinear reversible handoff at one scroll point", () => {
   const navbarSource = readFileSync(
     new URL("../src/components/Navbar.tsx", import.meta.url),
     "utf8",
@@ -195,8 +195,11 @@ test("navbar triggers a slower reversible header-to-menu handoff at one scroll p
   assert.equal(navbarSource.includes("handoffTimeline.reverse()"), true);
   assert.equal(navbarSource.includes("bounceDistancePx"), true);
   assert.equal(navbarSource.includes("scrollHandoffTriggerPx"), true);
-  assert.equal(navbarSource.includes("duration: 1.05"), true);
-  assert.equal(navbarSource.includes("duration: 1"), true);
+  assert.equal(navbarSource.includes("duration: 0.81"), true);
+  assert.equal(navbarSource.includes("duration: 0.77"), true);
+  assert.equal(navbarSource.includes('ease: "sine.inOut"'), true);
+  assert.equal(navbarSource.includes('ease: "expo.in"'), true);
+  assert.equal(navbarSource.includes('ease: "expo.out"'), true);
   assert.equal(navbarSource.includes("revealOnDesktopScroll"), true);
 });
 
