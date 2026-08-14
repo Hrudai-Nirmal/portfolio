@@ -55,7 +55,9 @@ export const menuButtonColors = {
 } as const;
 
 export const spaceshipHeaderConfig = {
-  isPersistent: true,
+  isPersistent: false,
+  scrollHandoffDistancePx: 240,
+  bounceDistancePx: 18,
   systemLabel: "NAV-COM // 01",
   roleLabel: "SOFTWARE ENGINEER · BANGALORE",
   statusLabel: "PRIMARY ACTION",

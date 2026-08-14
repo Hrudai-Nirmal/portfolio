@@ -1,11 +1,13 @@
 "use client";
 
 /**
- * The desktop mission-control rail stays fixed while mobile keeps compact
- * Shadow and menu controls available at the viewport edges.
+ * Coordinates the reversible desktop handoff from the mission-control rail
+ * to the compact menu while preserving the mobile edge controls.
  */
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SpaceshipHeader from "@/components/SpaceshipHeader";
 import StaggeredMenu from "@/components/StaggeredMenu";
 import {
@@ -15,17 +17,84 @@ import {
   spaceshipHeaderConfig,
 } from "@/content/portfolio-experience";
 
+gsap.registerPlugin(ScrollTrigger);
+
 interface NavbarProps {
   chatOpen: boolean;
   onToggleChat: () => void;
 }
 
-/** Renders the full header, its collapsed hamburger state, and chatbot control. */
+/** Renders the scroll-linked header handoff, navigation menu, and chatbot control. */
 export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigationRef = useRef<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    const navigationElement = navigationRef.current;
+    if (!navigationElement) return;
+
+    const mediaContext = gsap.matchMedia();
+
+    mediaContext.add("(min-width: 1280px)", () => {
+      const spaceshipHeader = navigationElement.querySelector<HTMLElement>(
+        ".spaceship-header",
+      );
+      const compactMenuHeader = navigationElement.querySelector<HTMLElement>(
+        ".staggered-menu-header",
+      );
+
+      if (!spaceshipHeader || !compactMenuHeader) return;
+
+      const handoffTimeline = gsap.timeline({ paused: true });
+
+      handoffTimeline
+        .to(spaceshipHeader, {
+          y: spaceshipHeaderConfig.bounceDistancePx,
+          duration: 0.22,
+          ease: "power2.out",
+        })
+        .to(
+          spaceshipHeader,
+          {
+            y: -220,
+            autoAlpha: 0,
+            duration: 0.78,
+            ease: "power4.in",
+          },
+          0.22,
+        )
+        .fromTo(
+          compactMenuHeader,
+          { y: -112, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.68,
+            ease: "back.out(1.4)",
+          },
+          0.32,
+        );
+
+      const handoffTrigger = ScrollTrigger.create({
+        trigger: document.documentElement,
+        start: 0,
+        end: spaceshipHeaderConfig.scrollHandoffDistancePx,
+        animation: handoffTimeline,
+        scrub: true,
+        invalidateOnRefresh: true,
+      });
+
+      return () => {
+        handoffTrigger.kill();
+        handoffTimeline.kill();
+      };
+    });
+
+    return () => mediaContext.revert();
+  }, []);
 
   return (
-    <nav aria-label="Primary navigation">
+    <nav ref={navigationRef} aria-label="Primary navigation">
       <SpaceshipHeader
         chatOpen={chatOpen}
         onToggleChat={onToggleChat}
@@ -45,6 +114,7 @@ export default function Navbar({ chatOpen, onToggleChat }: NavbarProps) {
         accentColor="#5227FF"
         isFixed
         controlBoardMode
+        revealOnDesktopScroll
         menuLabel={spaceshipHeaderConfig.menuLabel}
         onMenuOpen={() => setIsMenuOpen(true)}
         onMenuClose={() => setIsMenuOpen(false)}

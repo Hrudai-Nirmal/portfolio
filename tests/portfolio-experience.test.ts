@@ -75,7 +75,9 @@ test("hamburger colors match the restored interaction", () => {
 
 test("spaceship header keeps the selected mission-control hierarchy", () => {
   assert.deepEqual(spaceshipHeaderConfig, {
-    isPersistent: true,
+    isPersistent: false,
+    scrollHandoffDistancePx: 240,
+    bounceDistancePx: 18,
     systemLabel: "NAV-COM // 01",
     roleLabel: "SOFTWARE ENGINEER · BANGALORE",
     statusLabel: "PRIMARY ACTION",
@@ -105,6 +107,8 @@ test("spaceship header applies the requested compact scale and key-light hover s
   assert.equal(spaceshipHeaderSource.includes("scale-[0.7]"), true);
   assert.equal(spaceshipHeaderSource.includes("group-hover:fill-[#f0b90b]"), true);
   assert.equal(spaceshipHeaderSource.includes('stroke="#f0b90b"'), false);
+  assert.equal(spaceshipHeaderSource.includes("AUX THRUST"), true);
+  assert.equal(spaceshipHeaderSource.includes("THRUSTER READY"), true);
 });
 
 test("compact menu stays right-aligned above the Shadow control", () => {
@@ -120,14 +124,31 @@ test("compact menu stays right-aligned above the Shadow control", () => {
   assert.match(staggeredMenuSource, /max-width: 1279px[\s\S]*z-index: 60;/);
 });
 
-test("navbar keeps the mission-control rail fixed instead of collapsing on scroll", () => {
+test("navbar scrubs an exactly reversible header-to-menu scroll handoff", () => {
   const navbarSource = readFileSync(
     new URL("../src/components/Navbar.tsx", import.meta.url),
     "utf8",
   );
 
-  assert.equal(navbarSource.includes("isHeaderCollapsed"), false);
-  assert.equal(navbarSource.includes('addEventListener("scroll"'), false);
+  assert.equal(navbarSource.includes("ScrollTrigger.create"), true);
+  assert.equal(navbarSource.includes("scrub: true"), true);
+  assert.equal(navbarSource.includes("bounceDistancePx"), true);
+  assert.equal(navbarSource.includes("scrollHandoffDistancePx"), true);
+  assert.equal(navbarSource.includes("revealOnDesktopScroll"), true);
+});
+
+test("desktop hamburger is detached from the control rail until the scroll handoff", () => {
+  const staggeredMenuSource = readFileSync(
+    new URL("../src/components/StaggeredMenu.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(staggeredMenuSource.includes("revealOnDesktopScroll?: boolean"), true);
+  assert.equal(staggeredMenuSource.includes("data-scroll-reveal"), true);
+  assert.match(
+    staggeredMenuSource,
+    /min-width: 1280px[\s\S]*data-scroll-reveal[\s\S]*visibility: hidden;/,
+  );
 });
 
 test("work motion holds horizontal travel until the title phase completes", () => {

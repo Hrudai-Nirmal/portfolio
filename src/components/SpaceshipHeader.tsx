@@ -176,6 +176,24 @@ export default function SpaceshipHeader({
           <text x="1213" y="189" fill="#d77cff" fontFamily="var(--font-geist-mono), monospace" fontSize="12" fontWeight="900" letterSpacing="1.5">
             {spaceshipHeaderConfig.statusLabel}
           </text>
+
+          <g aria-hidden="true">
+            <rect x="1404" y="49" width="143" height="146" rx="16" fill="#202126" stroke="#08080b" strokeWidth="8" />
+            <rect x="1417" y="62" width="117" height="28" rx="7" fill="#f0b90b" stroke="#08080b" strokeWidth="5" />
+            <text x="1475.5" y="81" textAnchor="middle" fill="#111216" fontFamily="var(--font-geist-mono), monospace" fontSize="12" fontWeight="900" letterSpacing="1.2">
+              AUX THRUST
+            </text>
+            <rect x="1422" y="101" width="107" height="42" rx="8" fill="#101116" stroke="#08080b" strokeWidth="5" />
+            <path d="M 1438 122 H 1513" stroke="#484a53" strokeWidth="8" strokeLinecap="round" />
+            <path d="M 1438 122 H 1491" stroke="#35a8ff" strokeWidth="8" strokeLinecap="round" className="[filter:drop-shadow(0_0_5px_#35a8ff)]" />
+            <circle cx="1491" cy="122" r="13" fill="#d83420" stroke="#08080b" strokeWidth="5" />
+            <circle cx="1487" cy="118" r="4" fill="#ff8a72" />
+            <rect x="1420" y="153" width="111" height="27" rx="6" fill="#16171b" stroke="#08080b" strokeWidth="5" />
+            <circle cx="1435" cy="166.5" r="5" fill="#35a8ff" className="[filter:drop-shadow(0_0_4px_#35a8ff)]" />
+            <text x="1447" y="171" fill="#f2ecdf" fontFamily="var(--font-geist-mono), monospace" fontSize="10" fontWeight="900" letterSpacing="0.8">
+              THRUSTER READY
+            </text>
+          </g>
         </g>
       </svg>
     </div>

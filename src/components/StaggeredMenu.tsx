@@ -32,6 +32,7 @@ export interface StaggeredMenuProps {
   accentColor?: string;
   isFixed: boolean;
   controlBoardMode?: boolean;
+  revealOnDesktopScroll?: boolean;
   menuLabel?: string;
   changeMenuColorOnOpen?: boolean;
   closeOnClickAway?: boolean;
@@ -55,6 +56,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   accentColor = '#5227FF',
   isFixed = false,
   controlBoardMode = false,
+  revealOnDesktopScroll = false,
   menuLabel = 'Menu',
   closeOnClickAway = true,
   onMenuOpen,
@@ -303,6 +305,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         data-position={position}
         data-open={open || undefined}
         data-control-board={controlBoardMode || undefined}
+        data-scroll-reveal={revealOnDesktopScroll || undefined}
         data-menu-label={menuLabel}
       >
         <div
@@ -531,6 +534,33 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   .sm-scope .staggered-menu-wrapper[data-control-board] .sm-toggle:focus-visible {
     outline: 4px solid #f4efe5;
     outline-offset: 3px;
+  }
+  .sm-scope .staggered-menu-wrapper[data-control-board][data-scroll-reveal] .staggered-menu-header {
+    top: 1.25rem;
+    right: 1.25rem;
+    left: auto;
+    width: auto;
+    aspect-ratio: auto;
+    padding: 0;
+    transform: translateY(-7rem);
+    transform-origin: top right;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .sm-scope .staggered-menu-wrapper[data-control-board][data-scroll-reveal] .sm-toggle {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-width: 3px;
+    border-radius: 0.8rem;
+    box-shadow: 4px 4px 0 #08080b;
+  }
+  .sm-scope .staggered-menu-wrapper[data-control-board][data-scroll-reveal] .sm-toggle::before,
+  .sm-scope .staggered-menu-wrapper[data-control-board][data-scroll-reveal] .sm-toggle::after {
+    display: none;
+  }
+  .sm-scope .staggered-menu-wrapper[data-control-board][data-scroll-reveal] .sm-toggle svg {
+    height: 2.2rem;
+    margin-top: 0;
   }
 }
 @media (max-width: 1279px) {
