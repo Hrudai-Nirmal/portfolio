@@ -75,6 +75,20 @@ npm run kb:mcp
 npm run test:kb
 ```
 
+## Custom Shadow Chat
+
+The portfolio renders its own floating Shadow comms interface instead of the
+hosted Dify iframe. Without chat credentials it identifies itself as local
+navigation mode and answers common portfolio questions from the app. To connect
+the same interface to the Dify chat application, configure these server-only
+variables:
+
+- `DIFY_CHAT_API_KEY`
+- `DIFY_CHAT_API_BASE_URL` (optional, defaults to `https://api.dify.ai/v1`)
+
+The chat key is read only by `/api/shadow` and must never use a `NEXT_PUBLIC_`
+prefix.
+
 ### GitHub Actions Automation
 
 Workflow: `.github/workflows/sync-shadow-kb.yml`

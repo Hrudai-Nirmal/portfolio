@@ -26,6 +26,10 @@ import {
   getHeroThrustEffects,
   normalizeThrustLevel,
 } from "../src/lib/hero-thrust.ts";
+import {
+  getLocalShadowReply,
+  normalizeShadowQuery,
+} from "../src/lib/shadow-chat.ts";
 
 test("hero typing phrases follow the requested loop order", () => {
   assert.deepEqual(heroTypingPhrases, [
@@ -124,6 +128,18 @@ test("spaceship header applies the requested compact scale and key-light hover s
   assert.equal(spaceshipHeaderSource.includes('event.key === "ArrowRight"'), true);
 });
 
+test("spaceship navigation keys use tactile retro console detailing", () => {
+  const spaceshipHeaderSource = readFileSync(
+    new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(spaceshipHeaderSource.includes("data-console-key"), true);
+  assert.equal(spaceshipHeaderSource.includes("NAV 0"), true);
+  assert.equal(spaceshipHeaderSource.includes("KEY"), true);
+  assert.equal(spaceshipHeaderSource.includes("strokeDasharray=\"4 5\""), true);
+});
+
 test("spaceship header replaces identity copy with a compact destination radar", () => {
   const spaceshipHeaderSource = readFileSync(
     new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),
@@ -179,6 +195,43 @@ test("page wires the thrust control to Hero and updates Lightfall uniforms live"
   assert.equal(lightfallSource.includes("advanceLightfallTime"), true);
   assert.equal(lightfallSource.includes("speedRef.current = speed"), true);
   assert.equal(lightfallSource.includes("iTime * uSpeed"), false);
+});
+
+test("custom Shadow comms replaces the iframe with a floating two-thirds chat", () => {
+  const pageSource = readFileSync(
+    new URL("../src/app/page.tsx", import.meta.url),
+    "utf8",
+  );
+  const shadowChatSource = readFileSync(
+    new URL("../src/components/ShadowChat.tsx", import.meta.url),
+    "utf8",
+  );
+  const shadowRouteSource = readFileSync(
+    new URL("../src/app/api/shadow/route.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(pageSource.includes("<iframe"), false);
+  assert.equal(pageSource.includes("<ShadowChat"), true);
+  assert.equal(shadowChatSource.includes("h-[min(66.666vh,580px)]"), true);
+  assert.equal(shadowChatSource.includes("right-[clamp(0.75rem,2vw,1.5rem)]"), true);
+  assert.equal(shadowChatSource.includes("/shadow-pilot-avatar.png"), true);
+  assert.equal(shadowChatSource.includes("/shadow-robot-avatar.png"), true);
+  assert.equal(shadowChatSource.includes('aria-live="polite"'), true);
+  assert.equal(shadowChatSource.includes("onSubmit={handleSubmit}"), true);
+  assert.equal(shadowChatSource.includes("flex-wrap gap-2"), true);
+  assert.equal(shadowChatSource.includes("overflow-x-auto"), false);
+  assert.equal(shadowRouteSource.includes("DIFY_CHAT_API_KEY"), true);
+  assert.equal(shadowRouteSource.includes("/chat-messages"), true);
+});
+
+test("Shadow local navigation mode validates input and answers portfolio topics", () => {
+  assert.equal(normalizeShadowQuery("  Tell me about CORTEX  "), "Tell me about CORTEX");
+  assert.throws(() => normalizeShadowQuery("   "), /message is required/i);
+  assert.throws(() => normalizeShadowQuery("x".repeat(1001)), /1,000 characters/i);
+  assert.match(getLocalShadowReply("What projects has Hrudai built?"), /Meridian/i);
+  assert.match(getLocalShadowReply("Show me the top missions"), /Meridian/i);
+  assert.match(getLocalShadowReply("How can I contact him?"), /contact/i);
 });
 
 test("compact menu stays right-aligned above the Shadow control", () => {

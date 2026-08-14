@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Projects from "@/components/Projects";
+import ShadowChat from "@/components/ShadowChat";
 import WhyWorkWithMe from "@/components/WhyWorkWithMe";
 import { normalizeThrustLevel } from "@/lib/hero-thrust";
 
@@ -55,36 +56,7 @@ export default function Home() {
         </main>
         <Footer />
 
-        {chatOpen && (
-          <aside
-            id="shadow-chat-panel"
-            className="glass fixed inset-y-0 right-0 z-[60] w-full border-l border-border-color bg-surface shadow-2xl sm:w-[min(92vw,430px)]"
-          >
-            <div className="flex h-full flex-col">
-              <div className="flex items-center justify-between border-b border-border-color px-4 py-3">
-                <h2 className="text-sm font-semibold text-text-primary">
-                  Ask Shadow
-                </h2>
-                <button
-                  type="button"
-                  onClick={() => setChatOpen(false)}
-                  aria-label="Close chatbot"
-                  className="rounded-md px-3 py-1 text-sm text-text-secondary transition-colors duration-200 hover:bg-surface-hover hover:text-text-primary"
-                >
-                  Close
-                </button>
-              </div>
-              <div className="min-h-0 flex-1 bg-background">
-                <iframe
-                  src="https://udify.app/chatbot/opOcJNW5av6XHYpt"
-                  title="Portfolio AI chatbot"
-                  className="h-full w-full"
-                  allow="microphone"
-                />
-              </div>
-            </div>
-          </aside>
-        )}
+        {chatOpen && <ShadowChat onClose={() => setChatOpen(false)} />}
       </div>
     </>
   );
