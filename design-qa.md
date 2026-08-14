@@ -18,6 +18,7 @@
 - Icon-only animated-radar screenshot: `/tmp/icon-only-animated-radar-header.png`
 - User-reported button reference: `/var/folders/xn/zzsqmz5d7zddh1r_2_b4h59w0000gn/T/codex-clipboard-26c235fb-3e8f-4ab4-8019-1e6c6f4adf53.png` (924 × 302)
 - Corrected full-header screenshot and normalized button crop: `/tmp/fitted-icon-header.png` and `/tmp/fitted-icon-nav-module.png`
+- Space-console button captures: `/tmp/spaceship-console-buttons.png` and `/tmp/spaceship-console-buttons-hover.png`
 - Rendered radar module bounds: 213.18 × 108.43 CSS pixels at x 233.80, y 8.84
 - Compared state: hero at the top, menu closed, Shadow chat closed
 - Normalization: reference focus crop resized to 842 × 140 and centered above the implementation's 1274 × 150 top region, matching the user-requested 70% rail scale
@@ -25,6 +26,7 @@
 - Latest three-state comparison: `/tmp/retro-console-shadow-comparison.png` (selected header reference, closed implementation, and active custom conversation)
 - Label-removal comparison: `/tmp/icon-only-radar-comparison.png` (previous labeled keys above, icon-only keys and animated radar below)
 - Button-fit comparison: `/tmp/fitted-icon-reference-comparison.png` (reported state above, corrected normalized implementation below)
+- Console-depth comparison: `/tmp/spaceship-console-buttons-comparison.png` (centered icon keys before refinement above, guarded console switches after refinement below)
 - Compact screenshot: `/tmp/mission-control-svg-compact.png` at a 390 × 844 CSS viewport
 - A separate micro-crop was unnecessary because the combined comparison keeps the radar route, navigation labels, Shadow display, status copy, screws, and thrust control legible
 
@@ -40,6 +42,7 @@
 - The final navigation pass removes every visible NAV/KEY and HOME/WORK/ABOUT/CONTACT label from the four key faces. Icons remain at their prior coordinates, while semantic link labels and SVG titles preserve keyboard and screen-reader meaning.
 - A luminous dotted overlay follows the decorative map's existing route from x 114/y 127 to the planet target at x 354/y 108. Browser sampling confirmed dash offset changed from -14.12px to -29.18px over 420ms, while the origin beacon changed scale and opacity independently.
 - The supplied crop exposed two shared geometry errors across all four buttons: glyph center x was 14.5 SVG units left of the key center, and the removed label plate still occupied the upper face. The correction uses the true key center at x + 63.5/y 110, removes the dead plate, expands the dashed service area from 95 × 58 to 97 × 80, and normalizes each glyph inside it.
+- The console refinement preserves those corrected glyph centers but gives each key a stronger mechanical hierarchy: octagonal shell, twin guard rails, raised chamfered cap, corner retainers, under-cap shadow, and a separate lamp recess. The hover capture confirms that only the targeted cap brightens and its blue lamp changes to yellow.
 - Shadow Comms uses the same cream, charcoal, red, yellow, purple, blue, and green hardware palette as the rail. Its red title plate, secured-channel strip, rounded speech bubbles, thick outlines, and generated crewmate/robot portraits deliver the requested playful social-deduction-game chat energy without using franchise branding or assets.
 - At 1280 × 720, the panel occupies x 810–1250, y 144–623.98, and exactly 479.98 pixels of height (two-thirds of the viewport). The rail ends above the panel, so the chat is not overlapped.
 - At 390 × 844, the panel is 366.59 × 562.66 pixels, stays within the viewport, and wraps quick prompts rather than creating horizontal overflow.
@@ -75,6 +78,8 @@
 22. **Post-fix evidence:** `/tmp/icon-only-radar-comparison.png` shows the labeled and icon-only header states at the same 1280 × 720 viewport.
 23. **P2 — icon/button misalignment from label removal:** The four glyphs retained their old label-sharing coordinates, leaving them high and left inside a dead two-zone button face. Fix: removed the obsolete label housing and rebuilt all glyph coordinates around the true center of one continuous dashed face.
 24. **Post-fix evidence:** `/tmp/fitted-icon-reference-comparison.png` places the supplied broken crop directly above the corrected module at equal width. All four icons now sit within their service boxes with balanced margins and no clipping.
+25. **P2 — controls still read as flat interface tiles:** The corrected alignment left each key as a simple framed square. Fix: added a layered shell/cap/guard/lamp construction and moved the whole cap assembly on press so the controls read as physical spacecraft hardware.
+26. **Post-fix evidence:** `/tmp/spaceship-console-buttons-comparison.png` compares identical header regions before and after; `/tmp/spaceship-console-buttons-hover.png` verifies the active cap and status-lamp state without layout movement.
 
 ## Functional verification
 
@@ -98,6 +103,7 @@
 - TDD evidence for this pass: retro-key structure, custom-chat dimensions and wiring, local query validation, mission-intent routing, and mobile wrapping assertions each failed before their corresponding implementation and passed afterward.
 - Latest TDD and browser evidence: icon-only source assertions and radar motion/reduced-motion assertions failed before implementation, then passed; live computed styles confirmed both radar animations advance without console errors.
 - Button-fit TDD evidence: true center coordinates, dead-plate removal, and expanded-box assertions failed against the reported implementation before the geometry correction and passed afterward. The rendered navigation module remains 341.09 × 110.01 CSS pixels at x 453.82/y 25.16, confirming the fix did not resize or displace the header.
+- Console-key TDD evidence: shell, guard, recessed lamp, and full-cap press-state assertions failed before implementation and passed afterward. Browser verification at 1280 × 720 found no console errors, retained the existing header footprint, and confirmed the first key's blue lamp turns yellow on hover.
 
 ## Follow-up polish
 

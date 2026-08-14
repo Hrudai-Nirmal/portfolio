@@ -201,17 +201,86 @@ export default function SpaceshipHeader({
           {menuItems.map((menuItem, menuItemIndex) => {
             const keyX = keyPositions[menuItemIndex];
             return (
-              <a key={menuItem.link} href={menuItem.link} aria-label={menuItem.ariaLabel} className="group pointer-events-auto text-[#f2f0ea] outline-none">
+              <a
+                key={menuItem.link}
+                href={menuItem.link}
+                aria-label={menuItem.ariaLabel}
+                data-console-key="navigation"
+                className="group pointer-events-auto text-[#f2f0ea] outline-none"
+              >
                 <title>{menuItem.label}</title>
-                <rect x={keyX} y="57" width="127" height="119" rx="14" fill="#34353d" stroke="#070709" strokeWidth="7" className="group-focus-visible:stroke-[#60a5fa]" />
-                <path d={`M ${keyX + 10} 70 L ${keyX + 20} 63 H ${keyX + 107} L ${keyX + 117} 70 V 151 L ${keyX + 108} 158 H ${keyX + 19} L ${keyX + 10} 151 Z`} fill="#17181d" stroke="#08080b" strokeWidth="5" className="transition-[fill,transform] duration-200 group-hover:fill-[#f2ecdf] group-active:[transform:translateY(2px)]" />
-                <rect x={keyX + 15} y="70" width="97" height="80" rx="9" fill="none" stroke="#646670" strokeWidth="2" strokeDasharray="4 5" className="transition-colors group-hover:stroke-[#777168]" />
-                <circle cx={keyX + 17} cy="67" r="3.5" fill="#aeb0b4" stroke="#08080b" strokeWidth="2" />
-                <circle cx={keyX + 110} cy="67" r="3.5" fill="#aeb0b4" stroke="#08080b" strokeWidth="2" />
-                <g className="transition-colors duration-200 group-hover:text-[#111216] group-active:[transform:translateY(2px)]">
-                  <NavigationGlyph index={menuItemIndex} x={keyX} />
+                <path
+                  data-console-key-shell="true"
+                  d={`M ${keyX + 12} 57 H ${keyX + 115} L ${keyX + 127} 69 V 164 L ${keyX + 115} 176 H ${keyX + 12} L ${keyX} 164 V 69 Z`}
+                  fill="#34353d"
+                  stroke="#070709"
+                  strokeWidth="7"
+                  className="transition-colors duration-200 group-hover:fill-[#41434c] group-focus-visible:stroke-[#60a5fa]"
+                />
+                <g data-console-key-guard="true" fill="#17181d" stroke="#070709" strokeWidth="4">
+                  <rect x={keyX + 1} y="83" width="8" height="54" rx="4" className="transition-colors group-hover:fill-[#565963]" />
+                  <rect x={keyX + 118} y="83" width="8" height="54" rx="4" className="transition-colors group-hover:fill-[#565963]" />
                 </g>
-                <rect x={keyX + 34} y="158" width="59" height="7" rx="3.5" fill="#238dff" className="transition-[fill,filter] duration-200 [filter:drop-shadow(0_0_5px_#238dff)] group-hover:fill-[#f0b90b] group-hover:[filter:drop-shadow(0_0_5px_#f0b90b)]" />
+                <path
+                  d={`M ${keyX + 20} 154 H ${keyX + 107} L ${keyX + 98} 164 H ${keyX + 29} Z`}
+                  fill="#090a0d"
+                  stroke="#070709"
+                  strokeWidth="3"
+                />
+                <g className="transition-transform duration-150 group-active:[transform:translateY(3px)]">
+                  <path
+                    d={`M ${keyX + 17} 75 L ${keyX + 27} 67 H ${keyX + 100} L ${keyX + 110} 75 V 141 L ${keyX + 100} 150 H ${keyX + 27} L ${keyX + 17} 141 Z`}
+                    fill="#17181d"
+                    stroke="#08080b"
+                    strokeWidth="5"
+                    className="transition-colors duration-200 group-hover:fill-[#e4ded1]"
+                  />
+                  <path
+                    d={`M ${keyX + 28} 73 H ${keyX + 99}`}
+                    fill="none"
+                    stroke="#5c5f69"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    className="transition-colors group-hover:stroke-[#a19b90]"
+                  />
+                  <rect
+                    x={keyX + 23}
+                    y="78"
+                    width="81"
+                    height="63"
+                    rx="7"
+                    fill="none"
+                    stroke="#646670"
+                    strokeWidth="2"
+                    strokeDasharray="4 5"
+                    className="transition-colors group-hover:stroke-[#777168]"
+                  />
+                  <path
+                    d={`M ${keyX + 27} 88 V 82 H ${keyX + 33} M ${keyX + 94} 82 H ${keyX + 100} V 88 M ${keyX + 27} 131 V 137 H ${keyX + 33} M ${keyX + 94} 137 H ${keyX + 100} V 131`}
+                    fill="none"
+                    stroke="#92949d"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    className="transition-colors group-hover:stroke-[#403d38]"
+                  />
+                  <circle cx={keyX + 23} cy="73" r="3.5" fill="#aeb0b4" stroke="#08080b" strokeWidth="2" />
+                  <circle cx={keyX + 104} cy="73" r="3.5" fill="#aeb0b4" stroke="#08080b" strokeWidth="2" />
+                  <g className="transition-colors duration-200 group-hover:text-[#111216]">
+                    <NavigationGlyph index={menuItemIndex} x={keyX} />
+                  </g>
+                </g>
+                <rect
+                  data-console-key-lamp-housing="true"
+                  x={keyX + 27}
+                  y="154"
+                  width="73"
+                  height="17"
+                  rx="8.5"
+                  fill="#08090c"
+                  stroke="#4c4f58"
+                  strokeWidth="3"
+                />
+                <rect x={keyX + 35} y="159" width="57" height="7" rx="3.5" fill="#238dff" className="transition-[fill,filter] duration-200 [filter:drop-shadow(0_0_5px_#238dff)] group-hover:fill-[#f0b90b] group-hover:[filter:drop-shadow(0_0_6px_#f0b90b)]" />
               </a>
             );
           })}

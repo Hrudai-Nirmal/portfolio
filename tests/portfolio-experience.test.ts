@@ -134,7 +134,26 @@ test("spaceship navigation keys keep retro hardware with icons only", () => {
     "utf8",
   );
 
-  assert.equal(spaceshipHeaderSource.includes("data-console-key"), false);
+  assert.equal(
+    spaceshipHeaderSource.includes('data-console-key="navigation"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes('data-console-key-shell="true"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes('data-console-key-guard="true"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes('data-console-key-lamp-housing="true"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes("group-active:[transform:translateY(3px)]"),
+    true,
+  );
   assert.equal(spaceshipHeaderSource.includes("NAV 0"), false);
   assert.equal(spaceshipHeaderSource.includes("menuItem.label.toUpperCase()"), false);
   assert.equal(spaceshipHeaderSource.includes("strokeDasharray=\"4 5\""), true);
@@ -144,9 +163,9 @@ test("spaceship navigation keys keep retro hardware with icons only", () => {
     spaceshipHeaderSource.includes('y="68" width="91" height="18"'),
     false,
   );
-  assert.equal(
-    spaceshipHeaderSource.includes('y="70" width="97" height="80"'),
-    true,
+  assert.match(
+    spaceshipHeaderSource,
+    /y="78"[\s\S]*width="81"[\s\S]*height="63"/,
   );
 });
 
