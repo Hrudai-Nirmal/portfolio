@@ -131,7 +131,7 @@ export default function SpaceshipHeader({
         aria-labelledby="mission-control-title"
         className="h-auto w-full overflow-visible [filter:drop-shadow(8px_10px_0_#050507)]"
       >
-        <title id="mission-control-title">Hrudai Nirmal mission control navigation</title>
+        <title id="mission-control-title">Mission control navigation</title>
 
         <g aria-hidden="true">
           <path d="M 58 100 H 1548 Q 1575 100 1575 126 Q 1575 152 1548 152 H 58 Q 25 152 25 126 Q 25 100 58 100 Z" fill="#24252b" stroke="#070709" strokeWidth="9" />
@@ -140,11 +140,20 @@ export default function SpaceshipHeader({
           <path d="M 1548 105 H 1580 Q 1595 105 1595 120 V 174 Q 1595 190 1579 190 H 1564" fill="none" stroke="#070709" strokeWidth="7" />
         </g>
 
-        <g aria-label="Identity module">
+        <g aria-label="Destination radar progress">
           <rect x="34" y="36" width="405" height="164" rx="20" fill="#222329" stroke="#070709" strokeWidth="10" />
-          <rect x="52" y="50" width="369" height="132" rx="13" fill="#f2ecdf" stroke="#08080b" strokeWidth="7" />
+          <rect x="52" y="50" width="369" height="132" rx="13" fill="#071006" stroke="#08080b" strokeWidth="7" />
+          <image
+            href="/mission-radar.png"
+            x="57"
+            y="55"
+            width="359"
+            height="120"
+            preserveAspectRatio="xMidYMid slice"
+          />
+          <rect x="63" y="61" width="347" height="108" rx="10" fill="none" stroke="#80da22" strokeOpacity="0.35" strokeWidth="2" />
           <rect x="196" y="26" width="98" height="24" rx="7" fill="#1f2025" stroke="#08080b" strokeWidth="7" />
-          <rect x="215" y="33" width="60" height="8" rx="4" fill="#35a8ff" className="[filter:drop-shadow(0_0_7px_#35a8ff)]" />
+          <rect x="215" y="33" width="60" height="8" rx="4" fill="#80da22" className="[filter:drop-shadow(0_0_7px_#80da22)]" />
           <path d="M 314 43 H 362 L 371 25 H 323 Z" fill="#d83420" stroke="#08080b" strokeWidth="6" />
           <path d="M 120 36 V 8" stroke="#6f7075" strokeWidth="8" />
           <circle cx="120" cy="7" r="13" fill="#b64cff" stroke="#08080b" strokeWidth="6" />
@@ -153,11 +162,8 @@ export default function SpaceshipHeader({
           <PanelScrew x={404} y={65} />
           <PanelScrew x={68} y={168} />
           <PanelScrew x={404} y={168} />
-          <text x="78" y="122" fill="#101014" fontFamily="var(--font-geist-sans), sans-serif" fontSize="40" fontWeight="900" letterSpacing="-2">
-            Hrudai Nirmal
-          </text>
-          <text x="79" y="153" fill="#1768d5" fontFamily="var(--font-geist-mono), monospace" fontSize="14" fontWeight="900" letterSpacing="2">
-            {spaceshipHeaderConfig.roleLabel}
+          <text x="77" y="77" fill="#a6ff4d" fontFamily="var(--font-geist-mono), monospace" fontSize="10" fontWeight="900" letterSpacing="1.2" className="[filter:drop-shadow(0_0_4px_#80da22)]">
+            DESTINATION 68%
           </text>
         </g>
 

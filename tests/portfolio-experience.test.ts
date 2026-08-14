@@ -124,6 +124,19 @@ test("spaceship header applies the requested compact scale and key-light hover s
   assert.equal(spaceshipHeaderSource.includes('event.key === "ArrowRight"'), true);
 });
 
+test("spaceship header replaces identity copy with a compact destination radar", () => {
+  const spaceshipHeaderSource = readFileSync(
+    new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(spaceshipHeaderSource.includes("Hrudai Nirmal"), false);
+  assert.equal(spaceshipHeaderSource.includes("spaceshipHeaderConfig.roleLabel"), false);
+  assert.equal(spaceshipHeaderSource.includes('href="/mission-radar.png"'), true);
+  assert.equal(spaceshipHeaderSource.includes('aria-label="Destination radar progress"'), true);
+  assert.equal(spaceshipHeaderSource.includes("DESTINATION 68%"), true);
+});
+
 test("hero thrust maps the control range to a stronger Lightfall warp", () => {
   assert.equal(normalizeThrustLevel(-1), 0);
   assert.equal(normalizeThrustLevel(2), 1);
@@ -195,8 +208,8 @@ test("navbar triggers a faster nonlinear reversible handoff at one scroll point"
   assert.equal(navbarSource.includes("handoffTimeline.reverse()"), true);
   assert.equal(navbarSource.includes("bounceDistancePx"), true);
   assert.equal(navbarSource.includes("scrollHandoffTriggerPx"), true);
-  assert.equal(navbarSource.includes("duration: 0.81"), true);
-  assert.equal(navbarSource.includes("duration: 0.77"), true);
+  assert.equal(navbarSource.includes("duration: 0.68"), true);
+  assert.equal(navbarSource.includes("duration: 0.65"), true);
   assert.equal(navbarSource.includes('ease: "sine.inOut"'), true);
   assert.equal(navbarSource.includes('ease: "expo.in"'), true);
   assert.equal(navbarSource.includes('ease: "expo.out"'), true);

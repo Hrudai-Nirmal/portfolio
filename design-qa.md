@@ -5,19 +5,19 @@
 - Selected concept: Mission Control Rail (option 3)
 - Reference image: `/Users/hrudainirmal/.codex/generated_images/019ff644-a64e-7702-b2a7-912b3b1d22e1/exec-a88fdcc5-2dcf-4e6c-bb45-258198ca0d04.png`
 - Source pixels: 2128 × 739
-- Implementation: interactive SVG in `/Users/hrudainirmal/Projects/Portfolio/src/components/SpaceshipHeader.tsx`; the reference image is not shipped or rendered by the site
+- Implementation: interactive SVG in `/Users/hrudainirmal/Projects/Portfolio/src/components/SpaceshipHeader.tsx` with a purpose-built CRT radar asset at `/Users/hrudainirmal/Projects/Portfolio/public/mission-radar.png`; the original reference image is not shipped or rendered by the site
 
 ## Comparison setup
 
 - Local implementation: `http://127.0.0.1:3000/`
 - CSS viewport: 1280 × 720 at 1× density
-- Browser screenshots: `/tmp/mission-control-fast-header.png` and `/tmp/mission-control-fast-menu.png` (1274 × 717; browser scrollbar excluded)
-- Rendered SVG bounds: 842.23 × 126.33 CSS pixels at x 215.88, y 12
+- Browser screenshots: `/tmp/mission-control-radar-header.png` and `/tmp/mission-control-radar-menu.png` (1274 × 717; browser scrollbar excluded)
+- Rendered radar module bounds: 213.18 × 108.43 CSS pixels at x 233.80, y 8.84
 - Compared state: hero at the top, menu closed, Shadow chat closed
 - Normalization: reference focus crop resized to 842 × 140 and centered above the implementation's 1274 × 150 top region, matching the user-requested 70% rail scale
-- Reference and trigger-state comparison: `/tmp/mission-control-fast-comparison.png`
+- Reference and final-state comparison: `/tmp/mission-control-radar-comparison.png`
 - Compact screenshot: `/tmp/mission-control-svg-compact.png` at a 390 × 844 CSS viewport
-- A separate micro-crop was unnecessary because both normalized frames keep the name, navigation labels, Shadow display, status copy, screws, and hazard stripe legible
+- A separate micro-crop was unnecessary because the combined comparison keeps the radar route, navigation labels, Shadow display, status copy, screws, and thrust control legible
 
 ## Findings
 
@@ -25,12 +25,13 @@
 - The 70% desktop scale is an intentional user-directed refinement; the SVG rail remains centered while the detached compact menu owns the top-right after the handoff.
 - The AUX THRUST control keeps the reference's yellow hardware accent and now exposes a real horizontal range, live percentage readout, and red-to-yellow knob state without changing the rail's silhouette.
 - Thrust changes only the rate of the existing Lightfall field. Streak length, glow, geometry, and hero contrast remain unchanged as requested.
-- The handoff keeps the same endpoints and trigger but now completes in 1.12 seconds, with a restrained sine dip, exponential header launch, and exponential menu drop.
-- Fonts and typography: heavy sans-serif identity text, condensed monospace navigation labels, blue engineering subtitle, and purple terminal display preserve the reference hierarchy and optical weight.
+- The handoff keeps the same endpoints and trigger but now completes in 0.94 seconds, with a restrained sine dip, exponential header launch, and exponential menu drop.
+- The left module keeps its original footprint and hardware but replaces personal copy with a monochrome-green CRT route display. The dotted trajectory, orbital rings, destination reticle, segmented progress bar, scanline texture, and phosphor glow remain legible at the rail's 70% scale.
+- Fonts and typography: condensed monospace navigation labels, small green destination telemetry, and the purple terminal display preserve the reference hierarchy and optical weight.
 - Spacing and layout rhythm: the identity, four-key navigation bank, and command housing retain the reference's three-module sequence, connected spine, thick chassis, inset panels, rounded corners, and fixed top placement.
 - Colors and visual tokens: cream, near-black, charcoal, electric blue, purple, red, and safety yellow match the source art direction with high-contrast outlines and flat neo-brutalist shadows.
-- Image quality and asset fidelity: at the user's explicit direction, the implementation is responsive vector markup rather than a raster image. It stays sharp at all desktop densities and exposes each control as a semantic target.
-- Copy and content: Hrudai Nirmal, SOFTWARE ENGINEER · BANGALORE, HOME, WORK, ABOUT, CONTACT, ASK SHADOW, and PRIMARY ACTION preserve the selected reference; AUX THRUST and THRUSTER READY identify the requested replacement control.
+- Image quality and asset fidelity: the controls remain responsive vector markup, while the newly requested CRT artwork is a dedicated 3:1 raster asset rendered inside the existing SVG slot. At 1086 × 362 pixels it stays crisp at the displayed 213 × 108 CSS-pixel size without inflating layout dimensions.
+- Copy and content: personal name and role details are absent from the rail. HOME, WORK, ABOUT, CONTACT, ASK SHADOW, PRIMARY ACTION, AUX THRUST, and DESTINATION 68% identify the remaining controls and navigation state.
 
 ## Comparison history
 
@@ -45,7 +46,9 @@
 9. **P2 — thrust label text selection:** Dragging across the SVG could select AUX THRUST. Fix: suppress the pointer-down default after explicitly focusing the slider and apply `user-select: none` to the complete control.
 10. **P2 — scrubbed header handoff:** Header/menu transforms previously followed every scroll pixel. Fix: crossing 160px now plays an autonomous timeline; crossing upward reverses it from its current position.
 11. **P3 — handoff felt too linear and slow:** Fix: divided timings by approximately 1.3 and replaced the gentler power/back eases with `sine.inOut`, `expo.in`, and `expo.out` for a slower middle and sharper sling phases.
-12. **Post-fix evidence:** `/tmp/mission-control-fast-comparison.png` shows the selected reference above and the final triggered header/menu states below.
+12. **P3 — handoff still felt slightly slow:** Fix: shortened the longest phases again, bringing the autonomous timeline from 1.12 to 0.94 seconds without changing its trigger, endpoints, or nonlinear easing.
+13. **Requested identity-panel replacement:** Removed the visible name and role copy, then placed a generated green CRT destination radar in the same module footprint with a dotted route and 68% planet progress.
+14. **Post-fix evidence:** `/tmp/mission-control-radar-comparison.png` shows the selected reference above and the final radar-equipped implementation below.
 
 ## Functional verification
 
@@ -59,10 +62,11 @@
 - At `scrollY: 120`, the rail remained at y 12 and the menu stayed hidden after a 700ms wait, confirming that transforms no longer scrub with scroll.
 - Crossing to `scrollY: 170` first placed the rail at y 25.74 during its bounce, then completed autonomously with the rail at y -208 and menu at y 20.
 - Crossing back to `scrollY: 150` reversed the active timeline and restored the rail to y 12 while hiding the menu.
-- The faster pass completed both directions within a 1.2-second browser sampling window; midpoint samples confirmed the header holds near its 18px dip before accelerating offscreen while the menu drops rapidly and settles.
+- The latest pass completed both directions within a 1.1-second browser sampling window; the rail reached opacity zero and the menu reached opacity one after crossing downward, then returned to the inverse state after crossing upward.
+- At 1280 × 720, the destination radar is visible inside a 213.18 × 108.43 CSS-pixel box, matching the previous identity module footprint without increasing the overall rail size.
 - At 390 × 844, Ask Shadow occupies x 20–137.20 and the menu occupies x 312.41–370; they do not overlap, and the menu is in the higher stacking layer.
-- Browser logs contain no error-level entries after thrust dragging and both directions of the trigger animation.
-- TDD evidence: the 1.3× timing and sine/exponential easing assertions failed before implementation, then passed after the refined timeline was added.
+- Browser logs contain no error-level entries after loading the radar asset and exercising both directions of the trigger animation.
+- TDD evidence: the radar replacement and shorter 0.68/0.65-second phase assertions failed before implementation, then passed after the asset and refined timeline were added.
 
 ## Follow-up polish
 

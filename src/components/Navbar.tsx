@@ -57,7 +57,7 @@ export default function Navbar({
       handoffTimeline
         .to(spaceshipHeader, {
           y: spaceshipHeaderConfig.bounceDistancePx,
-          duration: 0.25,
+          duration: 0.21,
           ease: "sine.inOut",
         })
         .to(
@@ -65,10 +65,10 @@ export default function Navbar({
           {
             y: -220,
             autoAlpha: 0,
-            duration: 0.81,
+            duration: 0.68,
             ease: "expo.in",
           },
-          0.25,
+          0.21,
         )
         .fromTo(
           compactMenuHeader,
@@ -76,10 +76,10 @@ export default function Navbar({
           {
             y: 0,
             autoAlpha: 1,
-            duration: 0.77,
+            duration: 0.65,
             ease: "expo.out",
           },
-          0.35,
+          0.29,
         );
 
       const handoffTrigger = ScrollTrigger.create({
