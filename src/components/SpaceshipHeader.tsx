@@ -185,6 +185,19 @@ export default function SpaceshipHeader({
         className="h-auto w-full overflow-visible [filter:drop-shadow(8px_10px_0_#050507)]"
       >
         <title id="mission-control-title">Mission control navigation</title>
+        <defs>
+          <clipPath id="destination-planet-clip">
+            <circle cx="365" cy="108" r="19" />
+          </clipPath>
+          <pattern
+            id="shadow-crt-scanlines"
+            patternUnits="userSpaceOnUse"
+            width="4"
+            height="4"
+          >
+            <rect width="4" height="1" fill="#e2a2ff" opacity="0.18" />
+          </pattern>
+        </defs>
 
         {HEADER_SUSPENSION_BAR_X_POSITIONS.map((suspensionBarX) => (
           <HeaderSuspensionBar key={suspensionBarX} x={suspensionBarX} />
@@ -210,7 +223,7 @@ export default function SpaceshipHeader({
           />
           <g aria-hidden="true" pointerEvents="none">
             <path
-              d="M 114 127 C 184 121 246 80 354 108"
+              d="M 114 127 C 184 121 246 80 365 108"
               fill="none"
               stroke="#80da22"
               strokeWidth="7"
@@ -218,7 +231,7 @@ export default function SpaceshipHeader({
               opacity="0.12"
             />
             <path
-              d="M 114 127 C 184 121 246 80 354 108"
+              d="M 114 127 C 184 121 246 80 365 108"
               fill="none"
               stroke="#b7ff4f"
               strokeWidth="3"
@@ -226,10 +239,20 @@ export default function SpaceshipHeader({
               className="radar-route-progress [filter:drop-shadow(0_0_5px_#80da22)]"
             />
             <g className="radar-current-beacon [filter:drop-shadow(0_0_7px_#b7ff4f)]">
-              <circle cx="114" cy="127" r="10" fill="none" stroke="#b7ff4f" strokeWidth="2" />
-              <circle cx="114" cy="127" r="4" fill="#d9ff9d" />
+              <circle cx="220" cy="105" r="10" fill="none" stroke="#b7ff4f" strokeWidth="2" />
+              <circle cx="220" cy="105" r="4" fill="#d9ff9d" />
             </g>
           </g>
+          <image
+            href="/mission-radar.png"
+            x="57"
+            y="55"
+            width="359"
+            height="120"
+            preserveAspectRatio="xMidYMid slice"
+            clipPath="url(#destination-planet-clip)"
+            pointerEvents="none"
+          />
           <rect x="63" y="61" width="347" height="108" rx="10" fill="none" stroke="#80da22" strokeOpacity="0.35" strokeWidth="2" />
           <rect x="196" y="26" width="98" height="24" rx="7" fill="#1f2025" stroke="#08080b" strokeWidth="7" />
           <rect x="215" y="33" width="60" height="8" rx="4" fill="#80da22" className="[filter:drop-shadow(0_0_7px_#80da22)]" />
@@ -356,6 +379,7 @@ export default function SpaceshipHeader({
           <g
             role="button"
             tabIndex={0}
+            data-shadow-crt="true"
             aria-label={chatOpen ? "Close Shadow" : "Ask Shadow"}
             aria-expanded={chatOpen}
             aria-controls="shadow-chat-panel"
@@ -363,17 +387,45 @@ export default function SpaceshipHeader({
             onKeyDown={handleShadowKeyDown}
             className="group pointer-events-auto cursor-pointer outline-none"
           >
-            <rect x="1183" y="49" width="203" height="118" rx="17" fill="#17101f" stroke="#08080b" strokeWidth="9" className="transition-colors group-hover:fill-[#2a153b] group-focus-visible:stroke-[#b85cff]" />
-            <rect x="1195" y="61" width="179" height="94" rx="10" fill="#261438" stroke="#4a2a62" strokeWidth="4" />
-            <text x="1214" y="88" fill="#d77cff" fontFamily="var(--font-geist-mono), monospace" fontSize="18" fontWeight="900" className="[filter:drop-shadow(0_0_5px_#b85cff)]">
+            <g data-shadow-crt-antenna="true" fill="none" stroke="#08080b" strokeWidth="6" strokeLinecap="round">
+              <path d="M 1213 54 L 1188 28" />
+              <path d="M 1236 54 L 1264 27" />
+              <circle cx="1187" cy="27" r="6" fill="#d83420" />
+              <circle cx="1265" cy="26" r="6" fill="#f0b90b" />
+            </g>
+            <rect
+              x="1183"
+              y="49"
+              width="203"
+              height="118"
+              rx="22"
+              fill="#564630"
+              stroke="#08080b"
+              strokeWidth="9"
+              className="transition-colors group-hover:fill-[#715c3f] group-focus-visible:stroke-[#b85cff]"
+            />
+            <rect x="1192" y="58" width="147" height="100" rx="28" fill="#151117" stroke="#08080b" strokeWidth="5" />
+            <rect x="1200" y="65" width="131" height="86" rx="24" fill="#261438" stroke="#613478" strokeWidth="3" className="transition-colors group-hover:fill-[#351848]" />
+            <rect x="1203" y="68" width="125" height="80" rx="21" fill="url(#shadow-crt-scanlines)" pointerEvents="none" />
+            <path d="M 1213 76 Q 1262 63 1317 77" fill="none" stroke="#e4a4ff" strokeWidth="4" strokeLinecap="round" opacity="0.18" pointerEvents="none" />
+            <text x="1210" y="88" fill="#d77cff" fontFamily="var(--font-geist-mono), monospace" fontSize="15" fontWeight="900" className="[filter:drop-shadow(0_0_5px_#b85cff)]">
               &gt;_
             </text>
-            <text x="1214" y="116" fill="#d77cff" fontFamily="var(--font-geist-mono), monospace" fontSize="23" fontWeight="900" className="[filter:drop-shadow(0_0_5px_#b85cff)]">
+            <text x="1210" y="114" fill="#d77cff" fontFamily="var(--font-geist-mono), monospace" fontSize={chatOpen ? 16 : 19} fontWeight="900" className="[filter:drop-shadow(0_0_5px_#b85cff)]">
               {chatOpen ? "CLOSE" : "ASK"}
             </text>
-            <text x="1214" y="143" fill="#d77cff" fontFamily="var(--font-geist-mono), monospace" fontSize="23" fontWeight="900" className="[filter:drop-shadow(0_0_5px_#b85cff)]">
+            <text x="1210" y="137" fill="#d77cff" fontFamily="var(--font-geist-mono), monospace" fontSize="18" fontWeight="900" className="[filter:drop-shadow(0_0_5px_#b85cff)]">
               SHADOW
             </text>
+            <g data-shadow-crt-controls="true">
+              <rect x="1342" y="59" width="34" height="97" rx="9" fill="#252228" stroke="#08080b" strokeWidth="5" />
+              <circle cx="1359" cy="81" r="9" fill="#d8c9a9" stroke="#08080b" strokeWidth="4" />
+              <path d="M 1359 75 V 81" stroke="#6f5e44" strokeWidth="3" strokeLinecap="round" />
+              <circle cx="1359" cy="111" r="9" fill="#d83420" stroke="#08080b" strokeWidth="4" />
+              <path d="M 1359 105 V 111" stroke="#ff9c87" strokeWidth="3" strokeLinecap="round" />
+              <path d="M 1350 136 H 1368 M 1350 143 H 1368 M 1350 150 H 1368" stroke="#0b0c0f" strokeWidth="4" strokeLinecap="round" />
+            </g>
+            <path d="M 1207 167 H 1227 V 172 H 1203 Z M 1342 167 H 1362 L 1366 172 H 1346 Z" fill="#30271d" stroke="#08080b" strokeWidth="3" />
           </g>
 
           <rect x="1183" y="174" width="203" height="21" rx="7" fill="#17171c" stroke="#08080b" strokeWidth="5" />

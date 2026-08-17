@@ -207,6 +207,26 @@ test("destination radar safely animates route progress and current position", ()
 
   assert.equal(spaceshipHeaderSource.includes("radar-route-progress"), true);
   assert.equal(spaceshipHeaderSource.includes("radar-current-beacon"), true);
+  assert.equal(
+    spaceshipHeaderSource.includes('<circle cx="220" cy="105" r="10"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes('id="destination-planet-clip"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes(
+      'clipPath="url(#destination-planet-clip)"',
+    ),
+    true,
+  );
+  assert.ok(
+    spaceshipHeaderSource.indexOf('className="radar-route-progress') <
+      spaceshipHeaderSource.indexOf(
+        'clipPath="url(#destination-planet-clip)"',
+      ),
+  );
   assert.equal(globalStylesSource.includes("@keyframes radarRouteFlow"), true);
   assert.equal(globalStylesSource.includes("@keyframes radarBeaconPulse"), true);
   assert.match(
@@ -298,6 +318,32 @@ test("custom Shadow comms replaces the iframe with a floating two-thirds chat", 
   assert.equal(shadowChatSource.includes("overflow-x-auto"), false);
   assert.equal(shadowRouteSource.includes("DIFY_CHAT_API_KEY"), true);
   assert.equal(shadowRouteSource.includes("/chat-messages"), true);
+});
+
+test("Shadow header control uses a compact interactive CRT television shell", () => {
+  const spaceshipHeaderSource = readFileSync(
+    new URL("../src/components/SpaceshipHeader.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.equal(
+    spaceshipHeaderSource.includes('data-shadow-crt="true"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes('id="shadow-crt-scanlines"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes('data-shadow-crt-controls="true"'),
+    true,
+  );
+  assert.equal(
+    spaceshipHeaderSource.includes('data-shadow-crt-antenna="true"'),
+    true,
+  );
+  assert.equal(spaceshipHeaderSource.includes('aria-controls="shadow-chat-panel"'), true);
+  assert.equal(spaceshipHeaderSource.includes("onToggleChat"), true);
 });
 
 test("Shadow local navigation mode validates input and answers portfolio topics", () => {
